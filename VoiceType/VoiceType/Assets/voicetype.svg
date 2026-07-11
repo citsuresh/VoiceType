@@ -1,32 +1,34 @@
 <svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4F46E5"/>
-      <stop offset="1" stop-color="#7C3AED"/>
-    </linearGradient>
-    <linearGradient id="mic" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#E5E7EB"/>
-    </linearGradient>
-  </defs>
+  <!-- Filled monochrome microphone glyph on a transparent background. White fill with a
+       dark outline so it reads clearly at small tray sizes on both dark and light
+       backgrounds. Drawn in two layers: a dark base (fill + wide stroke) and a white
+       top layer, which leaves a consistent dark outline around every shape. -->
 
-  <!-- Rounded-square app background -->
-  <rect x="8" y="8" width="240" height="240" rx="52" ry="52" fill="url(#bg)"/>
+  <!-- Dark base layer -->
+  <g fill="#1F1F1F" stroke="#1F1F1F" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="102" y="30" width="52" height="104" rx="26" ry="26" stroke-width="8"/>
+    <rect x="122" y="164" width="12" height="26" rx="6" stroke-width="8"/>
+    <rect x="98" y="188" width="60" height="14" rx="7" stroke-width="8"/>
+  </g>
+  <g fill="none" stroke="#1F1F1F" stroke-linecap="round">
+    <path d="M84 122 a44 44 0 0 0 88 0" stroke-width="32"/>
+    <path d="M177.7 53.6 a42 42 0 0 1 0 36.8" stroke-width="23"/>
+    <path d="M199.4 39 a70 70 0 0 1 0 74" stroke-width="22"/>
+    <path d="M78.3 53.6 a42 42 0 0 0 0 36.8" stroke-width="23"/>
+    <path d="M56.6 39 a70 70 0 0 0 0 74" stroke-width="22"/>
+  </g>
 
-  <!-- Microphone capsule -->
-  <rect x="104" y="52" width="48" height="96" rx="24" ry="24" fill="url(#mic)"/>
-
-  <!-- Mic stand arc -->
-  <path d="M76 120 a52 52 0 0 0 104 0"
-        fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/>
-
-  <!-- Stem -->
-  <rect x="122" y="172" width="12" height="30" rx="6" fill="#FFFFFF"/>
-
-  <!-- Base -->
-  <rect x="92" y="198" width="72" height="12" rx="6" fill="#FFFFFF"/>
-
-  <!-- Sound waves -->
-  <path d="M186 92 a34 34 0 0 1 0 56" fill="none" stroke="#C4B5FD" stroke-width="8" stroke-linecap="round"/>
-  <path d="M70 92 a34 34 0 0 0 0 56" fill="none" stroke="#C4B5FD" stroke-width="8" stroke-linecap="round"/>
+  <!-- White top layer -->
+  <g fill="#FFFFFF">
+    <rect x="102" y="30" width="52" height="104" rx="26" ry="26"/>
+    <rect x="122" y="164" width="12" height="26" rx="6"/>
+    <rect x="98" y="188" width="60" height="14" rx="7"/>
+  </g>
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round">
+    <path d="M84 122 a44 44 0 0 0 88 0" stroke-width="24"/>
+    <path d="M177.7 53.6 a42 42 0 0 1 0 36.8" stroke-width="15"/>
+    <path d="M199.4 39 a70 70 0 0 1 0 74" stroke-width="14"/>
+    <path d="M78.3 53.6 a42 42 0 0 0 0 36.8" stroke-width="15"/>
+    <path d="M56.6 39 a70 70 0 0 0 0 74" stroke-width="14"/>
+  </g>
 </svg>

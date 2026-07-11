@@ -163,10 +163,29 @@ namespace VoiceType.UI
             }
         }
 
-        // Resolves the running executable's own icon. Falls back to the default application
-        // icon if extraction fails so the tray icon is never blank.
+        // Resolves the tray icon. Prefers the packaged multi-resolution voicetype.ico so the
+        // shell can pick the sharpest frame for the current DPI/tray size. Falls back to the
+        // running executable's own icon, then the default application icon, so the tray icon is
+        // never blank.
         private Icon ResolveApplicationIcon()
         {
+            try
+            {
+                var baseDir = AppContext.BaseDirectory;
+                var icoPath = Path.Combine(baseDir, "Assets", "voicetype.ico");
+                if (File.Exists(icoPath))
+                {
+                    // Load the frame that best matches the current small-icon metric.
+                    var desired = SystemInformation.SmallIconSize;
+                    _ownedIcon = new Icon(icoPath, desired);
+                    return _ownedIcon;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"TrayIconManager: could not load voicetype.ico: {ex.Message}");
+            }
+
             try
             {
                 var exePath = Environment.ProcessPath;

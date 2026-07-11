@@ -1,9 +1,56 @@
-# VoiceType
+<p align="center">
+  <img src="VoiceType/VoiceType/Assets/voicetype.png" alt="VoiceType icon" width="160" height="160" />
+</p>
+
+<h1 align="center">VoiceType</h1>
 
 A local, privacy-preserving push-to-talk dictation tool for Windows. Hold a hotkey,
 speak, and the transcribed text is inserted at your cursor. All speech recognition runs
 **locally** using [whisper.cpp](https://github.com/ggml-org/whisper.cpp) — nothing is sent
 to the cloud.
+
+---
+
+## Running & the system tray
+
+VoiceType has **no main window** — it runs windowless from the **system tray**. The tray
+icon (a white microphone) is the app's control center. Right-click it for the menu:
+
+- **Model** — pick from the Whisper models found in the models folder; the active one is checked.
+  Selecting a model switches it live (in `Server` mode the whisper-server is restarted to load it).
+- **Open Settings** — opens the Settings window (also available by **double-clicking** the tray icon).
+- **Exit** — shuts the app down.
+
+Fatal errors and status notes are surfaced as tray balloon notifications.
+
+---
+
+## Settings window
+
+The Settings window is the recommended way to configure VoiceType (you don't have to edit
+`appsettings.json` by hand). It lets you set the **model**, **microphone**, **transcription
+mode**, **hotkey**, **language**, **insert method**, temp directory, preview timings, and the
+per-mode executable/server fields. It opens **single-instance** — reopening focuses the
+existing window instead of creating a second one.
+
+### How changes are applied
+
+Click **Save** to validate and persist all fields to
+[`appsettings.json`](VoiceType/VoiceType/appsettings.json). Most changes take effect
+**immediately, without restarting the app**:
+
+| Change | When it applies |
+|--------|-----------------|
+| Model | Live. In `Server` mode the whisper-server restarts to load the new model; `Cli`/`Stream` pick it up on the next dictation. |
+| Transcription mode | Live. The server is created/disposed and the controller is re-wired. |
+| Hotkey | Live. The global hotkey is re-registered immediately. |
+| Server executable / host / port / arguments | Live in `Server` mode — the server restarts to pick up the new launch settings. |
+| Language, insert method, clipboard restore, temp dir, preview timings | Live on the next dictation session. |
+| Microphone | Applies on the **next** dictation session (a mid-session switch is avoided). If a session is in progress when you save, a tray note reminds you. |
+
+Invalid values (non-positive numbers, an out-of-range port `1–65535`, or an incomplete
+hotkey such as a lone modifier) are rejected with a validation message and nothing is saved.
+**Cancel** closes the window without applying changes.
 
 ---
 
@@ -134,3 +181,18 @@ or `SendInput` (synthetic typing).
 
 Microphone is captured at **16 kHz mono 16-bit** — Whisper's native format, so no resampling
 is needed. Speak close to the mic in a quiet environment for best accuracy.
+
+---
+
+## App icon
+
+The app icon is a white microphone glyph. The vector source is
+[`Assets/voicetype.svg`](VoiceType/VoiceType/Assets/voicetype.svg); the multi-resolution
+[`Assets/voicetype.ico`](VoiceType/VoiceType/Assets/voicetype.ico) is generated from it via
+[`Assets/generate-icon.ps1`](VoiceType/VoiceType/Assets/generate-icon.ps1). The `.ico` is
+embedded into the executable (`<ApplicationIcon>`) for Explorer/taskbar/Alt-Tab and window
+title bars, and is also copied to the output folder so the tray icon can load the best-fitting
+small frame at runtime.
+
+> If you change the icon, rebuild **and fully restart** the app — a running debugger instance
+> keeps the old embedded/loaded icon until then.
