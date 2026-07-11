@@ -55,3 +55,10 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Visual Studio local cache / settings (never commit)
+.vs/
+
+# Whisper model binaries are NOT stored in git (too large for GitHub's 100 MB limit).
+# Download them manually and place them in whisper.cpp/models/ - see README.md.
+VoiceType/VoiceType/whisper.cpp/models/*.bin

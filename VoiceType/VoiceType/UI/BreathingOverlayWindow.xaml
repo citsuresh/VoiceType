@@ -1,0 +1,75 @@
+﻿<Window x:Class="VoiceType.UI.BreathingOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BreathingOverlayWindow"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize"
+        WindowStartupLocation="Manual">
+    <!-- Read-only model-name bubble stacked above the waveform pill -->
+    <StackPanel VerticalAlignment="Bottom">
+        <Border x:Name="ModelBubble" Background="#E6283593" CornerRadius="10" Padding="10,3"
+                Visibility="Collapsed"
+                HorizontalAlignment="Center" Margin="0,0,0,4" SnapsToDevicePixels="True">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="2" Opacity="0.5" />
+            </Border.Effect>
+            <TextBlock x:Name="ModelText" Foreground="#CFFFFFFF"
+                       FontSize="11" FontWeight="SemiBold" TextWrapping="NoWrap" />
+        </Border>
+        <!-- Pill-shaped container -->
+        <Border x:Name="Pill" Background="#E6283593" CornerRadius="22" SnapsToDevicePixels="True"
+                Height="44" MinWidth="78" HorizontalAlignment="Center">
+            <Grid>
+            <!-- Listening: fixed bar row, bars update in-place, never scroll -->
+            <ItemsControl x:Name="BarItems"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          IsHitTestVisible="False" Margin="6,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Width="3" Height="{Binding}" MinHeight="3"
+                                   Margin="0,0,2,0" RadiusX="1" RadiusY="1"
+                                   Fill="White" VerticalAlignment="Center" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!-- Processing: status text with animated dots (hidden while listening) -->
+            <StackPanel x:Name="StatusPanel" Orientation="Horizontal"
+                        Visibility="Collapsed" IsHitTestVisible="False"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="14,0">
+                <TextBlock x:Name="StatusText" Text="Processing"
+                           Foreground="White" FontSize="13" FontWeight="SemiBold"
+                           VerticalAlignment="Center" />
+                <!-- Animated wave dots: shown while preparing ("Starting mic") and while processing.
+                     Each dot's vertical offset is driven from BreathingOverlayWindow so the row of
+                     dots ripples as a smooth left-to-right traveling wave. -->
+                <ItemsControl x:Name="DotsWave" Visibility="Collapsed"
+                              IsHitTestVisible="False" VerticalAlignment="Center"
+                              Margin="4,0,0,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="." Foreground="White" FontSize="17" FontWeight="Bold"
+                                       VerticalAlignment="Center" Margin="1.5,0,1.5,0">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform Y="{Binding Offset}" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+    </Border>
+    </StackPanel>
+</Window>

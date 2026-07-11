@@ -1,0 +1,175 @@
+﻿<Window x:Class="VoiceType.UI.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="VoiceType Settings"
+        Height="620" Width="680"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        MinHeight="480" MinWidth="560">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="FieldLabel">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,6,12,6" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,6" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,6" />
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,12" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Settings" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,12" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,8,0">
+            <StackPanel>
+
+                <!-- General -->
+                <GroupBox Header="General">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Model" Style="{StaticResource FieldLabel}" />
+                        <ComboBox x:Name="ModelComboBox" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" DisplayMemberPath="DisplayName" SelectedValuePath="Path" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Microphone" Style="{StaticResource FieldLabel}" />
+                        <ComboBox x:Name="MicrophoneComboBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" DisplayMemberPath="Name" SelectedValuePath="Index" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Transcription mode" Style="{StaticResource FieldLabel}" />
+                        <ComboBox x:Name="ModeComboBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="ModeComboBox_SelectionChanged" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Hotkey" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="HotkeyCaptureTextBox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True" IsReadOnlyCaretVisible="False" Cursor="Hand" GotFocus="HotkeyCaptureTextBox_GotFocus" LostFocus="HotkeyCaptureTextBox_LostFocus" PreviewKeyDown="HotkeyCaptureTextBox_PreviewKeyDown" />
+                        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Foreground="Gray" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Text="Click the box above and press the desired key combination (e.g. Ctrl + Alt)." />
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Language" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="LanguageTextBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Insert method" Style="{StaticResource FieldLabel}" />
+                        <ComboBox x:Name="InsertMethodComboBox" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                        <CheckBox x:Name="EnableClipboardRestoreCheckBox" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,6" Content="Restore previous clipboard content after paste" />
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="Temp directory" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="TempDirectoryTextBox" Grid.Row="8" Grid.Column="1" />
+                        <Button x:Name="TempDirectoryBrowseButton" Grid.Row="8" Grid.Column="2" Content="Browse..." Margin="8,6,0,6" Padding="8,0" Click="TempDirectoryBrowseButton_Click" />
+
+                        <TextBlock Grid.Row="9" Grid.Column="0" Text="Preview (ms)" Style="{StaticResource FieldLabel}" />
+                        <StackPanel Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <TextBlock Text="Chunk" VerticalAlignment="Center" Margin="0,6,6,6" />
+                            <TextBox x:Name="PreviewChunkTextBox" Width="70" />
+                            <TextBlock Text="Throttle" VerticalAlignment="Center" Margin="16,6,6,6" />
+                            <TextBox x:Name="PreviewThrottleTextBox" Width="70" />
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Server mode -->
+                <GroupBox x:Name="ServerGroupBox" Header="Server mode">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Executable" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="ServerExecutableTextBox" Grid.Row="0" Grid.Column="1" />
+                        <Button x:Name="ServerExecutableBrowseButton" Grid.Row="0" Grid.Column="2" Content="Browse..." Margin="8,6,0,6" Padding="8,0" Click="ServerExecutableBrowseButton_Click" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Host / Port" Style="{StaticResource FieldLabel}" />
+                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <TextBox x:Name="ServerHostTextBox" Width="140" />
+                            <TextBlock Text=":" VerticalAlignment="Center" Margin="6,6" />
+                            <TextBox x:Name="ServerPortTextBox" Width="80" />
+                            <TextBlock Text="Timeout (s)" VerticalAlignment="Center" Margin="16,6,6,6" />
+                            <TextBox x:Name="ServerTimeoutTextBox" Width="70" />
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Arguments" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="ServerArgumentsTextBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+                    </Grid>
+                </GroupBox>
+
+                <!-- Stream mode -->
+                <GroupBox x:Name="StreamGroupBox" Header="Stream mode">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Executable" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="StreamExecutableTextBox" Grid.Row="0" Grid.Column="1" />
+                        <Button x:Name="StreamExecutableBrowseButton" Grid.Row="0" Grid.Column="2" Content="Browse..." Margin="8,6,0,6" Padding="8,0" Click="StreamExecutableBrowseButton_Click" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Arguments" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="StreamArgumentsTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" />
+                    </Grid>
+                </GroupBox>
+
+                <!-- CLI mode -->
+                <GroupBox x:Name="CliGroupBox" Header="CLI mode">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Executable" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="CliExecutableTextBox" Grid.Row="0" Grid.Column="1" />
+                        <Button x:Name="CliExecutableBrowseButton" Grid.Row="0" Grid.Column="2" Content="Browse..." Margin="8,6,0,6" Padding="8,0" Click="CliExecutableBrowseButton_Click" />
+                    </Grid>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button x:Name="SaveButton" Content="Save" Width="90" Height="30" Margin="0,0,8,0" IsDefault="True" Click="SaveButton_Click" />
+            <Button x:Name="CancelButton" Content="Cancel" Width="90" Height="30" IsCancel="True" Click="CancelButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
