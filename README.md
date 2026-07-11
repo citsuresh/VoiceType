@@ -25,6 +25,35 @@ Fatal errors and status notes are surfaced as tray balloon notifications.
 
 ---
 
+## Floating status pill
+
+While you dictate, a small **floating pill** appears near the bottom-center of the primary
+screen and shows what VoiceType is doing. A bubble above the pill displays the **active
+model** name (e.g. `ggml-base.en`).
+
+The pill is **click-through** and **non-activating** — it never steals focus or interferes
+with the app you are dictating into, so text still lands at your cursor. It cycles through
+these states:
+
+| State | What you see | Meaning |
+|-------|--------------|---------|
+| Starting mic | "Starting mic" with bobbing wave dots | The microphone is being opened. |
+| Listening | A live traveling-wave waveform that reacts to your voice level | Recording your speech. |
+| Processing | "Processing" with animated wave dots | Whisper is transcribing the captured audio. |
+
+<p align="center">
+  <img src="docs/images/pill-starting.png" alt="Starting mic state" height="70" />
+  &nbsp;&nbsp;
+  <img src="docs/images/pill-listening.png" alt="Listening state" height="70" />
+  &nbsp;&nbsp;
+  <img src="docs/images/pill-processing.png" alt="Processing state" height="70" />
+</p>
+
+The pill hides automatically once the transcribed text has been inserted, and it can also
+show brief informational messages.
+
+---
+
 ## Settings window
 
 The Settings window is the recommended way to configure VoiceType (you don't have to edit
