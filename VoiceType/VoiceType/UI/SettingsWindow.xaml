@@ -67,7 +67,8 @@
 
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Hotkey" Style="{StaticResource FieldLabel}" />
                         <TextBox x:Name="HotkeyCaptureTextBox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True" IsReadOnlyCaretVisible="False" Cursor="Hand" GotFocus="HotkeyCaptureTextBox_GotFocus" LostFocus="HotkeyCaptureTextBox_LostFocus" PreviewKeyDown="HotkeyCaptureTextBox_PreviewKeyDown" />
-                        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Foreground="Gray" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Text="Click the box above and press the desired key combination (e.g. Ctrl + Alt)." />
+                        <TextBlock x:Name="HotkeyHintText" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Foreground="Gray" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Text="Click the box above and press the desired key combination (e.g. Ctrl + Alt). Press Esc to cancel." />
+                        <TextBlock x:Name="HotkeyValidationText" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Foreground="#C00000" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Visibility="Collapsed" />
 
                         <TextBlock Grid.Row="5" Grid.Column="0" Text="Language" Style="{StaticResource FieldLabel}" />
                         <TextBox x:Name="LanguageTextBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" />

@@ -162,6 +162,16 @@ namespace VoiceType
         }
 
         /// <summary>
+        /// Surfaces a brief tray balloon note. Used by Settings to tell the user when a microphone
+        /// change will only take effect on the next dictation session (a live mid-session switch is
+        /// avoided because the active capture, wav writer and stream consumers are bound to it).
+        /// </summary>
+        public void ShowNote(string text)
+        {
+            _trayIcon?.ShowBalloon("VoiceType", text, System.Windows.Forms.ToolTipIcon.Info);
+        }
+
+        /// <summary>
         /// Applies a runtime transcription-mode change: creates and starts a long-lived
         /// whisper-server (wiring it into the controller) when switching into Server mode, or
         /// disposes it when switching out. Other modes need no persistent process. The shared

@@ -32,6 +32,10 @@ namespace VoiceType.UI
         private string _capturedModifiers = string.Empty;
         private string _capturedKey = string.Empty;
 
+        // Snapshot of the captured combo taken when the box gains focus, so Esc can revert to it.
+        private string _preCaptureModifiers = string.Empty;
+        private string _preCaptureKey = string.Empty;
+
         private sealed record ModelItem(string Path, string DisplayName);
         private sealed record MicItem(int Index, string Name);
 
@@ -166,6 +170,10 @@ namespace VoiceType.UI
 
         private void HotkeyCaptureTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
+            // Remember the current combo so Esc can restore it if capture is abandoned.
+            _preCaptureModifiers = _capturedModifiers;
+            _preCaptureKey = _capturedKey;
+            ClearHotkeyValidation();
             HotkeyCaptureTextBox.Text = "Press a key combination...";
         }
 
@@ -182,14 +190,22 @@ namespace VoiceType.UI
         /// </summary>
         private void HotkeyCaptureTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
-
             var key = e.Key == Key.System ? e.SystemKey : e.Key;
 
-            // Escape abandons capture and restores the previous value.
+            // Tab moves focus normally so keyboard navigation keeps working.
+            if (key is Key.Tab)
+                return;
+
+            e.Handled = true;
+
+            // Escape abandons capture and restores the previously captured combo.
             if (key == Key.Escape)
             {
+                _capturedModifiers = _preCaptureModifiers;
+                _capturedKey = _preCaptureKey;
+                ClearHotkeyValidation();
                 UpdateHotkeyDisplay();
+                Keyboard.ClearFocus();
                 return;
             }
 
@@ -197,6 +213,7 @@ namespace VoiceType.UI
             bool keyIsAlt = key is Key.LeftAlt or Key.RightAlt;
             bool keyIsShift = key is Key.LeftShift or Key.RightShift;
             bool keyIsWin = key is Key.LWin or Key.RWin;
+            bool keyIsModifier = keyIsCtrl || keyIsAlt || keyIsShift || keyIsWin;
 
             var mods = new List<string>();
             var held = Keyboard.Modifiers;
@@ -205,13 +222,70 @@ namespace VoiceType.UI
             if (held.HasFlag(ModifierKeys.Alt) && !keyIsAlt) mods.Add("Alt");
             if (held.HasFlag(ModifierKeys.Windows) && !keyIsWin) mods.Add("Win");
 
-            // key.ToString() always yields a valid Key enum name, which GlobalHotkeyManager parses.
+            // While only modifier keys are held (combo in progress), show the running combo but
+            // don't commit it yet - a modifier alone is not a valid final hotkey. Wait for a
+            // non-modifier main key to be pressed before recording the captured value.
+            if (keyIsModifier)
+            {
+                var pressed = keyIsCtrl ? "Ctrl" : keyIsAlt ? "Alt" : keyIsShift ? "Shift" : "Win";
+                var running = new List<string>(mods) { pressed };
+                HotkeyCaptureTextBox.Text = string.Join(" + ", running) + " + ...";
+                return;
+            }
+
+            // A non-modifier main key completes the combo. key.ToString() always yields a valid
+            // Key enum name, which GlobalHotkeyManager parses via Enum.TryParse<Key>.
             _capturedModifiers = string.Join("+", mods);
             _capturedKey = key.ToString();
+            ClearHotkeyValidation();
 
             HotkeyCaptureTextBox.Text = mods.Count > 0
                 ? string.Join(" + ", mods) + " + " + _capturedKey
                 : _capturedKey;
+        }
+
+        /// <summary>
+        /// Validates the captured hotkey combo. A valid combo requires a non-modifier main key
+        /// (a lone modifier is rejected) whose name parses to a <see cref="Key"/>. Shows an inline
+        /// message on failure so an invalid value is never persisted.
+        /// </summary>
+        private bool ValidateCapturedHotkey()
+        {
+            if (string.IsNullOrWhiteSpace(_capturedKey))
+            {
+                ShowHotkeyValidation("Press a main key (e.g. a letter or F-key) in addition to any modifiers.");
+                return false;
+            }
+
+            if (_capturedKey is "LeftCtrl" or "RightCtrl" or "LeftAlt" or "RightAlt"
+                or "LeftShift" or "RightShift" or "LWin" or "RWin")
+            {
+                ShowHotkeyValidation("A modifier alone is not a valid hotkey; add a main key.");
+                return false;
+            }
+
+            if (!Enum.TryParse<Key>(_capturedKey, out _))
+            {
+                ShowHotkeyValidation("The captured key is not recognised; try a different combination.");
+                return false;
+            }
+
+            ClearHotkeyValidation();
+            return true;
+        }
+
+        private void ShowHotkeyValidation(string message)
+        {
+            HotkeyValidationText.Text = message;
+            HotkeyValidationText.Visibility = Visibility.Visible;
+            HotkeyHintText.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClearHotkeyValidation()
+        {
+            HotkeyValidationText.Visibility = Visibility.Collapsed;
+            HotkeyValidationText.Text = string.Empty;
+            HotkeyHintText.Visibility = Visibility.Visible;
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -225,9 +299,16 @@ namespace VoiceType.UI
                 return;
             }
 
+            // Reject an invalid hotkey (e.g. a lone modifier or unrecognised key) before saving.
+            if (!ValidateCapturedHotkey())
+            {
+                return;
+            }
+
             var previousModel = _settings.WhisperModelPath;
             var previousMode = _settings.Mode;
             var previousHotkey = _settings.DictationHotkey ?? string.Empty;
+            var previousMic = _settings.MicrophoneDeviceIndex;
 
             // Snapshot server-launch fields so we can detect whether a restart is needed.
             var previousServerExe = _settings.WhisperServerExecutablePath ?? string.Empty;
@@ -312,8 +393,14 @@ namespace VoiceType.UI
             if (hotkeyChanged)
                 app?.ReapplyHotkey();
 
-            // Mic change needs no action here: the controller recreates its AudioCaptureService for
-            // the newly selected device on the next session (see EnsureAudioCaptureInitialized).
+            // Mic change: the controller recreates its AudioCaptureService for the newly selected
+            // device on the next session (see EnsureAudioCaptureInitialized). Switching the live
+            // NAudio capture mid-session is avoided because the active writer and stream consumers
+            // are bound to the current instance; if a session is in progress, tell the user the new
+            // mic applies from the next session.
+            var micChanged = previousMic != _settings.MicrophoneDeviceIndex;
+            if (micChanged && controller is not null && controller.State != DictationState.Idle)
+                app?.ShowNote("Microphone change will apply on the next dictation session.");
 
             controller?.RefreshModelName();
 
