@@ -498,7 +498,7 @@ namespace VoiceType.Core
             });
         }
 
-        public async Task StartSessionAsync(CancellationToken ct = default, IntPtr preferredForegroundHwnd = default, IntPtr preferredFocusHwnd = default)
+        public async Task StartSessionAsync(CancellationToken ct = default, IntPtr preferredForegroundHwnd = default, IntPtr preferredFocusHwnd = default, Func<bool>? isHotkeyStillHeld = null)
         {
             var starting = false;
             int myGeneration;
@@ -627,6 +627,28 @@ namespace VoiceType.Core
                 return;
             }
 
+            // Physical-key guard for hold-to-talk: right before we engage the microphone, confirm
+            // the hotkey chord is actually still held down. A very fast tap can release during the
+            // async overlay setup above without the state guard catching it; checking the real key
+            // state here is authoritative and prevents a stuck "toggle-like" session.
+            if (isHotkeyStillHeld is not null && !isHotkeyStillHeld())
+            {
+                Logger.Info("StartSessionAsync: hotkey no longer physically held before mic start (fast release) - aborting start and closing overlay.");
+                var releasedToIdle = false;
+                lock (_sync)
+                {
+                    if (_state == DictationState.Listening && myGeneration == _sessionGeneration)
+                    {
+                        _state = DictationState.Idle;
+                        releasedToIdle = true;
+                    }
+                }
+                if (releasedToIdle)
+                    RaiseStateChanged(DictationState.Idle);
+                await CloseStartupOverlayAsync();
+                return;
+            }
+
             // If using Stream mode, we normally skip audio capture entirely.
             // But when in Cli mode we also record a WAV file so we can run the CLI for final transcription.
             if (_settings.Mode == TranscriptionMode.Stream)
@@ -737,6 +759,49 @@ namespace VoiceType.Core
                 {
                     Logger.Error($"Failed to start audio capture: {ex}");
                 }
+            }
+
+            // Second fast-release guard: the mic is only truly running at this point. A very fast
+            // hotkey tap can have already released (StopSessionAsync completing to Idle) while the
+            // awaits above ran - because the mic had not started yet, that stop had nothing to tear
+            // down and the capture we just started would keep running with the session already gone.
+            // Detect that here (state guard plus the authoritative physical-key check) and stop the
+            // capture/overlay so we don't get stuck listening.
+            if (IsSessionSuperseded(myGeneration) || (isHotkeyStillHeld is not null && !isHotkeyStillHeld()))
+            {
+                Logger.Info("StartSessionAsync: session superseded after mic start (fast release) - stopping capture and closing overlay.");
+                try
+                {
+                    _audioCapture?.Stop();
+                    _audioCapture?.Dispose();
+                    _audioCapture = null;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"Error stopping capture after superseded start: {ex}");
+                }
+
+                try { _streamClient?.Dispose(); } catch { }
+                _streamClient = null;
+
+                // If the state guard didn't already move us past Listening (i.e. only the
+                // physical-key check tripped), return to Idle so the app isn't stuck listening.
+                // Only raise the state change when we actually performed the reset, so we don't
+                // interfere with a concurrent StopSessionAsync finalization.
+                var resetToIdle = false;
+                lock (_sync)
+                {
+                    if (_state == DictationState.Listening && myGeneration == _sessionGeneration)
+                    {
+                        _state = DictationState.Idle;
+                        resetToIdle = true;
+                    }
+                }
+                if (resetToIdle)
+                    RaiseStateChanged(DictationState.Idle);
+
+                await CloseStartupOverlayAsync();
+                return;
             }
 
             await Task.Yield();

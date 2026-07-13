@@ -77,6 +77,10 @@ namespace VoiceType.Infrastructure.Config
         // (Ctrl/Shift/Alt/Win). A future voice-command feature will add its own hotkey setting.
         public string DictationHotkey { get; set; } = "Ctrl+Space";
 
+        // When false, the hold-to-talk dictation hotkey is not registered at startup, letting a
+        // user who prefers toggle mode disable the hold-to-talk input path entirely.
+        public bool DictationHotkeyEnabled { get; set; } = true;
+
         // Convenience views over DictationHotkey for consumers that need the parts separately
         // (e.g. GlobalHotkeyManager). Not serialized - DictationHotkey is the single source of truth.
         [JsonIgnore]
@@ -87,6 +91,10 @@ namespace VoiceType.Infrastructure.Config
         // The toggle-mode hotkey as a single "+"-separated combo, e.g. "Ctrl+Shift+Space". A single
         // tap starts/stops a hands-free (toggle) dictation session. Same format as DictationHotkey.
         public string ToggleHotkey { get; set; } = "Ctrl+Shift+Space";
+
+        // When false, toggle mode is disabled entirely: the toggle hotkey is not registered and
+        // tray single-click toggle is inactive. Lets a user who prefers hold-to-talk turn it off.
+        public bool ToggleModeEnabled { get; set; } = true;
 
         // Convenience views over ToggleHotkey. Not serialized - ToggleHotkey is the source of truth.
         [JsonIgnore]

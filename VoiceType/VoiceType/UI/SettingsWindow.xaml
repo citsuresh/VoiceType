@@ -172,26 +172,31 @@
 
                         <!-- Hold-to-talk -->
                         <GroupBox Header="Hold-to-talk">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                            <StackPanel>
+                                <CheckBox x:Name="DictationHotkeyEnabledCheckBox" Margin="0,6" Content="Enable hold-to-talk hotkey" Checked="DictationHotkeyEnabledCheckBox_CheckedChanged" Unchecked="DictationHotkeyEnabledCheckBox_CheckedChanged" />
+                                <Grid x:Name="HoldToTalkFieldsGrid">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Hotkey" Style="{StaticResource FieldLabel}" />
-                                <TextBox x:Name="HotkeyCaptureTextBox" Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsReadOnlyCaretVisible="False" Cursor="Hand" GotFocus="HotkeyCaptureTextBox_GotFocus" LostFocus="HotkeyCaptureTextBox_LostFocus" PreviewKeyDown="HotkeyCaptureTextBox_PreviewKeyDown" />
-                                <TextBlock x:Name="HotkeyHintText" Grid.Row="1" Grid.Column="1" Foreground="Gray" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Text="Click the box above and press the desired key combination (e.g. Ctrl + Space). Press and hold to dictate; release to stop. Press Esc to cancel." />
-                                <TextBlock x:Name="HotkeyValidationText" Grid.Row="1" Grid.Column="1" Foreground="#C00000" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Visibility="Collapsed" />
-                            </Grid>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Hotkey" Style="{StaticResource FieldLabel}" />
+                                    <TextBox x:Name="HotkeyCaptureTextBox" Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsReadOnlyCaretVisible="False" Cursor="Hand" GotFocus="HotkeyCaptureTextBox_GotFocus" LostFocus="HotkeyCaptureTextBox_LostFocus" PreviewKeyDown="HotkeyCaptureTextBox_PreviewKeyDown" />
+                                    <TextBlock x:Name="HotkeyHintText" Grid.Row="1" Grid.Column="1" Foreground="Gray" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Text="Click the box above and press the desired key combination (e.g. Ctrl + Space). Press and hold to dictate; release to stop. Press Esc to cancel." />
+                                    <TextBlock x:Name="HotkeyValidationText" Grid.Row="1" Grid.Column="1" Foreground="#C00000" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Visibility="Collapsed" />
+                                </Grid>
+                            </StackPanel>
                         </GroupBox>
 
                         <!-- Toggle mode -->
                         <GroupBox Header="Toggle mode">
                             <StackPanel>
+                                <CheckBox x:Name="ToggleModeEnabledCheckBox" Margin="0,6" Content="Enable toggle mode" Checked="ToggleModeEnabledCheckBox_CheckedChanged" Unchecked="ToggleModeEnabledCheckBox_CheckedChanged" />
+                                <StackPanel x:Name="ToggleModeFieldsPanel">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -213,6 +218,7 @@
                                 <StackPanel Orientation="Horizontal" Margin="20,0,0,6">
                                     <TextBlock Text="Idle timeout (seconds)" VerticalAlignment="Center" Margin="0,0,6,0" />
                                     <TextBox x:Name="ToggleIdleAutoStopSecondsTextBox" Width="60" />
+                                </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>

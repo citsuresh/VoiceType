@@ -95,7 +95,9 @@ namespace VoiceType
                 Logger.Info("Hotkey pressed");
                 if (controller.State == DictationState.Idle)
                     _activeListeningMode = ListeningMode.Hotkey;
-                try { await controller.StartSessionAsync(); } catch { }
+                // Pass a physical-key check so the controller can confirm the chord is still held
+                // right before it starts listening; a fast tap that already released is aborted.
+                try { await controller.StartSessionAsync(isHotkeyStillHeld: hotkeyManager.IsHotkeyPhysicallyDown); } catch { }
             };
             hotkeyManager.HotkeyReleased += async (s, ev) =>
             {
@@ -106,6 +108,9 @@ namespace VoiceType
             hotkeyManager.Start();
             Resources["HotkeyManager"] = hotkeyManager;
             _hotkeyManager = hotkeyManager;
+            // Hold-to-talk can be disabled entirely in Settings; start the hook only when enabled.
+            if (!settings.DictationHotkeyEnabled)
+                hotkeyManager.Stop();
 
             // Toggle-mode hotkey: a single tap toggles a hands-free session (same as clicking the
             // tray icon). Ignored while a hold-to-talk session is active so the two paths never fight.
@@ -120,6 +125,9 @@ namespace VoiceType
             toggleHotkeyManager.Start();
             Resources["ToggleHotkeyManager"] = toggleHotkeyManager;
             _toggleHotkeyManager = toggleHotkeyManager;
+            // Toggle mode can be disabled entirely in Settings; start the hook only when enabled.
+            if (!settings.ToggleModeEnabled)
+                toggleHotkeyManager.Stop();
 
             // Tray icon is the sole control center for this windowless app.
             _trayIcon = new TrayIconManager(
@@ -158,6 +166,11 @@ namespace VoiceType
                 {
                     if (controller.State == DictationState.Idle)
                     {
+                        // Toggle mode can be disabled entirely in Settings; don't start a
+                        // hands-free session from the tray when it's turned off.
+                        if (!settings.ToggleModeEnabled)
+                            return;
+
                         _activeListeningMode = ListeningMode.Toggle;
 
                         // Clicking the tray icon moves foreground to the shell, so pass the last
@@ -250,6 +263,22 @@ namespace VoiceType
             {
                 _hotkeyManager?.UpdateHotkey();
                 _toggleHotkeyManager?.UpdateHotkey();
+
+                // Honor the enable flags: install or remove each hook to match the current setting.
+                if (_hotkeyManager is not null)
+                {
+                    _hotkeyManager.Stop();
+                    if (_settings?.DictationHotkeyEnabled == true)
+                        _hotkeyManager.Start();
+                }
+
+                if (_toggleHotkeyManager is not null)
+                {
+                    _toggleHotkeyManager.Stop();
+                    if (_settings?.ToggleModeEnabled == true)
+                        _toggleHotkeyManager.Start();
+                }
+
                 Logger.Info("App: hotkey re-registered from settings.");
             }
             catch (Exception ex)

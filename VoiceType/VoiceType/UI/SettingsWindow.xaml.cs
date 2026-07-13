@@ -110,10 +110,16 @@ namespace VoiceType.UI
             _capturedKey = _settings.HotkeyKey ?? string.Empty;
             UpdateHotkeyDisplay();
 
+            DictationHotkeyEnabledCheckBox.IsChecked = _settings.DictationHotkeyEnabled;
+            UpdateHoldToTalkFieldsEnabled();
+
             // Toggle-mode hotkey.
             _capturedToggleModifiers = _settings.ToggleHotkeyModifiers ?? string.Empty;
             _capturedToggleKey = _settings.ToggleHotkeyKey ?? string.Empty;
             UpdateToggleHotkeyDisplay();
+
+            ToggleModeEnabledCheckBox.IsChecked = _settings.ToggleModeEnabled;
+            UpdateToggleModeFieldsEnabled();
 
             // General fields.
             LanguageTextBox.Text = _settings.Language ?? string.Empty;
@@ -442,6 +448,20 @@ namespace VoiceType.UI
             HotkeyHintText.Visibility = Visibility.Visible;
         }
 
+        private void DictationHotkeyEnabledCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+            => UpdateHoldToTalkFieldsEnabled();
+
+        private void ToggleModeEnabledCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+            => UpdateToggleModeFieldsEnabled();
+
+        // Grey out the hold-to-talk hotkey fields when the feature is disabled.
+        private void UpdateHoldToTalkFieldsEnabled()
+            => HoldToTalkFieldsGrid.IsEnabled = DictationHotkeyEnabledCheckBox.IsChecked == true;
+
+        // Grey out the toggle-mode fields (hotkey, tray toggle, idle auto-stop) when disabled.
+        private void UpdateToggleModeFieldsEnabled()
+            => ToggleModeFieldsPanel.IsEnabled = ToggleModeEnabledCheckBox.IsChecked == true;
+
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Validate numeric fields before mutating settings so a bad value can't be persisted.
@@ -470,6 +490,8 @@ namespace VoiceType.UI
             var previousMode = _settings.Mode;
             var previousHotkey = _settings.DictationHotkey ?? string.Empty;
             var previousToggleHotkey = _settings.ToggleHotkey ?? string.Empty;
+            var previousHotkeyEnabled = _settings.DictationHotkeyEnabled;
+            var previousToggleModeEnabled = _settings.ToggleModeEnabled;
             var previousMic = _settings.MicrophoneDeviceIndex;
 
             // Snapshot server-launch fields so we can detect whether a restart is needed.
@@ -486,6 +508,8 @@ namespace VoiceType.UI
                 _settings.Mode = mode;
             _settings.DictationHotkey = VoiceTypeSettings.CombineHotkey(_capturedModifiers, _capturedKey);
             _settings.ToggleHotkey = VoiceTypeSettings.CombineHotkey(_capturedToggleModifiers, _capturedToggleKey);
+            _settings.DictationHotkeyEnabled = DictationHotkeyEnabledCheckBox.IsChecked == true;
+            _settings.ToggleModeEnabled = ToggleModeEnabledCheckBox.IsChecked == true;
 
             // General fields.
             _settings.Language = LanguageTextBox.Text?.Trim() ?? string.Empty;
@@ -534,6 +558,8 @@ namespace VoiceType.UI
             var modeChanged = previousMode != _settings.Mode;
             var hotkeyChanged = !string.Equals(previousHotkey, _settings.DictationHotkey, StringComparison.OrdinalIgnoreCase);
             var toggleHotkeyChanged = !string.Equals(previousToggleHotkey, _settings.ToggleHotkey, StringComparison.OrdinalIgnoreCase);
+            var hotkeyEnabledChanged = previousHotkeyEnabled != _settings.DictationHotkeyEnabled ||
+                previousToggleModeEnabled != _settings.ToggleModeEnabled;
             var serverLaunchChanged =
                 !string.Equals(previousServerExe, _settings.WhisperServerExecutablePath, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(previousServerHost, _settings.WhisperServerHost, StringComparison.OrdinalIgnoreCase) ||
@@ -562,7 +588,7 @@ namespace VoiceType.UI
             }
 
             // Hotkey change: re-register the global hotkey immediately.
-            if (hotkeyChanged || toggleHotkeyChanged)
+            if (hotkeyChanged || toggleHotkeyChanged || hotkeyEnabledChanged)
                 app?.ReapplyHotkey();
 
             // Mic change: the controller recreates its AudioCaptureService for the newly selected

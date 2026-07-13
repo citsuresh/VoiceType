@@ -216,6 +216,18 @@ namespace VoiceType.Infrastructure.Hotkeys
                 && winDown == wantWin;
         }
 
+        /// <summary>
+        /// Returns true when the full hotkey chord (target key plus the exact configured
+        /// modifiers) is physically held down right now. Used by the hold-to-talk start path to
+        /// confirm the keys are still pressed before it begins listening, so a very fast tap that
+        /// released during async startup does not leave a stuck session.
+        /// </summary>
+        public bool IsHotkeyPhysicallyDown()
+        {
+            bool targetDown = (NativeMethods.GetAsyncKeyState(_targetVk) & 0x8000) != 0;
+            return targetDown && ModifiersMatch();
+        }
+
         public void Dispose()
         {
             if (_isDisposed) return;
