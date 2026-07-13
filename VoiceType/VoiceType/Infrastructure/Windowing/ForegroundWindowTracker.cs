@@ -22,6 +22,29 @@ namespace VoiceType.Infrastructure.Windowing
 
         public IntPtr CapturedHandle => _capturedHwnd;
 
+        // Seeds the tracker from a previously observed window handle instead of the live
+        // GetForegroundWindow() result. Used for tray-toggle dictation, where clicking the tray
+        // icon makes the shell/taskbar the foreground window, so the live value would be wrong.
+        // Falls back to live capture when the supplied handle is not a valid window.
+        public void CaptureFromHandle(IntPtr hwnd, IntPtr focusHwnd = default)
+        {
+            if (hwnd == IntPtr.Zero || !Native.IsWindow(hwnd))
+            {
+                Logger.Info("CaptureFromHandle: supplied handle invalid; falling back to live foreground capture.");
+                CaptureForegroundWindow();
+                return;
+            }
+
+            _capturedHwnd = hwnd;
+            _capturedFocusHwnd = focusHwnd != IntPtr.Zero && Native.IsWindow(focusHwnd)
+                ? focusHwnd
+                : TryGetFocusedControl(hwnd);
+            Logger.Info($"Captured foreground window from cached handle: {DescribeWindow(_capturedHwnd)}; focused control: {DescribeWindow(_capturedFocusHwnd)}");
+        }
+
+        // The control that had keyboard focus in the captured window (updated after restore).
+        public IntPtr CapturedFocusHandle => _capturedFocusHwnd;
+
         // Returns the handle of the control that currently has keyboard focus within the
         // given top-level window's thread. Works across processes via GetGUIThreadInfo.
         private static IntPtr TryGetFocusedControl(IntPtr hwnd)

@@ -36,6 +36,13 @@ namespace VoiceType.UI
         private string _preCaptureModifiers = string.Empty;
         private string _preCaptureKey = string.Empty;
 
+        // Pending toggle-mode hotkey captured via its own press-to-capture box, in the same
+        // normalised string form (modifiers joined by '+', key = a Key name).
+        private string _capturedToggleModifiers = string.Empty;
+        private string _capturedToggleKey = string.Empty;
+        private string _preCaptureToggleModifiers = string.Empty;
+        private string _preCaptureToggleKey = string.Empty;
+
         private sealed record ModelItem(string Path, string DisplayName);
         private sealed record MicItem(int Index, string Name);
 
@@ -103,6 +110,11 @@ namespace VoiceType.UI
             _capturedKey = _settings.HotkeyKey ?? string.Empty;
             UpdateHotkeyDisplay();
 
+            // Toggle-mode hotkey.
+            _capturedToggleModifiers = _settings.ToggleHotkeyModifiers ?? string.Empty;
+            _capturedToggleKey = _settings.ToggleHotkeyKey ?? string.Empty;
+            UpdateToggleHotkeyDisplay();
+
             // General fields.
             LanguageTextBox.Text = _settings.Language ?? string.Empty;
 
@@ -114,6 +126,13 @@ namespace VoiceType.UI
             TempDirectoryTextBox.Text = _settings.TempDirectory ?? string.Empty;
             PreviewChunkTextBox.Text = _settings.PreviewChunkMilliseconds.ToString(CultureInfo.InvariantCulture);
             PreviewThrottleTextBox.Text = _settings.PreviewThrottleMilliseconds.ToString(CultureInfo.InvariantCulture);
+
+            UseTrayIconToggleCheckBox.IsChecked = _settings.UseTrayIconToggle;
+            ToggleIdleAutoStopCheckBox.IsChecked = _settings.ToggleIdleAutoStopEnabled;
+            ToggleIdleAutoStopSecondsTextBox.Text = _settings.ToggleIdleAutoStopSeconds.ToString(CultureInfo.InvariantCulture);
+
+            CopyToClipboardWhenNoEditableCheckBox.IsChecked = _settings.CopyToClipboardWhenNoEditable;
+            ShowClipboardCopyNotificationCheckBox.IsChecked = _settings.ShowClipboardCopyNotification;
 
             // Server fields.
             ServerExecutableTextBox.Text = _settings.WhisperServerExecutablePath ?? string.Empty;
@@ -180,6 +199,136 @@ namespace VoiceType.UI
         private void HotkeyCaptureTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             UpdateHotkeyDisplay();
+        }
+
+        /// <summary>
+        /// Renders the currently captured toggle-mode hotkey combo into its read-only capture box.
+        /// </summary>
+        private void UpdateToggleHotkeyDisplay()
+        {
+            string combo;
+            if (string.IsNullOrWhiteSpace(_capturedToggleModifiers))
+            {
+                combo = _capturedToggleKey;
+            }
+            else
+            {
+                var mods = string.Join(" + ", _capturedToggleModifiers.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+                combo = string.IsNullOrWhiteSpace(_capturedToggleKey) ? mods : $"{mods} + {_capturedToggleKey}";
+            }
+
+            ToggleHotkeyCaptureTextBox.Text = string.IsNullOrWhiteSpace(combo) ? "(none)" : combo;
+        }
+
+        private void ToggleHotkeyCaptureTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            _preCaptureToggleModifiers = _capturedToggleModifiers;
+            _preCaptureToggleKey = _capturedToggleKey;
+            ClearToggleHotkeyValidation();
+            ToggleHotkeyCaptureTextBox.Text = "Press a key combination...";
+        }
+
+        private void ToggleHotkeyCaptureTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            UpdateToggleHotkeyDisplay();
+        }
+
+        /// <summary>
+        /// Captures the pressed key combination for the toggle-mode hotkey, mirroring the
+        /// dictation capture logic in <see cref="HotkeyCaptureTextBox_PreviewKeyDown"/>.
+        /// </summary>
+        private void ToggleHotkeyCaptureTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            var key = e.Key == Key.System ? e.SystemKey : e.Key;
+
+            if (key is Key.Tab)
+                return;
+
+            e.Handled = true;
+
+            if (key == Key.Escape)
+            {
+                _capturedToggleModifiers = _preCaptureToggleModifiers;
+                _capturedToggleKey = _preCaptureToggleKey;
+                ClearToggleHotkeyValidation();
+                UpdateToggleHotkeyDisplay();
+                Keyboard.ClearFocus();
+                return;
+            }
+
+            bool keyIsCtrl = key is Key.LeftCtrl or Key.RightCtrl;
+            bool keyIsAlt = key is Key.LeftAlt or Key.RightAlt;
+            bool keyIsShift = key is Key.LeftShift or Key.RightShift;
+            bool keyIsWin = key is Key.LWin or Key.RWin;
+            bool keyIsModifier = keyIsCtrl || keyIsAlt || keyIsShift || keyIsWin;
+
+            var mods = new List<string>();
+            var held = Keyboard.Modifiers;
+            if (held.HasFlag(ModifierKeys.Control) && !keyIsCtrl) mods.Add("Ctrl");
+            if (held.HasFlag(ModifierKeys.Shift) && !keyIsShift) mods.Add("Shift");
+            if (held.HasFlag(ModifierKeys.Alt) && !keyIsAlt) mods.Add("Alt");
+            if (held.HasFlag(ModifierKeys.Windows) && !keyIsWin) mods.Add("Win");
+
+            if (keyIsModifier)
+            {
+                var pressed = keyIsCtrl ? "Ctrl" : keyIsAlt ? "Alt" : keyIsShift ? "Shift" : "Win";
+                var running = new List<string>(mods) { pressed };
+                ToggleHotkeyCaptureTextBox.Text = string.Join(" + ", running) + " + ...";
+                return;
+            }
+
+            _capturedToggleModifiers = string.Join("+", mods);
+            _capturedToggleKey = key.ToString();
+            ClearToggleHotkeyValidation();
+
+            ToggleHotkeyCaptureTextBox.Text = mods.Count > 0
+                ? string.Join(" + ", mods) + " + " + _capturedToggleKey
+                : _capturedToggleKey;
+        }
+
+        /// <summary>
+        /// Validates the captured toggle-mode hotkey combo, mirroring <see cref="ValidateCapturedHotkey"/>.
+        /// </summary>
+        private bool ValidateCapturedToggleHotkey()
+        {
+            if (string.IsNullOrWhiteSpace(_capturedToggleKey))
+            {
+                ShowToggleHotkeyValidation("Press a main key (e.g. a letter or F-key) in addition to any modifiers.");
+                return false;
+            }
+
+            if (_capturedToggleKey is "LeftCtrl" or "RightCtrl" or "LeftAlt" or "RightAlt"
+                or "LeftShift" or "RightShift" or "LWin" or "RWin")
+            {
+                if (string.IsNullOrWhiteSpace(_capturedToggleModifiers))
+                {
+                    ShowToggleHotkeyValidation("A modifier alone is not a valid hotkey; add a main key.");
+                    return false;
+                }
+            }
+
+            if (!Enum.TryParse<Key>(_capturedToggleKey, out _))
+            {
+                ShowToggleHotkeyValidation("The captured key is not recognised; try a different combination.");
+                return false;
+            }
+
+            ClearToggleHotkeyValidation();
+            return true;
+        }
+
+        private void ShowToggleHotkeyValidation(string message)
+        {
+            ToggleHotkeyValidationText.Text = message;
+            ToggleHotkeyValidationText.Visibility = Visibility.Visible;
+            ToggleHotkeyHintText.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClearToggleHotkeyValidation()
+        {
+            ToggleHotkeyValidationText.Visibility = Visibility.Collapsed;
+            ToggleHotkeyValidationText.Text = string.Empty;
+            ToggleHotkeyHintText.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -260,8 +409,13 @@ namespace VoiceType.UI
             if (_capturedKey is "LeftCtrl" or "RightCtrl" or "LeftAlt" or "RightAlt"
                 or "LeftShift" or "RightShift" or "LWin" or "RWin")
             {
-                ShowHotkeyValidation("A modifier alone is not a valid hotkey; add a main key.");
-                return false;
+                // A modifier as the "main key" is only valid as part of a multi-key combo
+                // (e.g. Ctrl+LeftAlt for push-to-talk); a lone modifier is not a hotkey.
+                if (string.IsNullOrWhiteSpace(_capturedModifiers))
+                {
+                    ShowHotkeyValidation("A modifier alone is not a valid hotkey; add a main key.");
+                    return false;
+                }
             }
 
             if (!Enum.TryParse<Key>(_capturedKey, out _))
@@ -293,6 +447,7 @@ namespace VoiceType.UI
             // Validate numeric fields before mutating settings so a bad value can't be persisted.
             if (!TryParsePositiveInt(PreviewChunkTextBox.Text, "Preview chunk (ms)", out var previewChunk) ||
                 !TryParsePositiveInt(PreviewThrottleTextBox.Text, "Preview throttle (ms)", out var previewThrottle) ||
+                !TryParsePositiveInt(ToggleIdleAutoStopSecondsTextBox.Text, "Idle timeout (seconds)", out var idleSeconds) ||
                 !TryParsePositiveInt(ServerTimeoutTextBox.Text, "Server timeout (s)", out var serverTimeout) ||
                 !TryParsePort(ServerPortTextBox.Text, out var serverPort))
             {
@@ -305,9 +460,16 @@ namespace VoiceType.UI
                 return;
             }
 
+            // Reject an invalid toggle-mode hotkey before saving.
+            if (!ValidateCapturedToggleHotkey())
+            {
+                return;
+            }
+
             var previousModel = _settings.WhisperModelPath;
             var previousMode = _settings.Mode;
             var previousHotkey = _settings.DictationHotkey ?? string.Empty;
+            var previousToggleHotkey = _settings.ToggleHotkey ?? string.Empty;
             var previousMic = _settings.MicrophoneDeviceIndex;
 
             // Snapshot server-launch fields so we can detect whether a restart is needed.
@@ -323,6 +485,7 @@ namespace VoiceType.UI
             if (ModeComboBox.SelectedItem is TranscriptionMode mode)
                 _settings.Mode = mode;
             _settings.DictationHotkey = VoiceTypeSettings.CombineHotkey(_capturedModifiers, _capturedKey);
+            _settings.ToggleHotkey = VoiceTypeSettings.CombineHotkey(_capturedToggleModifiers, _capturedToggleKey);
 
             // General fields.
             _settings.Language = LanguageTextBox.Text?.Trim() ?? string.Empty;
@@ -331,6 +494,14 @@ namespace VoiceType.UI
             _settings.TempDirectory = TempDirectoryTextBox.Text?.Trim() ?? string.Empty;
             _settings.PreviewChunkMilliseconds = previewChunk;
             _settings.PreviewThrottleMilliseconds = previewThrottle;
+
+            // Tray toggle mode fields.
+            _settings.UseTrayIconToggle = UseTrayIconToggleCheckBox.IsChecked == true;
+            _settings.ToggleIdleAutoStopEnabled = ToggleIdleAutoStopCheckBox.IsChecked == true;
+            _settings.ToggleIdleAutoStopSeconds = idleSeconds;
+
+            _settings.CopyToClipboardWhenNoEditable = CopyToClipboardWhenNoEditableCheckBox.IsChecked == true;
+            _settings.ShowClipboardCopyNotification = ShowClipboardCopyNotificationCheckBox.IsChecked == true;
 
             // Server fields.
             _settings.WhisperServerExecutablePath = ServerExecutableTextBox.Text?.Trim() ?? string.Empty;
@@ -362,6 +533,7 @@ namespace VoiceType.UI
             var modelChanged = !string.Equals(previousModel, _settings.WhisperModelPath, StringComparison.OrdinalIgnoreCase);
             var modeChanged = previousMode != _settings.Mode;
             var hotkeyChanged = !string.Equals(previousHotkey, _settings.DictationHotkey, StringComparison.OrdinalIgnoreCase);
+            var toggleHotkeyChanged = !string.Equals(previousToggleHotkey, _settings.ToggleHotkey, StringComparison.OrdinalIgnoreCase);
             var serverLaunchChanged =
                 !string.Equals(previousServerExe, _settings.WhisperServerExecutablePath, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(previousServerHost, _settings.WhisperServerHost, StringComparison.OrdinalIgnoreCase) ||
@@ -390,7 +562,7 @@ namespace VoiceType.UI
             }
 
             // Hotkey change: re-register the global hotkey immediately.
-            if (hotkeyChanged)
+            if (hotkeyChanged || toggleHotkeyChanged)
                 app?.ReapplyHotkey();
 
             // Mic change: the controller recreates its AudioCaptureService for the newly selected
@@ -403,6 +575,9 @@ namespace VoiceType.UI
                 app?.ShowNote("Microphone change will apply on the next dictation session.");
 
             controller?.RefreshModelName();
+
+            // Reflect the (possibly changed) tray-toggle setting on the tray context menu.
+            app?.SyncTrayToggleMode(_settings.UseTrayIconToggle);
 
             Close();
         }

@@ -24,6 +24,87 @@ namespace VoiceType.Core
         private readonly object _sync = new object();
 
         /// <summary>
+        /// Raised whenever the dictation state changes (e.g. Idle -> Listening -> Finalizing ->
+        /// Idle). Fired outside the internal lock. Handlers must be thread-safe / marshal to the
+        /// UI thread themselves. Used by the tray icon to reflect recording state.
+        /// </summary>
+        public event Action<DictationState>? StateChanged;
+
+        private void RaiseStateChanged(DictationState state)
+        {
+            try
+            {
+                StateChanged?.Invoke(state);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"StateChanged handler failed: {ex}");
+            }
+        }
+
+        // Idle auto-stop (used only by tray-toggle sessions). When armed, a lightweight timer
+        // stops the session after the mic stays below the silence threshold for the configured
+        // number of seconds. A short warm-up grace avoids stopping before the user starts talking.
+        private System.Threading.Timer? _idleMonitorTimer;
+        private volatile bool _idleAutoStopArmed;
+        private long _lastVoiceActivityTicks;
+        private int _idleAutoStopSeconds = 5;
+        private DateTime _idleArmTimeUtc;
+        private const double IdleSilenceThreshold = 0.02; // normalized level (0..1) below = idle
+        private const double IdleWarmupSeconds = 1.5;
+
+        /// <summary>
+        /// Arms idle auto-stop for the current/next session. Safe to call from any thread.
+        /// </summary>
+        public void ArmIdleAutoStop(int idleSeconds)
+        {
+            _idleAutoStopSeconds = Math.Max(1, idleSeconds);
+            _idleArmTimeUtc = DateTime.UtcNow;
+            Interlocked.Exchange(ref _lastVoiceActivityTicks, DateTime.UtcNow.Ticks);
+            _idleAutoStopArmed = true;
+            _idleMonitorTimer ??= new System.Threading.Timer(IdleMonitorTick, null, 500, 500);
+            Logger.Info($"Idle auto-stop armed: {_idleAutoStopSeconds}s");
+        }
+
+        /// <summary>
+        /// Disarms idle auto-stop and disposes the monitor timer. Safe to call from any thread.
+        /// </summary>
+        public void DisarmIdleAutoStop()
+        {
+            if (!_idleAutoStopArmed && _idleMonitorTimer is null) return;
+            _idleAutoStopArmed = false;
+            try { _idleMonitorTimer?.Dispose(); } catch { }
+            _idleMonitorTimer = null;
+        }
+
+        // Records mic activity from the audio-level signal; resets the idle timer when the level
+        // exceeds the silence threshold.
+        private void NoteAudioActivity(double level)
+        {
+            if (!_idleAutoStopArmed) return;
+            if (level >= IdleSilenceThreshold)
+                Interlocked.Exchange(ref _lastVoiceActivityTicks, DateTime.UtcNow.Ticks);
+        }
+
+        private void IdleMonitorTick(object? state)
+        {
+            if (!_idleAutoStopArmed) return;
+            if (_state != DictationState.Listening && _state != DictationState.Previewing) return;
+            if ((DateTime.UtcNow - _idleArmTimeUtc).TotalSeconds < IdleWarmupSeconds) return;
+
+            var lastActivity = new DateTime(Interlocked.Read(ref _lastVoiceActivityTicks), DateTimeKind.Utc);
+            if ((DateTime.UtcNow - lastActivity).TotalSeconds < _idleAutoStopSeconds) return;
+
+            Logger.Info("Idle auto-stop: mic idle threshold reached, stopping session.");
+            _idleAutoStopArmed = false;
+            _ = Task.Run(async () =>
+            {
+                try { await StopSessionAsync().ConfigureAwait(false); }
+                catch (Exception ex) { Logger.Error($"Idle auto-stop StopSessionAsync failed: {ex}"); }
+            });
+        }
+
+        /// <summary>
         /// Computes the display model name (file name without extension) from the current settings.
         /// </summary>
         private string CurrentModelDisplayName =>
@@ -185,6 +266,8 @@ namespace VoiceType.Core
             {
                 try
                 {
+                    NoteAudioActivity(level);
+
                     var vm = _overlayViewModel;
                     if (vm != null)
                     {
@@ -381,7 +464,7 @@ namespace VoiceType.Core
             return await transcriber.TranscribeAsync(wavPath);
         }
 
-        public async Task StartSessionAsync(CancellationToken ct = default)
+        public async Task StartSessionAsync(CancellationToken ct = default, IntPtr preferredForegroundHwnd = default, IntPtr preferredFocusHwnd = default)
         {
             var starting = false;
 
@@ -408,6 +491,8 @@ namespace VoiceType.Core
 
             Logger.Info("Starting dictation session: capturing foreground window, showing overlay and preparing audio");
 
+            RaiseStateChanged(DictationState.Listening);
+
             // Reset the mic-live flag so the pill starts in the "Starting mic" preparing state
             // and only switches to the listening bars once the first audio buffer arrives.
             Interlocked.Exchange(ref _micLive, 0);
@@ -423,7 +508,16 @@ namespace VoiceType.Core
             try
             {
                 var tracker = new Infrastructure.Windowing.ForegroundWindowTracker();
-                tracker.CaptureForegroundWindow();
+                if (preferredForegroundHwnd != IntPtr.Zero)
+                {
+                    // Tray-toggle path: the live foreground is the shell/taskbar, so use the last
+                    // real foreground window captured by the foreground monitor instead.
+                    tracker.CaptureFromHandle(preferredForegroundHwnd, preferredFocusHwnd);
+                }
+                else
+                {
+                    tracker.CaptureForegroundWindow();
+                }
                 // store on resources for use during final commit
                 Application.Current.Resources["ForegroundTracker"] = tracker;
             }
@@ -630,6 +724,9 @@ namespace VoiceType.Core
 
             Logger.Info("Stopping dictation session: running finalization (placeholder)");
 
+            DisarmIdleAutoStop();
+            RaiseStateChanged(DictationState.Finalizing);
+
             // Update overlay status to Processing...
             if (_overlayViewModel != null)
             {
@@ -834,6 +931,8 @@ namespace VoiceType.Core
 
             Logger.Info("Dictation session ended and state set to Idle.");
 
+            RaiseStateChanged(DictationState.Idle);
+
             if (startPending)
             {
                 Logger.Info("Processing queued start request after finalization.");
@@ -917,6 +1016,29 @@ namespace VoiceType.Core
 
             if (focusRestored)
             {
+                // Gate insertion on whether the restored target actually accepts text. Pasting or
+                // typing into a non-editable surface would silently lose the transcript, so when no
+                // editable control is focused we fall back to leaving it on the clipboard.
+                if (_settings.CopyToClipboardWhenNoEditable
+                    && !Infrastructure.Windowing.FocusedControlInspector.IsEditableControlFocused())
+                {
+                    Logger.Info("InsertTextOrNotifyAsync: no editable control focused; leaving transcript on clipboard.");
+                    try
+                    {
+                        await Infrastructure.Input.ClipboardHelper.SetTextAsync(text);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error($"Failed to copy text to clipboard for fallback: {ex}");
+                    }
+
+                    if (_settings.ShowClipboardCopyNotification)
+                    {
+                        ShowClipboardFallbackNotification(text);
+                    }
+                    return;
+                }
+
                 var injector = CreateInputInjector();
                 try
                 {
@@ -990,6 +1112,8 @@ namespace VoiceType.Core
 
         public void Dispose()
         {
+            DisarmIdleAutoStop();
+
             try
             {
                 Application.Current?.Dispatcher.Invoke(() =>

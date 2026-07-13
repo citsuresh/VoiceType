@@ -92,6 +92,42 @@
                     </Grid>
                 </GroupBox>
 
+                <!-- Toggle mode -->
+                <GroupBox Header="Toggle mode">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Toggle hotkey" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="ToggleHotkeyCaptureTextBox" Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsReadOnlyCaretVisible="False" Cursor="Hand" GotFocus="ToggleHotkeyCaptureTextBox_GotFocus" LostFocus="ToggleHotkeyCaptureTextBox_LostFocus" PreviewKeyDown="ToggleHotkeyCaptureTextBox_PreviewKeyDown" />
+                            <TextBlock x:Name="ToggleHotkeyHintText" Grid.Row="1" Grid.Column="1" Foreground="Gray" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Text="Click the box above and press the desired key combination (e.g. Ctrl + Shift + Space). A single tap starts/stops hands-free dictation. Press Esc to cancel." />
+                            <TextBlock x:Name="ToggleHotkeyValidationText" Grid.Row="1" Grid.Column="1" Foreground="#C00000" FontSize="11" Margin="0,0,0,6" TextWrapping="Wrap" Visibility="Collapsed" />
+                        </Grid>
+
+                        <CheckBox x:Name="UseTrayIconToggleCheckBox" Margin="0,6" Content="Use tray icon for toggle mode (single-click starts/stops; double-click opens Settings)" />
+                        <CheckBox x:Name="ToggleIdleAutoStopCheckBox" Margin="0,6" Content="Automatically stop listening when the mic is idle" />
+                        <StackPanel Orientation="Horizontal" Margin="20,0,0,6">
+                            <TextBlock Text="Idle timeout (seconds)" VerticalAlignment="Center" Margin="0,0,6,0" />
+                            <TextBox x:Name="ToggleIdleAutoStopSecondsTextBox" Width="60" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Text insertion fallback -->
+                <GroupBox Header="Text insertion">
+                    <StackPanel>
+                        <CheckBox x:Name="CopyToClipboardWhenNoEditableCheckBox" Margin="0,6" Content="Copy to clipboard when no editable field is focused (instead of typing/pasting)" />
+                        <CheckBox x:Name="ShowClipboardCopyNotificationCheckBox" Margin="20,0,0,6" Content="Show a notification when the transcript is copied to the clipboard" />
+                    </StackPanel>
+                </GroupBox>
+
                 <!-- Server mode -->
                 <GroupBox x:Name="ServerGroupBox" Header="Server mode">
                     <Grid>

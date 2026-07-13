@@ -24,6 +24,16 @@ namespace VoiceType
         private DictationSessionController? _controller;
         private Infrastructure.Whisper.WhisperServerClient? _serverClient;
         private GlobalHotkeyManager? _hotkeyManager;
+        private GlobalHotkeyManager? _toggleHotkeyManager;
+
+        // Tracks the last real foreground window (excluding our own process and the shell) so
+        // tray-toggle dictation can restore the window the user was actually working in, even
+        // though clicking the tray icon momentarily moves foreground to the shell/taskbar.
+        private Infrastructure.Windowing.ForegroundWindowMonitor? _foregroundMonitor;
+
+        // Which input path started the current session, so the tray icon can show a mode-specific
+        // recording indicator. Set when a session starts; reset to None when it returns to Idle.
+        private ListeningMode _activeListeningMode = ListeningMode.None;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -54,6 +64,12 @@ namespace VoiceType
             _settings = settings;
             _controller = controller;
 
+            // Start the foreground-window monitor on the UI thread (it needs a message pump) so we
+            // always know the user's last real target window for tray-toggle dictation.
+            _foregroundMonitor = new Infrastructure.Windowing.ForegroundWindowMonitor();
+            _foregroundMonitor.Start();
+            Resources["ForegroundMonitor"] = _foregroundMonitor;
+
             try
             {
                 var probe = new Infrastructure.Whisper.WhisperProcessRunner(settings).ProbePaths();
@@ -77,6 +93,8 @@ namespace VoiceType
             hotkeyManager.HotkeyPressed += async (s, ev) =>
             {
                 Logger.Info("Hotkey pressed");
+                if (controller.State == DictationState.Idle)
+                    _activeListeningMode = ListeningMode.Hotkey;
                 try { await controller.StartSessionAsync(); } catch { }
             };
             hotkeyManager.HotkeyReleased += async (s, ev) =>
@@ -89,13 +107,93 @@ namespace VoiceType
             Resources["HotkeyManager"] = hotkeyManager;
             _hotkeyManager = hotkeyManager;
 
+            // Toggle-mode hotkey: a single tap toggles a hands-free session (same as clicking the
+            // tray icon). Ignored while a hold-to-talk session is active so the two paths never fight.
+            var toggleHotkeyManager = new GlobalHotkeyManager(settings, HotkeyKind.Toggle);
+            toggleHotkeyManager.HotkeyPressed += (s, ev) =>
+            {
+                Logger.Info("Toggle hotkey pressed");
+                if (_activeListeningMode == ListeningMode.Hotkey)
+                    return;
+                ToggleDictationFromTray();
+            };
+            toggleHotkeyManager.Start();
+            Resources["ToggleHotkeyManager"] = toggleHotkeyManager;
+            _toggleHotkeyManager = toggleHotkeyManager;
+
             // Tray icon is the sole control center for this windowless app.
             _trayIcon = new TrayIconManager(
                 onOpenSettings: () => SettingsWindow.ShowSingleInstance(),
                 onExit: () => Shutdown(),
                 getModels: () => new Infrastructure.Whisper.WhisperProcessRunner(settings).EnumerateModels(),
                 getActiveModel: () => settings.WhisperModelPath,
-                onModelSelected: SwitchModelAsync);
+                onModelSelected: SwitchModelAsync,
+                onToggleDictation: ToggleDictationFromTray,
+                onToggleModeChanged: OnTrayToggleModeChanged,
+                toggleModeEnabled: settings.UseTrayIconToggle);
+
+            // Reflect dictation state on the tray icon (mode-specific recording indicator) and
+            // drive idle auto-stop only for tray-toggle sessions.
+            controller.StateChanged += state =>
+            {
+                var listening = state == DictationState.Listening || state == DictationState.Previewing;
+                if (!listening)
+                    _activeListeningMode = ListeningMode.None;
+
+                _trayIcon?.SetListeningState(listening ? _activeListeningMode : ListeningMode.None);
+            };
+        }
+
+        // Tray single-click handler: toggles a hands-free dictation session. When starting via the
+        // tray (not the hold-to-talk hotkey), optionally arm idle auto-stop from settings.
+        private void ToggleDictationFromTray()
+        {
+            var controller = _controller;
+            var settings = _settings;
+            if (controller is null || settings is null) return;
+
+            _ = System.Threading.Tasks.Task.Run(async () =>
+            {
+                try
+                {
+                    if (controller.State == DictationState.Idle)
+                    {
+                        _activeListeningMode = ListeningMode.Toggle;
+
+                        // Clicking the tray icon moves foreground to the shell, so pass the last
+                        // real foreground window (and its focused control) captured by the monitor.
+                        var preferredHwnd = _foregroundMonitor?.LastForegroundHandle ?? IntPtr.Zero;
+                        var preferredFocus = _foregroundMonitor?.LastFocusHandle ?? IntPtr.Zero;
+
+                        if (settings.ToggleIdleAutoStopEnabled)
+                            controller.ArmIdleAutoStop(settings.ToggleIdleAutoStopSeconds);
+
+                        await controller.StartSessionAsync(preferredForegroundHwnd: preferredHwnd, preferredFocusHwnd: preferredFocus).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await controller.StopSessionAsync().ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"App: tray toggle dictation failed: {ex}");
+                }
+            });
+        }
+
+        // Persists the tray context-menu "Toggle mode" checkbox change to settings.
+        private void OnTrayToggleModeChanged(bool enabled)
+        {
+            var settings = _settings;
+            if (settings is null || settings.UseTrayIconToggle == enabled) return;
+
+            settings.UseTrayIconToggle = enabled;
+            _ = System.Threading.Tasks.Task.Run(async () =>
+            {
+                try { await SettingsLoader.SaveAsync(settings).ConfigureAwait(false); }
+                catch (Exception ex) { Logger.Error($"App: failed to persist tray toggle mode: {ex}"); }
+            });
         }
 
         // Applies a runtime model switch: mutates the shared settings, persists to appsettings.json,
@@ -151,6 +249,7 @@ namespace VoiceType
             try
             {
                 _hotkeyManager?.UpdateHotkey();
+                _toggleHotkeyManager?.UpdateHotkey();
                 Logger.Info("App: hotkey re-registered from settings.");
             }
             catch (Exception ex)
@@ -169,6 +268,15 @@ namespace VoiceType
         public void ShowNote(string text)
         {
             _trayIcon?.ShowBalloon("VoiceType", text, System.Windows.Forms.ToolTipIcon.Info);
+        }
+
+        /// <summary>
+        /// Updates the tray context-menu "Toggle mode" checkbox to match the persisted setting
+        /// after the user changes it in the Settings window.
+        /// </summary>
+        public void SyncTrayToggleMode(bool enabled)
+        {
+            _trayIcon?.SetToggleModeEnabled(enabled);
         }
 
         /// <summary>
@@ -290,9 +398,17 @@ namespace VoiceType
                 _trayIcon?.Dispose();
                 _trayIcon = null;
 
+                _foregroundMonitor?.Dispose();
+                _foregroundMonitor = null;
+
                 if (Resources.Contains("HotkeyManager") && Resources["HotkeyManager"] is IDisposable hk)
                 {
                     hk.Dispose();
+                }
+
+                if (Resources.Contains("ToggleHotkeyManager") && Resources["ToggleHotkeyManager"] is IDisposable toggleHk)
+                {
+                    toggleHk.Dispose();
                 }
 
                 if (Resources.Contains("DictationController") && Resources["DictationController"] is IDisposable ctrl)

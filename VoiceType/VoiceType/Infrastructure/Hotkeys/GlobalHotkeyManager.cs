@@ -7,6 +7,15 @@ using VoiceType.Infrastructure.Config;
 
 namespace VoiceType.Infrastructure.Hotkeys
 {
+    // Identifies which configured hotkey a GlobalHotkeyManager instance is bound to.
+    public enum HotkeyKind
+    {
+        // Hold-to-talk dictation hotkey (DictationHotkey). Fires press and release.
+        Dictation,
+        // Toggle-mode hotkey (ToggleHotkey). A single tap toggles a hands-free session.
+        Toggle
+    }
+
     // A lightweight global hotkey manager using a low-level keyboard hook (WH_KEYBOARD_LL).
     // This approach is used because WM_HOTKEY does not reliably provide press-and-hold semantics
     // (detecting both key down and key up) for all scenarios. The low-level hook allows
@@ -14,11 +23,20 @@ namespace VoiceType.Infrastructure.Hotkeys
     public class GlobalHotkeyManager : IDisposable
     {
         private readonly VoiceTypeSettings _settings;
+        private readonly HotkeyKind _kind;
         private IntPtr _hookId = IntPtr.Zero;
         private NativeMethods.LowLevelKeyboardProc _proc;
         // Virtual key code of the configured target key. Not readonly so the hotkey can be
         // re-registered live (see UpdateHotkey) when the user changes it in Settings.
         private int _targetVk;
+
+        // The configured target key name for this manager's hotkey kind.
+        private string ConfiguredKey =>
+            _kind == HotkeyKind.Toggle ? _settings.ToggleHotkeyKey : _settings.HotkeyKey;
+
+        // The configured modifier list for this manager's hotkey kind.
+        private string ConfiguredModifiers =>
+            _kind == HotkeyKind.Toggle ? _settings.ToggleHotkeyModifiers : _settings.HotkeyModifiers;
 
         private bool _isDisposed = false;
 
@@ -37,11 +55,17 @@ namespace VoiceType.Infrastructure.Hotkeys
         public event EventHandler? HotkeyReleased;
 
         public GlobalHotkeyManager(VoiceTypeSettings settings)
+            : this(settings, HotkeyKind.Dictation)
+        {
+        }
+
+        public GlobalHotkeyManager(VoiceTypeSettings settings, HotkeyKind kind)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _kind = kind;
 
             // Parse configured key into a virtual key code
-            if (!Enum.TryParse<Key>(_settings.HotkeyKey ?? string.Empty, out var key))
+            if (!Enum.TryParse<Key>(ConfiguredKey ?? string.Empty, out var key))
             {
                 // fallback to LeftAlt
                 key = Key.LeftAlt;
@@ -64,7 +88,7 @@ namespace VoiceType.Infrastructure.Hotkeys
         /// </summary>
         public void UpdateHotkey()
         {
-            if (!Enum.TryParse<Key>(_settings.HotkeyKey ?? string.Empty, out var key))
+            if (!Enum.TryParse<Key>(ConfiguredKey ?? string.Empty, out var key))
             {
                 key = Key.LeftAlt;
             }
@@ -149,37 +173,47 @@ namespace VoiceType.Infrastructure.Hotkeys
         private bool ModifiersMatch()
         {
             // configured modifiers e.g. "Ctrl" or "Ctrl+Shift"
-            var raw = _settings.HotkeyModifiers ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(raw)) return true;
+            var raw = ConfiguredModifiers ?? string.Empty;
 
+            // Determine which modifiers the configured combo requires.
+            bool wantCtrl = false, wantAlt = false, wantShift = false, wantWin = false;
             var parts = raw.Split(new[] { '+', ',', '|' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var p in parts)
             {
-                var s = p.Trim().ToLowerInvariant();
-                switch (s)
+                switch (p.Trim().ToLowerInvariant())
                 {
                     case "ctrl":
                     case "control":
-                        if ((NativeMethods.GetAsyncKeyState(NativeMethods.VK_CONTROL) & 0x8000) == 0) return false;
+                        wantCtrl = true;
                         break;
                     case "alt":
-                        if ((NativeMethods.GetAsyncKeyState(NativeMethods.VK_MENU) & 0x8000) == 0) return false;
+                        wantAlt = true;
                         break;
                     case "shift":
-                        if ((NativeMethods.GetAsyncKeyState(NativeMethods.VK_SHIFT) & 0x8000) == 0) return false;
+                        wantShift = true;
                         break;
                     case "win":
                     case "lwin":
                     case "rwin":
-                        if ((NativeMethods.GetAsyncKeyState(NativeMethods.VK_LWIN) & 0x8000) == 0 && (NativeMethods.GetAsyncKeyState(NativeMethods.VK_RWIN) & 0x8000) == 0) return false;
-                        break;
-                    default:
-                        // unknown modifier - ignore
+                        wantWin = true;
                         break;
                 }
             }
 
-            return true;
+            // Read the current physical state of each modifier.
+            bool ctrlDown = (NativeMethods.GetAsyncKeyState(NativeMethods.VK_CONTROL) & 0x8000) != 0;
+            bool altDown = (NativeMethods.GetAsyncKeyState(NativeMethods.VK_MENU) & 0x8000) != 0;
+            bool shiftDown = (NativeMethods.GetAsyncKeyState(NativeMethods.VK_SHIFT) & 0x8000) != 0;
+            bool winDown = (NativeMethods.GetAsyncKeyState(NativeMethods.VK_LWIN) & 0x8000) != 0
+                || (NativeMethods.GetAsyncKeyState(NativeMethods.VK_RWIN) & 0x8000) != 0;
+
+            // Exact match: every required modifier must be down and every non-required modifier
+            // must be up. This keeps combos that share a target key (e.g. Ctrl+Space vs
+            // Ctrl+Shift+Space) from cross-triggering each other.
+            return ctrlDown == wantCtrl
+                && altDown == wantAlt
+                && shiftDown == wantShift
+                && winDown == wantWin;
         }
 
         public void Dispose()

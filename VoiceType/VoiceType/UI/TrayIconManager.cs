@@ -9,6 +9,20 @@ using VoiceType.Infrastructure.Logging;
 namespace VoiceType.UI
 {
     /// <summary>
+    /// Which input mode started the active dictation session, used to give the tray icon a
+    /// distinct look so the user can tell hold-to-talk (hotkey) apart from hands-free (toggle).
+    /// </summary>
+    public enum ListeningMode
+    {
+        /// <summary>No active session; show the idle icon.</summary>
+        None,
+        /// <summary>Started by holding the global hotkey (push/hold-to-talk).</summary>
+        Hotkey,
+        /// <summary>Started by a tray single-click (hands-free toggle).</summary>
+        Toggle
+    }
+
+    /// <summary>
     /// Hosts the WinForms <see cref="NotifyIcon"/> that acts as VoiceType's sole control
     /// center. The app is windowless at startup (ShutdownMode=OnExplicitShutdown), so this
     /// tray icon and its context menu (Model, Open Settings, Exit) are the primary user entry
@@ -20,11 +34,24 @@ namespace VoiceType.UI
         private readonly NotifyIcon _notifyIcon;
         private readonly ContextMenuStrip _menu;
         private readonly ToolStripMenuItem _modelMenu;
+        private readonly ToolStripMenuItem _toggleModeItem;
         private readonly Func<IReadOnlyList<string>> _getModels;
         private readonly Func<string?> _getActiveModel;
         private readonly Func<string, Task> _onModelSelected;
+        private readonly Action _onOpenSettings;
+        private readonly Action _onToggleDictation;
+        private readonly Action<bool> _onToggleModeChanged;
         private Icon? _ownedIcon;
+        private Icon? _recordingIconToggle;
+        private Icon? _recordingIconHotkey;
+        private Icon? _baseIcon;
+        private bool _isListening;
+        private System.Windows.Threading.DispatcherTimer? _singleClickTimer;
+        private DateTime _suppressClickUntilUtc;
         private bool _disposed;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
+        private static extern bool DestroyIcon(IntPtr hIcon);
 
         /// <summary>
         /// Creates and shows the tray icon.
@@ -39,17 +66,25 @@ namespace VoiceType.UI
             Action onExit,
             Func<IReadOnlyList<string>> getModels,
             Func<string?> getActiveModel,
-            Func<string, Task> onModelSelected)
+            Func<string, Task> onModelSelected,
+            Action onToggleDictation,
+            Action<bool> onToggleModeChanged,
+            bool toggleModeEnabled)
         {
             ArgumentNullException.ThrowIfNull(onOpenSettings);
             ArgumentNullException.ThrowIfNull(onExit);
             ArgumentNullException.ThrowIfNull(getModels);
             ArgumentNullException.ThrowIfNull(getActiveModel);
             ArgumentNullException.ThrowIfNull(onModelSelected);
+            ArgumentNullException.ThrowIfNull(onToggleDictation);
+            ArgumentNullException.ThrowIfNull(onToggleModeChanged);
 
             _getModels = getModels;
             _getActiveModel = getActiveModel;
             _onModelSelected = onModelSelected;
+            _onOpenSettings = onOpenSettings;
+            _onToggleDictation = onToggleDictation;
+            _onToggleModeChanged = onToggleModeChanged;
 
             _menu = new ContextMenuStrip();
 
@@ -57,6 +92,20 @@ namespace VoiceType.UI
             // files and the currently active model without restarting the app.
             _modelMenu = new ToolStripMenuItem("Model");
             _modelMenu.DropDownOpening += (_, _) => RebuildModelMenu();
+
+            // Checkable item lets the user enable/disable single-click tray toggle mode. Kept in
+            // sync with the Settings window via _onToggleModeChanged / SetToggleModeEnabled.
+            _toggleModeItem = new ToolStripMenuItem("Toggle mode (single-click)")
+            {
+                CheckOnClick = true,
+                Checked = toggleModeEnabled
+            };
+            _toggleModeItem.CheckedChanged += (_, _) =>
+            {
+                if (!_isListening && !_disposed)
+                    _notifyIcon.Text = IdleTooltip();
+                SafeInvoke(() => _onToggleModeChanged(_toggleModeItem.Checked), "Toggle mode changed");
+            };
 
             var openSettingsItem = new ToolStripMenuItem("Open Settings");
             openSettingsItem.Click += (_, _) => SafeInvoke(onOpenSettings, "Open Settings");
@@ -66,6 +115,7 @@ namespace VoiceType.UI
 
             _menu.Items.Add(_modelMenu);
             _menu.Items.Add(new ToolStripSeparator());
+            _menu.Items.Add(_toggleModeItem);
             _menu.Items.Add(openSettingsItem);
             _menu.Items.Add(new ToolStripSeparator());
             _menu.Items.Add(exitItem);
@@ -77,9 +127,121 @@ namespace VoiceType.UI
                 ContextMenuStrip = _menu,
                 Visible = true
             };
+            _baseIcon = _notifyIcon.Icon;
+            _notifyIcon.Text = IdleTooltip();
 
-            // Double-clicking the tray icon opens settings, matching the primary menu action.
-            _notifyIcon.DoubleClick += (_, _) => SafeInvoke(onOpenSettings, "Open Settings (double-click)");
+            // Left single-click toggles dictation when toggle mode is on. A short timer defers the
+            // single-click action so a double-click (open Settings) can cancel it and win instead.
+            _notifyIcon.MouseUp += OnTrayMouseUp;
+            _notifyIcon.DoubleClick += OnTrayDoubleClick;
+        }
+
+        // Single vs double click disambiguation: MouseUp starts a timer; if a DoubleClick arrives
+        // first it cancels the timer and opens Settings. A double-click also raises MouseUp twice,
+        // so we suppress clicks briefly after a double-click to stop the toggle from firing too.
+        private void OnTrayMouseUp(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            if (!_toggleModeItem.Checked) return;
+            if (DateTime.UtcNow < _suppressClickUntilUtc) return;
+
+            _singleClickTimer?.Stop();
+            _singleClickTimer ??= CreateSingleClickTimer();
+            _singleClickTimer.Start();
+        }
+
+        private void OnTrayDoubleClick(object? sender, EventArgs e)
+        {
+            _singleClickTimer?.Stop();
+            // Ignore the trailing MouseUp(s) of this double-click so the single-click toggle
+            // doesn't also fire (a double-click delivers MouseUp both before and after DoubleClick).
+            _suppressClickUntilUtc = DateTime.UtcNow.AddMilliseconds(SystemInformation.DoubleClickTime + 100);
+            SafeInvoke(_onOpenSettings, "Open Settings (double-click)");
+        }
+
+        private System.Windows.Threading.DispatcherTimer CreateSingleClickTimer()
+        {
+            var interval = TimeSpan.FromMilliseconds(SystemInformation.DoubleClickTime + 50);
+            var timer = new System.Windows.Threading.DispatcherTimer { Interval = interval };
+            timer.Tick += (_, _) =>
+            {
+                timer.Stop();
+                SafeInvoke(_onToggleDictation, "Toggle dictation (single-click)");
+            };
+            return timer;
+        }
+
+        /// <summary>
+        /// Reflects the current dictation state on the tray icon. When listening it swaps to a
+        /// mode-specific recording icon (green dot = hands-free toggle, red dot = hold-to-talk
+        /// hotkey) and updates the tooltip so the user can tell the two modes apart.
+        /// Safe to call from any thread.
+        /// </summary>
+        public void SetListeningState(ListeningMode mode)
+        {
+            if (_disposed) return;
+
+            _isListening = mode != ListeningMode.None;
+
+            void Apply()
+            {
+                try
+                {
+                    _notifyIcon.Icon = mode switch
+                    {
+                        ListeningMode.Toggle => GetRecordingIcon(ListeningMode.Toggle) ?? _notifyIcon.Icon,
+                        ListeningMode.Hotkey => GetRecordingIcon(ListeningMode.Hotkey) ?? _notifyIcon.Icon,
+                        _ => _baseIcon ?? _notifyIcon.Icon
+                    };
+                    _notifyIcon.Text = mode switch
+                    {
+                        ListeningMode.Toggle => "VoiceType - listening (hands-free)",
+                        ListeningMode.Hotkey => "VoiceType - listening (hold-to-talk)",
+                        _ => IdleTooltip()
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"TrayIconManager: failed to set listening icon: {ex.Message}");
+                }
+            }
+
+            var dispatcher = System.Windows.Application.Current?.Dispatcher;
+            if (dispatcher != null && !dispatcher.CheckAccess())
+                dispatcher.Invoke(Apply);
+            else
+                Apply();
+        }
+
+        /// <summary>
+        /// Builds the idle-state tooltip, reflecting how the user starts dictation (single-click
+        /// hands-free toggle vs holding the global hotkey).
+        /// </summary>
+        private string IdleTooltip() => _toggleModeItem.Checked
+            ? "VoiceType - idle (single-click to talk)"
+            : "VoiceType - idle (hold hotkey to talk)";
+
+        /// <summary>
+        /// Updates the checkable toggle-mode menu item to match the persisted setting (e.g. after
+        /// the user changes it in the Settings window). Safe to call from any thread.
+        /// </summary>
+        public void SetToggleModeEnabled(bool enabled)
+        {
+            if (_disposed) return;
+
+            void Apply()
+            {
+                _toggleModeItem.Checked = enabled;
+                // Keep the idle tooltip in step with the current input mode.
+                if (!_isListening)
+                    _notifyIcon.Text = IdleTooltip();
+            }
+
+            var dispatcher = System.Windows.Application.Current?.Dispatcher;
+            if (dispatcher != null && !dispatcher.CheckAccess())
+                dispatcher.Invoke(Apply);
+            else
+                Apply();
         }
 
         // Rebuilds the checkable Model submenu from the current models folder, marking the active
@@ -207,6 +369,47 @@ namespace VoiceType.UI
             return SystemIcons.Application;
         }
 
+        // Builds (once per mode) a "recording" variant of the tray icon by drawing a small colored
+        // dot in the lower-right corner of the base icon. Green = hands-free toggle, red = hold-to-
+        // talk hotkey, so the user can tell which mode started the active session.
+        private Icon? GetRecordingIcon(ListeningMode mode)
+        {
+            ref Icon? cache = ref (mode == ListeningMode.Toggle ? ref _recordingIconToggle : ref _recordingIconHotkey);
+            if (cache is not null) return cache;
+
+            var dotColor = mode == ListeningMode.Toggle ? Color.LimeGreen : Color.Red;
+
+            try
+            {
+                var size = SystemInformation.SmallIconSize;
+                using var bmp = new Bitmap(size.Width, size.Height);
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    if (_baseIcon is not null)
+                        g.DrawIcon(_baseIcon, new Rectangle(0, 0, size.Width, size.Height));
+
+                    var d = Math.Max(4, size.Width / 3);
+                    var rect = new Rectangle(size.Width - d, size.Height - d, d, d);
+                    using var brush = new SolidBrush(dotColor);
+                    using var pen = new Pen(Color.White, Math.Max(1f, size.Width / 16f));
+                    g.FillEllipse(brush, rect);
+                    g.DrawEllipse(pen, rect);
+                }
+
+                var hIcon = bmp.GetHicon();
+                using var tmp = Icon.FromHandle(hIcon);
+                cache = (Icon)tmp.Clone();
+                DestroyIcon(hIcon);
+                return cache;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"TrayIconManager: failed to build recording icon: {ex.Message}");
+                return null;
+            }
+        }
+
         private static void SafeInvoke(Action action, string label)
         {
             try
@@ -224,11 +427,15 @@ namespace VoiceType.UI
             if (_disposed) return;
             _disposed = true;
 
+            try { _singleClickTimer?.Stop(); } catch { }
+
             // Hide before disposing so the icon never lingers in the tray until the shell repaints.
             try { _notifyIcon.Visible = false; } catch { }
             try { _notifyIcon.Dispose(); } catch { }
             try { _menu.Dispose(); } catch { }
             try { _ownedIcon?.Dispose(); } catch { }
+            try { _recordingIconToggle?.Dispose(); } catch { }
+            try { _recordingIconHotkey?.Dispose(); } catch { }
         }
     }
 }

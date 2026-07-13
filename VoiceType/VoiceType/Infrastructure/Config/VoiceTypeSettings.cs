@@ -75,7 +75,7 @@ namespace VoiceType.Infrastructure.Config
         // The dictation (hold-to-talk) hotkey as a single "+"-separated combo, e.g. "Ctrl+LeftAlt"
         // or "F9". The LAST token is the target key; any preceding tokens are modifiers
         // (Ctrl/Shift/Alt/Win). A future voice-command feature will add its own hotkey setting.
-        public string DictationHotkey { get; set; } = "Ctrl+LeftAlt";
+        public string DictationHotkey { get; set; } = "Ctrl+Space";
 
         // Convenience views over DictationHotkey for consumers that need the parts separately
         // (e.g. GlobalHotkeyManager). Not serialized - DictationHotkey is the single source of truth.
@@ -84,8 +84,35 @@ namespace VoiceType.Infrastructure.Config
         [JsonIgnore]
         public string HotkeyModifiers => GetHotkeyModifiers(DictationHotkey);
 
+        // The toggle-mode hotkey as a single "+"-separated combo, e.g. "Ctrl+Shift+Space". A single
+        // tap starts/stops a hands-free (toggle) dictation session. Same format as DictationHotkey.
+        public string ToggleHotkey { get; set; } = "Ctrl+Shift+Space";
+
+        // Convenience views over ToggleHotkey. Not serialized - ToggleHotkey is the source of truth.
+        [JsonIgnore]
+        public string ToggleHotkeyKey => GetHotkeyKey(ToggleHotkey);
+        [JsonIgnore]
+        public string ToggleHotkeyModifiers => GetHotkeyModifiers(ToggleHotkey);
+
         // Zero-based index of the microphone (WaveIn device) to capture from. 0 = system default.
         public int MicrophoneDeviceIndex { get; set; } = 0;
+
+        // When true, single-clicking the tray icon toggles a hands-free dictation session
+        // (start/stop), as an alternative to the hold-to-talk hotkey. Double-click still opens
+        // Settings. Enabled by default; kept in sync with the tray context-menu "Toggle mode" item.
+        public bool UseTrayIconToggle { get; set; } = true;
+        // When true, a tray-toggle session stops automatically after the mic stays idle
+        // (below the silence threshold) for ToggleIdleAutoStopSeconds. Ignored for hold-to-talk.
+        public bool ToggleIdleAutoStopEnabled { get; set; } = false;
+        // Seconds of continuous mic idle before a tray-toggle session auto-stops (when enabled).
+        public int ToggleIdleAutoStopSeconds { get; set; } = 5;
+        // When true, if no editable control is focused when a transcript is ready, the text is
+        // left on the clipboard (so the user can paste it manually) instead of being typed/pasted
+        // into a surface that cannot accept it. Applies to both hotkey and tray-toggle modes.
+        public bool CopyToClipboardWhenNoEditable { get; set; } = true;
+        // When true, show a notification when the transcript is copied to the clipboard as a
+        // fallback (because no editable control was focused).
+        public bool ShowClipboardCopyNotification { get; set; } = true;
         // Text insertion method: "Clipboard" (Ctrl+V paste) or "Typing" (character-by-character SendInput).
         public string InsertMethod { get; set; } = "Clipboard";
         // When true, the user's previous clipboard content is restored after pasting the

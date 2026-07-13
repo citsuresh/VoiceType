@@ -14,6 +14,12 @@
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.1.0" />
   </ItemGroup>
+  <!-- UI Automation is used to detect whether the focused control can accept text before we
+       paste/type; without an editable target the transcript is left on the clipboard. -->
+  <ItemGroup>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
+  </ItemGroup>
   <!-- WinForms is enabled only to host the tray NotifyIcon. Remove its implicit global
        usings so WinForms types don't collide with WPF (e.g. System.Windows.Application vs
        System.Windows.Forms.Application). The one file that needs WinForms uses explicit usings. -->
