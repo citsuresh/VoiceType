@@ -4,22 +4,51 @@
 
 <h1 align="center">VoiceType</h1>
 
-A local, privacy-preserving push-to-talk dictation tool for Windows. Hold a hotkey,
-speak, and the transcribed text is inserted at your cursor. All speech recognition runs
+A local, privacy-preserving dictation tool for Windows. Press a hotkey, speak, and the
+transcribed text is inserted at your cursor. VoiceType offers two ways to dictate — a
+**hold-to-talk** hotkey and a hands-free **toggle** mode. All speech recognition runs
 **locally** using [whisper.cpp](https://github.com/ggml-org/whisper.cpp) — nothing is sent
 to the cloud.
+
+---
+
+## Dictation modes
+
+VoiceType supports two complementary ways to dictate:
+
+| Mode | Default hotkey | How it works |
+|------|----------------|--------------|
+| **Hold-to-talk** | **Ctrl + Space** | **Press and hold** the keys while you speak; **release** to stop. Recording lasts only as long as you hold the combo. Best for short, quick dictation. |
+| **Toggle (hands-free)** | **Ctrl + Shift + Space** | **Tap** the combo once to start listening (you can let go of the keys); **tap it again** to stop. Best for longer, hands-free dictation. Single-clicking the tray icon does the same thing. |
+
+Both hotkeys are configurable in the Settings window and take effect immediately after saving.
+
+**Behavior notes:**
+
+- A toggle press is **ignored while a hold-to-talk session is active**, so the two paths never collide.
+- The two combos use **exact modifier matching**, so `Ctrl + Space` and `Ctrl + Shift + Space` never cross-trigger each other even though they share the `Space` key.
+- In toggle mode you can optionally enable **"automatically stop when the mic is idle"** so a forgotten session stops itself after a configurable timeout — in addition to tapping the hotkey again.
 
 ---
 
 ## Running & the system tray
 
 VoiceType has **no main window** — it runs windowless from the **system tray**. The tray
-icon (a white microphone) is the app's control center. Right-click it for the menu:
+icon (a white microphone) is the app's control center. Interact with it as follows:
+
+- **Single left-click** — toggles a hands-free dictation session (start/stop), the same as the
+  **Ctrl + Shift + Space** toggle hotkey. Can be enabled/disabled in Settings and via the menu.
+- **Double-click** — opens the Settings window.
+- **Right-click** — opens the menu:
 
 - **Model** — pick from the Whisper models found in the models folder; the active one is checked.
   Selecting a model switches it live (in `Server` mode the whisper-server is restarted to load it).
 - **Open Settings** — opens the Settings window (also available by **double-clicking** the tray icon).
+- **Toggle mode** — a checkable item that enables/disables single-click toggle dictation.
 - **Exit** — shuts the app down.
+
+The tray icon and its tooltip reflect the current state (idle vs listening) and which mode is
+active (hold-to-talk hotkey vs hands-free toggle).
 
 Fatal errors and status notes are surfaced as tray balloon notifications.
 
@@ -58,9 +87,17 @@ show brief informational messages.
 
 The Settings window is the recommended way to configure VoiceType (you don't have to edit
 `appsettings.json` by hand). It lets you set the **model**, **microphone**, **transcription
-mode**, **hotkey**, **language**, **insert method**, temp directory, preview timings, and the
-per-mode executable/server fields. It opens **single-instance** — reopening focuses the
-existing window instead of creating a second one.
+mode**, **hotkey** (hold-to-talk), **language**, **insert method**, temp directory, preview
+timings, and the per-mode executable/server fields. A dedicated **Toggle mode** section lets
+you set the **toggle hotkey** and the hands-free options (use tray icon for toggle, automatic
+idle stop and its timeout). It opens **single-instance** — reopening focuses the existing
+window instead of creating a second one.
+
+### Capturing a hotkey
+
+Each hotkey field is a **press-to-capture** box: click it, press the desired key combination
+(e.g. `Ctrl + Space`), and it's captured. Press `Esc` to cancel and keep the previous value.
+An incomplete combo (such as a lone modifier) is rejected with a validation message.
 
 ### How changes are applied
 
@@ -72,7 +109,7 @@ Click **Save** to validate and persist all fields to
 |--------|-----------------|
 | Model | Live. In `Server` mode the whisper-server restarts to load the new model; `Cli`/`Stream` pick it up on the next dictation. |
 | Transcription mode | Live. The server is created/disposed and the controller is re-wired. |
-| Hotkey | Live. The global hotkey is re-registered immediately. |
+| Hotkey (hold-to-talk and toggle) | Live. Both global hotkeys are re-registered immediately. |
 | Server executable / host / port / arguments | Live in `Server` mode — the server restarts to pick up the new launch settings. |
 | Language, insert method, clipboard restore, temp dir, preview timings | Live on the next dictation session. |
 | Microphone | Applies on the **next** dictation session (a mid-session switch is avoided). If a session is in progress when you save, a tray note reminds you. |
@@ -196,13 +233,15 @@ Server mode — either use a smaller model or switch that large model to CLI mod
 ## Hotkey & insertion
 
 ```json
-"HotkeyModifiers": "Ctrl",
-"HotkeyKey": "LeftAlt",
+"DictationHotkey": "Ctrl+Space",
+"ToggleHotkey": "Ctrl+Shift+Space",
 "InsertMethod": "Clipboard"
 ```
 
-Hold **Ctrl + Left Alt**, speak, release. `InsertMethod` can be `Clipboard` (paste, default)
-or `SendInput` (synthetic typing).
+`DictationHotkey` is the **hold-to-talk** combo (hold **Ctrl + Space**, speak, release).
+`ToggleHotkey` is the hands-free **toggle** combo (tap **Ctrl + Shift + Space** to start, tap
+again to stop). `InsertMethod` can be `Clipboard` (paste, default) or `SendInput` (synthetic
+typing).
 
 ---
 

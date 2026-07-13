@@ -21,6 +21,12 @@ namespace VoiceType.Core
         public Infrastructure.Whisper.WhisperServerClient? ServerClient { get; set; }
         private DictationState _state = DictationState.Idle;
         private bool _pendingStartRequest = false;
+        // Monotonic id bumped each time a session transitions Idle -> Listening. A start runs
+        // several awaits (foreground capture, overlay creation) before the mic actually starts;
+        // a very fast hotkey release can flip the state to Finalizing during those awaits. The
+        // resumed start compares this id to detect it was superseded and abort instead of
+        // starting the microphone (which would leave the app "stuck" listening).
+        private int _sessionGeneration = 0;
         private readonly object _sync = new object();
 
         /// <summary>
@@ -464,9 +470,38 @@ namespace VoiceType.Core
             return await transcriber.TranscribeAsync(wavPath);
         }
 
+        // Returns true when the session identified by <paramref name="generation"/> is no longer
+        // the active listening session - i.e. a fast release/stop already moved it past Listening.
+        private bool IsSessionSuperseded(int generation)
+        {
+            lock (_sync)
+            {
+                return generation != _sessionGeneration || _state != DictationState.Listening;
+            }
+        }
+
+        // Closes the compact and breathing overlays created during session startup. Used when a
+        // start is aborted because it was superseded by a fast release before the mic engaged.
+        private async Task CloseStartupOverlayAsync()
+        {
+            var dispatcher = Application.Current?.Dispatcher ?? System.Windows.Threading.Dispatcher.CurrentDispatcher;
+            await dispatcher.InvokeAsync(() =>
+            {
+                try { _overlayWindow?.Close(); }
+                catch (Exception ex) { Logger.Error($"Error closing overlay window during aborted start: {ex}"); }
+                _overlayWindow = null;
+                _overlayViewModel = null;
+
+                try { _breathingWindow?.Close(); }
+                catch (Exception ex) { Logger.Error($"Error closing breathing overlay during aborted start: {ex}"); }
+                _breathingWindow = null;
+            });
+        }
+
         public async Task StartSessionAsync(CancellationToken ct = default, IntPtr preferredForegroundHwnd = default, IntPtr preferredFocusHwnd = default)
         {
             var starting = false;
+            int myGeneration;
 
             lock (_sync)
             {
@@ -474,6 +509,7 @@ namespace VoiceType.Core
                 {
                     _state = DictationState.Listening;
                     starting = true;
+                    myGeneration = ++_sessionGeneration;
                 }
                 else if (_state == DictationState.Finalizing)
                 {
@@ -580,6 +616,16 @@ namespace VoiceType.Core
                 }
                 catch { }
             });
+
+            // A very fast hotkey tap can have already released (StopSessionAsync) while the awaits
+            // above ran. In that case the session was superseded: don't start the microphone.
+            // Tear down the overlay we just created and bail so we don't get stuck listening.
+            if (IsSessionSuperseded(myGeneration))
+            {
+                Logger.Info("StartSessionAsync: session superseded before mic start (fast release) - aborting start and closing overlay.");
+                await CloseStartupOverlayAsync();
+                return;
+            }
 
             // If using Stream mode, we normally skip audio capture entirely.
             // But when in Cli mode we also record a WAV file so we can run the CLI for final transcription.
