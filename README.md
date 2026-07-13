@@ -215,10 +215,13 @@ is needed. Speak close to the mic in a quiet environment for best accuracy.
 
 ## App icon
 
-The app icon is a white microphone glyph. The vector source is
-[`Assets/voicetype.svg`](VoiceType/VoiceType/Assets/voicetype.svg); the multi-resolution
-[`Assets/voicetype.ico`](VoiceType/VoiceType/Assets/voicetype.ico) is generated from it via
-[`Assets/generate-icon.ps1`](VoiceType/VoiceType/Assets/generate-icon.ps1). The `.ico` is
+The app icon is a white microphone glyph. It is drawn programmatically by
+[`Assets/generate-icon.ps1`](VoiceType/VoiceType/Assets/generate-icon.ps1), which renders the
+multi-resolution [`Assets/voicetype.ico`](VoiceType/VoiceType/Assets/voicetype.ico); a matching
+256&nbsp;px [`Assets/voicetype.png`](VoiceType/VoiceType/Assets/voicetype.png) (used in this
+README) is produced by [`Assets/generate-png.ps1`](VoiceType/VoiceType/Assets/generate-png.ps1).
+An early [`Assets/voicetype.svg`](VoiceType/VoiceType/Assets/voicetype.svg) exists as the
+original design reference. The `.ico` is
 embedded into the executable (`<ApplicationIcon>`) for Explorer/taskbar/Alt-Tab and window
 title bars, and is also copied to the output folder so the tray icon can load the best-fitting
 small frame at runtime.
