@@ -17,7 +17,7 @@ function New-RoundedRect {
 function Draw-Glyph {
     param([System.Drawing.Graphics]$g)
 
-    $capsule = New-RoundedRect 102 30 52 104 26
+    $capsule = New-RoundedRect 102 30 52 116 26
     $stem = New-RoundedRect 122 164 12 26 6
     $base = New-RoundedRect 98 188 60 14 7
 
@@ -49,10 +49,6 @@ function Draw-Glyph {
     $g.DrawArc($darkInner, 98, 30, 84, 84, -26, 52)
     $g.DrawArc($darkInner, 74, 30, 84, 84, 154, 52)
     $darkInner.Dispose()
-    $darkOuter = & $mkPen $darkColor 22
-    $g.DrawArc($darkOuter, 70, 6, 140, 140, -32, 64)
-    $g.DrawArc($darkOuter, 46, 6, 140, 140, 148, 64)
-    $darkOuter.Dispose()
 
     # --- White top layer ---
     foreach ($p in @($capsule, $stem, $base)) { $g.FillPath($whiteBrush, $p) }
@@ -64,10 +60,6 @@ function Draw-Glyph {
     $g.DrawArc($whiteInner, 98, 30, 84, 84, -26, 52)
     $g.DrawArc($whiteInner, 74, 30, 84, 84, 154, 52)
     $whiteInner.Dispose()
-    $whiteOuter = & $mkPen ([System.Drawing.Color]::White) 14
-    $g.DrawArc($whiteOuter, 70, 6, 140, 140, -32, 64)
-    $g.DrawArc($whiteOuter, 46, 6, 140, 140, 148, 64)
-    $whiteOuter.Dispose()
 
     $darkBrush.Dispose(); $whiteBrush.Dispose()
     $capsule.Dispose(); $stem.Dispose(); $base.Dispose()
@@ -80,6 +72,16 @@ $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
 $g.Clear([System.Drawing.Color]::Transparent)
 $s = $size / 256.0
 $g.ScaleTransform($s, $s)
+# Enlarge the glyph so it reads at a similar size to native Windows tray
+# glyphs. Measured raw bounds: x 63..193 (w 131), y 26..206 (h 181), center
+# (128, 116). Height is the limiting dimension; zoom about the glyph center
+# to nearly fill the 256 canvas (small anti-alias margin), then shift the
+# glyph center to the canvas center (128, 128).
+$zoom = 1.38
+$g.TranslateTransform(0.0, 12.0)
+$g.TranslateTransform(128.0, 116.0)
+$g.ScaleTransform($zoom, $zoom)
+$g.TranslateTransform(-128.0, -116.0)
 Draw-Glyph $g
 $g.Dispose()
 
