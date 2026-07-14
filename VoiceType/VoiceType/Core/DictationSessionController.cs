@@ -389,15 +389,66 @@ namespace VoiceType.Core
 
         public DictationState State => _state;
 
-        private static string CleanTranscript(string raw)
+        // Known non-speech tags whisper emits. Always stripped (case-insensitive). A blanket
+        // [...]/(...) regex is deliberately avoided since it could eat legitimate dictation.
+        // Kept as an expandable list rather than a setting.
+        private static readonly string[] NonSpeechMarkers =
+        {
+            "[BLANK_AUDIO]", "[NOISE]", "[SOUND]", "[MUSIC]", "[LAUGHTER]",
+            "(laughs)", "(laughing)", "[APPLAUSE]", "[SILENCE]",
+            "(coughs)", "(sighs)", "(clears throat)", "(speaking foreign language)",
+            "[Speaking in foreign language]", "(indistinct)", "[indistinct]",
+            "(mouse clicking)", "(mouse click)", "(clicking)", "(keyboard clicking)", "(typing)"
+        };
+
+        // Splits text into sentences on end punctuation so each start can be capitalized.
+        private static readonly Regex SentenceStartRegex =
+            new(@"(^|[.!?]\s+)(\p{Ll})", RegexOptions.Compiled);
+
+        // Cleans and normalizes a raw transcript before insertion. This is a small, deterministic,
+        // allocation-light pipeline. The first stage (ANSI/marker/gutter/duplicate-line cleanup)
+        // always runs; the subsequent normalization steps are individually toggleable via settings:
+        // trim -> collapse double spaces -> capitalize sentences -> remove filler words ->
+        // add trailing period. Word-replacement rules (roadmap item #2) plug in after filler removal.
+        private string CleanTranscript(string raw)
         {
             if (string.IsNullOrWhiteSpace(raw)) return string.Empty;
 
+            var text = StripNonSpeechAndNoise(raw);
+
+            if (_settings.PostProcessTrimWhitespace)
+                text = text.Trim();
+
+            if (_settings.PostProcessCollapseSpaces)
+                text = Regex.Replace(text, @"[ \t]{2,}", " ");
+
+            if (_settings.PostProcessCapitalizeSentences)
+                text = CapitalizeSentences(text);
+
+            if (_settings.RemoveFillerWords)
+                text = RemoveFillerWords(text);
+
+            // Extension point: word-replacement rules (roadmap item #2) go here, after filler removal.
+
+            if (_settings.PostProcessAddTrailingPeriod)
+                text = AddTrailingPeriod(text);
+
+            return text;
+        }
+
+        // Always-on first stage: strips ANSI escapes, known non-speech markers, transcript gutters,
+        // and collapses consecutive duplicate lines. Independent of the toggleable normalization steps.
+        private static string StripNonSpeechAndNoise(string raw)
+        {
             // Remove common ANSI escape sequences (e.g., ESC[2K)
             var noAnsi = Regex.Replace(raw, @"\x1B\[[0-9;]*[A-Za-z]", string.Empty);
 
-            // Remove bracketed debug tags like [Start speaking], [BLANK_AUDIO]
-            noAnsi = Regex.Replace(noAnsi, @"\[(debug|Start speaking|BLANK_AUDIO)\]", string.Empty, RegexOptions.IgnoreCase);
+            // Remove bracketed debug tags like [Start speaking], [debug]
+            noAnsi = Regex.Replace(noAnsi, @"\[(debug|Start speaking)\]", string.Empty, RegexOptions.IgnoreCase);
+
+            // Remove known non-speech markers ([BLANK_AUDIO], (laughs), etc.) - literal, case-insensitive.
+            foreach (var marker in NonSpeechMarkers)
+                noAnsi = Regex.Replace(noAnsi, Regex.Escape(marker), string.Empty, RegexOptions.IgnoreCase);
 
             // Remove common inaudible markers and transcript gutters like >>
             noAnsi = Regex.Replace(noAnsi, @">>\s*", string.Empty);
@@ -420,6 +471,40 @@ namespace VoiceType.Core
             }
 
             return string.Join("\n", cleanedLines).Trim();
+        }
+
+        // Capitalizes the first letter of the text and of each sentence following end punctuation.
+        private static string CapitalizeSentences(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            return SentenceStartRegex.Replace(text, m => m.Groups[1].Value + m.Groups[2].Value.ToUpperInvariant());
+        }
+
+        // Removes configured filler words/phrases using whole-word, case-insensitive matching, then
+        // tidies up the spacing/commas left behind. Multi-token phrases (e.g. "uh-huh") are supported.
+        private string RemoveFillerWords(string text)
+        {
+            if (string.IsNullOrEmpty(text) || _settings.FillerWords is null) return text;
+
+            foreach (var filler in _settings.FillerWords)
+            {
+                if (string.IsNullOrWhiteSpace(filler)) continue;
+                var pattern = @"(?<![\w-])" + Regex.Escape(filler.Trim()) + @"(?![\w-])";
+                text = Regex.Replace(text, pattern, string.Empty, RegexOptions.IgnoreCase);
+            }
+
+            // Collapse doubled spaces and stray leading punctuation/spaces left by removals.
+            text = Regex.Replace(text, @"[ \t]{2,}", " ");
+            text = Regex.Replace(text, @"\s+([,.!?])", "$1");
+            return text.Trim();
+        }
+
+        // Ensures the text ends with terminal punctuation, adding a period when it doesn't.
+        private static string AddTrailingPeriod(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            var last = text[^1];
+            return last is '.' or '!' or '?' ? text : text + ".";
         }
 
         public DictationSessionController(VoiceTypeSettings settings)

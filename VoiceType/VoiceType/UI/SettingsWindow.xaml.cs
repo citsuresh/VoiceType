@@ -40,6 +40,7 @@ namespace VoiceType.UI
                 new TranscriptionSection(),
                 new DictationSection(),
                 new TextInsertionSection(),
+                new PostProcessingSection(),
             };
 
             foreach (var section in _sections)

@@ -90,8 +90,9 @@ The Settings window is the recommended way to configure VoiceType (you don't hav
 mode**, **hotkey** (hold-to-talk), **language**, **insert method**, temp directory, preview
 timings, and the per-mode executable/server fields. A dedicated **Toggle mode** section lets
 you set the **toggle hotkey** and the hands-free options (use tray icon for toggle, automatic
-idle stop and its timeout). It opens **single-instance** — reopening focuses the existing
-window instead of creating a second one.
+idle stop and its timeout). A **Post-processing** section controls how transcribed text is
+cleaned up before insertion (see below). It opens **single-instance** — reopening focuses the
+existing window instead of creating a second one.
 
 ### Capturing a hotkey
 
@@ -117,6 +118,38 @@ Click **Save** to validate and persist all fields to
 Invalid values (non-positive numbers, an out-of-range port `1–65535`, or an incomplete
 hotkey such as a lone modifier) are rejected with a validation message and nothing is saved.
 **Cancel** closes the window without applying changes.
+
+---
+
+## Post-processing
+
+Before transcribed text is inserted at your cursor, it passes through a small, deterministic
+cleanup pipeline. A built-in first stage always runs and removes noise that Whisper sometimes
+emits — ANSI escape sequences, transcript gutters (`>>`), consecutive duplicate lines, and a
+fixed list of non-speech tags such as `[BLANK_AUDIO]`, `[NOISE]`, `[MUSIC]`, `(laughs)`, and
+`(coughs)`. This stage needs no configuration.
+
+The **Post-processing** section of the Settings window then applies these optional, individually
+toggleable steps in order:
+
+| Step | What it does | Default |
+|------|--------------|---------|
+| Trim whitespace | Removes leading/trailing whitespace | On |
+| Collapse repeated spaces | Reduces runs of spaces/tabs to a single space | On |
+| Capitalize sentences | Capitalizes the first letter of each sentence | On |
+| Remove filler words | Strips configured filler words/phrases | Off |
+| Add trailing period | Appends a period when the text has no ending punctuation | Off |
+
+**Filler words** are matched **whole-word** and **case-insensitively**, so `um` is removed as a
+standalone word but left untouched inside `aluminum` or `album`. Multi-token phrases like
+`uh-huh` are supported. The list ships with a small set of non-lexical defaults (`um`, `uh`,
+`er`, `ah`, `mm`, `hmm`, `uh-huh`) that you can edit with **Add / Edit / Remove**; the list is
+disabled while **Remove filler words** is off. Lexical fillers (like/so/actually) are
+deliberately not seeded because they are often meaningful.
+
+All toggles and the filler-word list are persisted to
+[`appsettings.json`](VoiceType/VoiceType/appsettings.json) and take effect on the next
+dictation session. The built-in non-speech marker list lives in code and is not configurable.
 
 ---
 

@@ -129,6 +129,22 @@ namespace VoiceType.Infrastructure.Config
         // paste the restored (old) content instead of the transcript.
         public bool EnableClipboardRestore { get; set; } = false;
 
+        // Post-processing pipeline toggles applied to the transcript before insertion (see
+        // DictationSessionController.CleanTranscript). Each normalization step is individually
+        // toggleable; the built-in non-speech marker/ANSI cleanup always runs regardless.
+        public bool PostProcessTrimWhitespace { get; set; } = true;
+        public bool PostProcessCollapseSpaces { get; set; } = true;
+        public bool PostProcessCapitalizeSentences { get; set; } = true;
+        public bool PostProcessAddTrailingPeriod { get; set; } = false;
+
+        // Master toggle for filler-word removal plus the user-editable list of filler words/phrases.
+        // Matching is whole-word and case-insensitive (so "um" isn't stripped from "aluminum").
+        // Seeded with non-lexical fillers only; lexical fillers (like/so/actually) are omitted
+        // because they are often meaningful.
+        public bool RemoveFillerWords { get; set; } = false;
+        public System.Collections.Generic.List<string> FillerWords { get; set; } =
+            new System.Collections.Generic.List<string> { "um", "uh", "er", "ah", "mm", "hmm", "uh-huh" };
+
         // Captures any JSON properties not represented by the strongly-typed members above so
         // they round-trip untouched through Load/Save. This keeps future (or non-settings)
         // configuration sections in appsettings.json from being dropped when the user saves.

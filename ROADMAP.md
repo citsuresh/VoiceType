@@ -11,52 +11,19 @@ Status legend: 🟢 planned · 🟡 idea / needs design · ✅ done
 
 *Items are listed in intended implementation order.*
 
-### 1. 🟡 Auto-punctuation / post-processing rules
-Configurable cleanup applied to transcribed text before it's inserted.
-
-- **Why:** whisper output can need light normalization; we already have a single choke point
-  for this in `DictationSessionController.CleanTranscript`, which currently strips markers like
-  `[BLANK_AUDIO]`.
-- **Approach:** extend `CleanTranscript` into a small, ordered pipeline of rules. Fixed order in
-  code (individual steps still toggleable): trim → collapse spaces → capitalize sentences →
-  remove filler words → add trailing period → word replacements (see item 2).
-- **Built-in markers (no setting):** hard-code a case-insensitive list of non-speech tags whisper
-  emits and always strip them — no UI needed. Match a known list (not a blanket `[...]`/`(...)`
-  regex, which could eat legitimate dictation). Initial list: `[BLANK_AUDIO]`, `[NOISE]`,
-  `[SOUND]`, `[MUSIC]`, `[LAUGHTER]`, `(laughs)`, `(laughing)`, `[APPLAUSE]`, `[SILENCE]`,
-  `(coughs)`, `(sighs)`, `(clears throat)`, `(speaking foreign language)`,
-  `[Speaking in foreign language]`. Keep as a `static readonly` array, expandable over time.
-- **Normalization rules (checkboxes, persisted):** trim leading/trailing whitespace, collapse
-  double spaces, capitalize sentence starts, add trailing period — each an individual persisted
-  bool on `VoiceTypeSettings`.
-- **Filler-word removal:** a master "Remove filler words" toggle plus a user-editable list.
-  - **UI:** an editable list control (e.g. `DataGrid` or `ListBox` + **Add / Edit / Remove**
-    buttons) — one row = one entry, clearer than a multi-line text box and supports phrases
-    like `uh-huh`.
-  - **Defaults (non-lexical only, ~7):** `um`, `uh`, `er`, `ah`, `mm`, `hmm`, `uh-huh`.
-    Deliberately small; do **not** seed lexical fillers (like/so/actually) since they're often
-    meaningful. User can add their own.
-  - **No auto-learning:** entries are added/removed manually only.
-  - **Matching:** whole-word, case-insensitive (so "um" isn't stripped from "aluminum"/"album").
-- **Persistence:** all rule toggles and the filler list persist to `appsettings.json` via
-  `SettingsLoader.SaveAsync`. Built-in marker list stays in code (not persisted).
-- **Design note:** keep it deterministic and cheap (runs on the UI/insert path).
-- **Model-based punctuation:** out of scope — would need a separate NLP model (extra dependency +
-  inference cost) and is largely redundant since whisper already emits punctuation.
-
-### 2. 🟡 Custom word replacements / dictionary
+### 1. 🟡 Custom word replacements / dictionary
 Per-user substitutions for names, jargon, and acronyms whisper tends to mis-hear.
 
 - **Why:** proper nouns and domain terms (product names, people, acronyms) are commonly wrong.
 - **Data:** a user-editable list of `from → to` pairs (case-insensitive match, whole-word by
   default), stored in settings or a sidecar file (e.g. `replacements.json`).
 - **UI:** a small editable grid in the Settings window (add/remove rows).
-- **Integration:** apply as one of the last steps in the `CleanTranscript` pipeline described
-  above, after punctuation normalization.
+- **Integration:** apply at the dedicated extension point in the `CleanTranscript` pipeline,
+  after filler-word removal.
 - **Open question:** plain string replace vs. regex support; word-boundary handling and
   preserving surrounding casing.
 
-### 3. 🟡 Streaming (live) transcription polish
+### 2. 🟡 Streaming (live) transcription polish
 Refine the existing `Stream` mode UX and partial-result handling.
 
 - **Why:** the backend already supports a `Stream` mode alongside `Server`/`Cli`, but its UX
@@ -67,7 +34,7 @@ Refine the existing `Stream` mode UX and partial-result handling.
   status-pill sizing work already done are a foundation for a live-preview affordance.
 - **Open question:** insert-as-you-go vs. insert-on-finalize; how to correct earlier partials.
 
-### 4. 🟢 Language selection UI
+### 3. 🟢 Language selection UI
 Expose a language picker in the Settings window so users aren't limited to the default.
 
 - **Why:** whisper.cpp supports many languages, but the current UI only exposes a free-text
@@ -85,7 +52,7 @@ Expose a language picker in the Settings window so users aren't limited to the d
 - **Open question:** short curated list vs. full whisper language list; whether "Auto" is
   reliable enough to be the default.
 
-### 5. 🟡 First-run setup / model download helper
+### 4. 🟡 First-run setup / model download helper
 Guide new users to download a Whisper model on first launch.
 
 - **Why:** model binaries are intentionally **not** committed to git (too large for GitHub's
@@ -104,7 +71,7 @@ Guide new users to download a Whisper model on first launch.
 - **Open question:** download source/URLs and checksum verification; whether to bundle a tiny
   model vs. always download.
 
-### 6. 🟡 Tray-click toggle (hands-free) dictation mode
+### 5. 🟡 Tray-click toggle (hands-free) dictation mode
 Let users start/stop dictation by clicking the tray icon instead of holding a hotkey.
 
 - **Why:** the current hotkey is **hold-to-talk** (`HotkeyPressed → StartSessionAsync`,
@@ -142,7 +109,7 @@ Let users start/stop dictation by clicking the tray icon instead of holding a ho
 - **Open question:** silence threshold tuning/default; whether to also swap the tray icon during
   hold-mode sessions for consistency.
 
-### 7. 🟡 Installer and Auto-start on Windows login *(deferred)*
+### 6. 🟡 Installer and Auto-start on Windows login *(deferred)*
 Package VoiceType with a proper installer and, as part of it, offer auto-start at login.
 
 - **Why:** it's a background tray utility; most users will want it always running, and a real
