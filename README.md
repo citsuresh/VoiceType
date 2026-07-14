@@ -126,8 +126,8 @@ hotkey such as a lone modifier) are rejected with a validation message and nothi
 Before transcribed text is inserted at your cursor, it passes through a small, deterministic
 cleanup pipeline. A built-in first stage always runs and removes noise that Whisper sometimes
 emits — ANSI escape sequences, transcript gutters (`>>`), consecutive duplicate lines, and a
-fixed list of non-speech tags such as `[BLANK_AUDIO]`, `[NOISE]`, `[MUSIC]`, `(laughs)`, and
-`(coughs)`. This stage needs no configuration.
+fixed list of non-speech tags such as `[BLANK_AUDIO]`, `[NOISE]`, `[MUSIC]`, `(laughs)`,
+`(coughs)`, `(indistinct)`, and `(mouse clicking)`. This stage needs no configuration.
 
 The **Post-processing** section of the Settings window then applies these optional, individually
 toggleable steps in order:
