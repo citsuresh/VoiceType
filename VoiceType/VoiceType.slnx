@@ -1,3 +1,9 @@
 <Solution>
   <Project Path="VoiceType/VoiceType.csproj" />
+  <Folder Name="/docs/">
+    <File Path="../docs/CODE_SUMMARY.md" />
+    <File Path="../docs/DESIGN_DECISIONS.md" />
+    <File Path="../docs/PROJECT_STATE.md" />
+    <File Path="../docs/ROADMAP.md" />
+  </Folder>
 </Solution>
