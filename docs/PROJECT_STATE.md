@@ -14,14 +14,14 @@ future settings sub-pages.
 - `VoiceType/VoiceType/UI/SettingsWindow.xaml.cs` — added recursive tree filtering, selected-page
   preservation, and safe handling for non-selectable parent categories.
 - `VoiceType/VoiceType/UI/Settings/NavNode.cs` — added the hierarchy-aware navigation node model.
-- `VoiceType/ROADMAP.md` — removed the shipped TreeView backlog item and renumbered the remaining
+- `VoiceType/docs/ROADMAP.md` — removed the shipped TreeView backlog item and renumbered the remaining
   items.
 - `VoiceType/docs/PROJECT_STATE.md` — overwritten for this session snapshot.
 - `VoiceType/docs/DESIGN_DECISIONS.md` — appended the TreeView hierarchy decision.
 - `VoiceType/docs/CODE_SUMMARY.md` — documented the `NavNode` navigation model.
 
 ## Open tasks / backlog
-See root `ROADMAP.md` for the full, ordered backlog. The next relevant work is independently
+See `docs/ROADMAP.md` for the full, ordered backlog. The next relevant work is independently
 configurable post-processing settings and rules, with future child pages under `Post-processing`.
 
 ## Known issues

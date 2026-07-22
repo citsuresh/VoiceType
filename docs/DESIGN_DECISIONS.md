@@ -44,7 +44,7 @@
 
 - **Word-replacement rules deliberately deferred.** A clean extension point exists in
   `CleanTranscript` right after filler-word removal for a future custom dictionary/replacement
-  feature (see root `ROADMAP.md` item), but it is intentionally not implemented yet to keep the
+	feature (see `docs/ROADMAP.md` item), but it is intentionally not implemented yet to keep the
   post-processing pipeline's initial scope small.
 
 - **Git identity is fixed for this repository.** All commits/pushes use

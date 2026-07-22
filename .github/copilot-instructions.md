@@ -45,7 +45,7 @@ Commits (and pushes) in this repository must use:
 
 Example:git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@rediffmail.com" commit --author="Suresh Kumar Veluswamy <citsuresh@rediffmail.com>" -m "..."
 ## Documentation
-- Update `README.md` when user-visible behavior changes; update `ROADMAP.md` (remove + renumber,
+- Update `README.md` when user-visible behavior changes; update `docs/ROADMAP.md` (remove + renumber,
   no gaps) when a backlog item ships.
 
 ## Persistent project memory
@@ -55,8 +55,8 @@ re-summarizing prior conversation history for a new task:
   search tools for a new task. If these files don't exist, fall back to normal exploration; their
   absence is not an error.
 - `docs/PROJECT_STATE.md` and `docs/ROADMAP.md` — read when the user asks "do you remember",
-  references prior work, or asks what's next. `docs/ROADMAP.md` just points at the root
-  `ROADMAP.md`, which is the single source of truth for planned work.
+  references prior work, or asks what's next. `docs/ROADMAP.md` is the single source of truth
+  for planned work.
 
 Update them as follows:
 - `docs/CODE_SUMMARY.md`: when a new structural class/service is added, a component's
@@ -65,8 +65,7 @@ Update them as follows:
   choice is made or reversed. Never delete prior entries.
 - `docs/PROJECT_STATE.md`: overwrite (not append) at the end of a working session with current
   focus, open tasks, and recently changed files.
-- `docs/ROADMAP.md`: only touch if the relationship to the root `ROADMAP.md` changes; priority
-  changes go in the root file.
+- `docs/ROADMAP.md`: update when priorities or plans deliberately change.
 
 Keep all memory files concise — they exist to reduce token usage on future re-reads, not to serve
 as exhaustive documentation.
