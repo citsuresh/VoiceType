@@ -146,25 +146,7 @@ dictating into an AI coding assistant such as GitHub Copilot.
   automatic application profiles, model output-quality benchmarks, and the idle timeout for
   unloading the transformation model.
 
-### 9. 🟡 TreeView navigation for Settings window
-Replace the flat settings navigation list with a hierarchical TreeView while preserving the
-existing searchable settings workflow and single Save/Cancel transaction.
-
-- **Why:** organize related settings under parent categories and provide room for additional
-  post-processing pages without making the top-level navigation list unwieldy.
-- **Target structure:** keep the current top-level sections (`General`, `Transcription`,
-  `Dictation`, `Text insertion`, and `Post-processing`) and allow `Post-processing` to contain
-  child pages such as `Normalization`, `Filler word removal`, `Spoken punctuation`, `Custom word
-  replacements`, and `Custom removal rules`.
-- **Navigation:** parent categories may be non-selectable; selecting a child displays its own
-  settings section. Preserve keyboard navigation, search filtering, and the current selected-page
-  behavior.
-- **Architecture:** extend the settings navigation model to support parent/child items while
-  retaining the existing `ISettingsSection` contract for selectable pages.
-- **Open question:** whether the parent node should display a summary page or only expand/collapse
-  its child pages.
-
-### 10. 🟡 Additional post-processing settings
+### 9. 🟡 Additional post-processing settings
 Expand transcript post-processing into independently configurable settings pages under the
 `Post-processing` navigation category.
 

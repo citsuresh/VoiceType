@@ -63,3 +63,12 @@
   a large settings-page form. Alternatives considered: migrate the whole navigation immediately,
   or place every rule list in one undifferentiated dictionary; both were rejected in favor of a
   staged navigation change and explicit rule semantics.
+
+- **2026-07-22 — Settings navigation uses a hierarchy-aware wrapper without changing `ISettingsSection`.**
+  `NavNode` represents a title, optional selectable section, and child nodes; `SettingsWindow`
+  recursively filters and displays those nodes in a `TreeView`. Parent category nodes deliberately
+  have no section and do not replace the current detail page when selected. Rationale: preserves
+  the existing single Save/Cancel transaction and page contract while allowing future
+  `Post-processing` child pages. Alternatives considered: extend `ISettingsSection` with hierarchy
+  metadata or create selectable summary pages for every parent; both were unnecessary for the
+  current navigation scope.

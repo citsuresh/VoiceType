@@ -59,10 +59,11 @@ graph LR
 | `FinalTranscriptionResult` | `Models/FinalTranscriptionResult.cs` | Result DTO: success, text, error message, exit code, timed-out flag. |
 | `BreathingOverlayWindow` | `UI/BreathingOverlayWindow.xaml.cs` | Floating pill overlay with traveling-wave waveform animation synced to audio amplitude. |
 | `CompactOverlayWindow` | `UI/CompactOverlayWindow.xaml.cs` | Simple bottom-center-positioned overlay window. |
-| `SettingsWindow` | `UI/SettingsWindow.xaml.cs` | Searchable master-detail settings shell; owns Save/Cancel and live-apply diffing. |
+| `SettingsWindow` | `UI/SettingsWindow.xaml.cs` | Searchable TreeView master-detail settings shell; owns Save/Cancel and live-apply diffing. |
 | `TrayIconManager` | `UI/TrayIconManager.cs` | `NotifyIcon` control center: model menu, open Settings, toggle mode, exit; state-reflecting icon/tooltip. |
 | `FloatingOverlayViewModel` | `UI/ViewModels/FloatingOverlayViewModel.cs` | MVVM bindings for overlay: status text, audio level, waveform points, render mode. |
 | `ISettingsSection` | `UI/Settings/ISettingsSection.cs` | Contract (`Title`, `SearchKeywords`, `Load`, `Validate`, `Save`) for each Settings page. |
+| `NavNode` | `UI/Settings/NavNode.cs` | Hierarchical Settings navigation node with an optional selectable `ISettingsSection` host and child nodes. |
 | `SettingsInput` | `UI/Settings/SettingsInput.cs` | Shared helpers: positive-int/port parsing with validation, executable file picker. |
 | `GeneralSection`, `TranscriptionSection`, `DictationSection`, `TextInsertionSection`, `PostProcessingSection` | `UI/Settings/Sections/*.xaml(.cs)` | One `UserControl` per Settings page, registered in `SettingsWindow.xaml.cs`'s `_sections` list. |
 
