@@ -49,7 +49,7 @@ namespace VoiceType.UI
         private Icon? _baseIcon;
         private bool _isListening;
         private System.Windows.Threading.DispatcherTimer? _singleClickTimer;
-        private DateTime _suppressClickUntilUtc;
+        private DateTime _lastClickUpUtc = DateTime.MinValue;
         private bool _disposed;
 
         [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
@@ -144,32 +144,40 @@ namespace VoiceType.UI
             _notifyIcon.Text = IdleTooltip();
 
             // Left single-click toggles dictation when toggle mode is on. A short timer defers the
-            // single-click action so a double-click (open Settings) can cancel it and win instead.
+            // single-click action so a following second click (double-click -> open Settings) can
+            // cancel it and win instead. Double-click detection is done ourselves from MouseUp
+            // timestamps rather than relying on NotifyIcon.DoubleClick, which is not always raised
+            // reliably for tray icons (e.g. when hosted in the Windows 11 "overflow" flyout).
             _notifyIcon.MouseUp += OnTrayMouseUp;
-            _notifyIcon.DoubleClick += OnTrayDoubleClick;
         }
 
-        // Single vs double click disambiguation: MouseUp starts a timer; if a DoubleClick arrives
-        // first it cancels the timer and opens Settings. A double-click also raises MouseUp twice,
-        // so we suppress clicks briefly after a double-click to stop the toggle from firing too.
         private void OnTrayMouseUp(object? sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Middle)
+            {
+                if (_onViewHistory != null)
+                    SafeInvoke(() => _onViewHistory?.Invoke(), "View Transcript History (middle-click)");
+                return;
+            }
+
             if (e.Button != MouseButtons.Left) return;
+
+            var now = DateTime.UtcNow;
+            var isDoubleClick = now - _lastClickUpUtc <= TimeSpan.FromMilliseconds(SystemInformation.DoubleClickTime);
+            _lastClickUpUtc = isDoubleClick ? DateTime.MinValue : now;
+
+            if (isDoubleClick)
+            {
+                _singleClickTimer?.Stop();
+                SafeInvoke(_onOpenSettings, "Open Settings (double-click)");
+                return;
+            }
+
             if (!_toggleModeItem.Checked) return;
-            if (DateTime.UtcNow < _suppressClickUntilUtc) return;
 
             _singleClickTimer?.Stop();
             _singleClickTimer ??= CreateSingleClickTimer();
             _singleClickTimer.Start();
-        }
-
-        private void OnTrayDoubleClick(object? sender, EventArgs e)
-        {
-            _singleClickTimer?.Stop();
-            // Ignore the trailing MouseUp(s) of this double-click so the single-click toggle
-            // doesn't also fire (a double-click delivers MouseUp both before and after DoubleClick).
-            _suppressClickUntilUtc = DateTime.UtcNow.AddMilliseconds(SystemInformation.DoubleClickTime + 100);
-            SafeInvoke(_onOpenSettings, "Open Settings (double-click)");
         }
 
         private System.Windows.Threading.DispatcherTimer CreateSingleClickTimer()
