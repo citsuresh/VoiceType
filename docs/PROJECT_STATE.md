@@ -4,44 +4,29 @@
 > tasks/bugs, and recently changed files as of the last session.
 
 ## Current focus
-Implemented roadmap item #8 "Custom removal rules": an independently-toggleable post-processing
-step (`EnableCustomRemovalRules` + `CustomRemovalRules` list of `PhraseRemovalRule`) that strips a
-user-authored phrase from a sentence's start, end, or anywhere, via a new `RemovalScope` enum.
-Added `ApplyCustomRemovalRules` to `DictationSessionController.CleanTranscript`, run after custom
-word replacements: splits text into sentences on `.!?`, applies scope-specific regex removal per
-enabled rule (longest phrase first), then rejoins and re-collapses whitespace. New
-`CustomRemovalRulesSection` Settings page mirrors `CustomWordReplacementsSection`'s UX (DataGrid
-with Phrase/Scope columns, per-row enable checkbox, header tri-state "enable all", Add/Edit/Remove
-with a scope-picker modal, duplicate/blank validation), registered under the Post-processing nav
-category. Seeded `appsettings.json` with the feature disabled and an empty rule list (opt-in,
-no built-in phrases, per roadmap's safety note). Verified via a full solution build (0 errors)
-after the previously-running `VoiceType.exe` (which was locking the build output) was closed.
-Removed the now-shipped item #8 from `docs/ROADMAP.md` (last item, no renumbering needed).
+Fixed a tray-icon bug reported by the user: double-clicking the tray icon (to open Settings)
+would also start a dictation session. Root cause: single-vs-double-click disambiguation relied on
+`NotifyIcon.DoubleClick`, a separate OS-raised event that isn't always reliable/timely (e.g. for
+tray icons hosted in the Windows 11 "show hidden icons" overflow flyout), racing against a
+`DispatcherTimer` used to defer the single-click toggle action. Replaced this with fully
+self-contained double-click detection in `TrayIconManager.OnTrayMouseUp`: it now compares the
+current `MouseUp` timestamp against the previous one (`SystemInformation.DoubleClickTime`) itself,
+with no dependency on the `DoubleClick` event at all. Also added a new feature in the same
+handler/session: middle-click on the tray icon now opens the transcript history window (reuses
+the existing `_onViewHistory` callback already wired for the "View Transcript History" menu item).
+Both changes were committed and pushed to `origin/main` (commit `d62959b`).
 
 ## Recently changed files
-- `VoiceType/VoiceType/Infrastructure/Config/VoiceTypeSettings.cs` — added `RemovalScope` enum,
-  `PhraseRemovalRule` model, `EnableCustomRemovalRules` (default false), `CustomRemovalRules`
-  (default empty list).
-- `VoiceType/VoiceType/Core/DictationSessionController.cs` — added `ApplyCustomRemovalRules`
-  (sentence-split, scope-aware regex removal); wired into `CleanTranscript` after
-  `ApplyCustomWordReplacements`.
-- `VoiceType/VoiceType/UI/Settings/Sections/CustomRemovalRulesSection.xaml(.cs)` — new Settings
-  page (created this session), including a `RemovalRuleItem` view-model with `ScopeDisplay`.
-- `VoiceType/VoiceType/UI/SettingsWindow.xaml.cs` — registered the new section under
-  Post-processing (both `_sections` list and nav tree).
-- `VoiceType/VoiceType/appsettings.json` — added `EnableCustomRemovalRules`/`CustomRemovalRules`
-  defaults (disabled, empty).
-- `docs/ROADMAP.md` — removed shipped item #8 (last item in the list; no renumbering needed).
+- `VoiceType/VoiceType/UI/TrayIconManager.cs` — removed `_notifyIcon.DoubleClick` subscription and
+  the `_suppressClickUntilUtc`/`OnTrayDoubleClick` race-prone logic; `OnTrayMouseUp` now (1) detects
+  double-click itself from `MouseUp` timestamps to open Settings, and (2) handles
+  `MouseButtons.Middle` to invoke `_onViewHistory` and open transcript history.
 
 ## Open tasks / backlog
-- Changes have not yet been committed or pushed — commit/push when the user confirms testing is
-  done (per user's global instruction: don't commit/push automatically).
-- Consider adding focused unit tests for `ApplyCustomRemovalRules` (start/end/anywhere scope
-  matching, multi-sentence input) if/when a test project is introduced.
-- No further roadmap items are pending from this session's scope; next priority is whatever the
-  user picks from the remaining roadmap items (1–7).
+- No further roadmap items were addressed this session.
 
 ## Known issues
-- None known; full solution build succeeds with 0 errors as of this session. An earlier build
-  attempt failed only because `VoiceType.exe` was running and locking the output — not a code
-  issue.
+- None known from this session's changes; solution build succeeded after the fix. (Note: while
+  the app was actively being debugged/running, a rebuild attempt reported the change wasn't
+  applied to the running process — expected, not a bug; requires stopping debugging to pick up
+  the new build.)
