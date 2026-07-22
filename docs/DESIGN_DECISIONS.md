@@ -53,6 +53,15 @@
 
 ## 2026
 
+- **2026-07-22 — Persist transcript comparison highlights as semantic spans.** Transcript history
+  stores the exact raw Whisper and final post-processed strings plus offset/length spans marked
+  `removed`, `modified`, or `added`; the UI maps these semantic kinds to its red/yellow/green
+  presentation. Rationale: avoids ambiguity and escaping requirements of inline bracket markup
+  when dictation legitimately contains parentheses, brackets, code, or punctuation, while keeping
+  persisted entries independent of WPF colors and controls. Alternatives considered: persisting
+  WPF rich-text formatting, storing every rendered token, and embedding marker syntax in text;
+  all were rejected as brittle, presentation-coupled, or unnecessarily complex.
+
 - **2026-07-22 — Defer global TreeView migration while separating post-processing rule categories.**
   The current implementation should retain the existing flat settings ListBox and add the
   post-processing categories as separate right-side GroupBoxes; a later navigation enhancement

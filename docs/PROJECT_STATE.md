@@ -4,28 +4,21 @@
 > tasks/bugs, and recently changed files as of the last session.
 
 ## Current focus
-TreeView navigation is implemented for the Settings window. The existing settings pages remain
-selectable leaf nodes, while the navigation model now supports expandable parent categories for
-future settings sub-pages.
+Specified a transcript-comparison preview and persisted history feature for post-processing.
+The feature has not been implemented; `docs/NEW_FEATURE_SPECS.md` is the implementation handoff.
 
 ## Recently changed files
-- `VoiceType/VoiceType/UI/SettingsWindow.xaml` — replaced the flat settings `ListBox` with a
-  searchable `TreeView`.
-- `VoiceType/VoiceType/UI/SettingsWindow.xaml.cs` — added recursive tree filtering, selected-page
-  preservation, and safe handling for non-selectable parent categories.
-- `VoiceType/VoiceType/UI/Settings/NavNode.cs` — added the hierarchy-aware navigation node model.
-- `VoiceType/docs/ROADMAP.md` — removed the shipped TreeView backlog item and renumbered the remaining
-  items.
-- `VoiceType/docs/PROJECT_STATE.md` — overwritten for this session snapshot.
-- `VoiceType/docs/DESIGN_DECISIONS.md` — appended the TreeView hierarchy decision.
-- `VoiceType/docs/CODE_SUMMARY.md` — documented the `NavNode` navigation model.
+- `docs/NEW_FEATURE_SPECS.md` — created the feature specification for the cursor-adjacent preview
+  bulb, chat-card comparison popup, semantic diff highlighting, and bounded `history.json` storage.
+- `docs/PROJECT_STATE.md` — overwritten for this session snapshot.
+- `docs/DESIGN_DECISIONS.md` — appended the persisted semantic-highlight decision.
 
 ## Open tasks / backlog
-See `docs/ROADMAP.md` for the full, ordered backlog. The next relevant work is independently
-configurable post-processing settings and rules, with future child pages under `Post-processing`.
+- Implement the transcript-comparison bulb, popup, token-aware diff, and history from
+  `docs/NEW_FEATURE_SPECS.md`.
+- Define the full history-window entry point, resilient app-data storage behavior, and the precise
+  keyboard/focus dismissal integration during implementation.
 
 ## Known issues
-- Parent category nodes are intentionally non-selectable; selecting one keeps the current details
-  page visible.
-- Additional post-processing settings and rule application are not implemented.
-- The concise-prompt transformation provider is not implemented.
+- No application code changed in this session.
+- Build validation could not run because VoiceType was being debugged/running.
