@@ -73,11 +73,11 @@ graph LR
 | `GeneralSection`, `TranscriptionSection`, `DictationSection`, `TextInsertionSection`, `PostProcessingSection` | `UI/Settings/Sections/*.xaml(.cs)` | One `UserControl` per Settings page, registered in `SettingsWindow.xaml.cs`'s `_sections` list. |
 | `TranscriptDiffService` | `Core/Diff/TranscriptDiffService.cs` | Word/token-aware diff producing `removed`/`modified`/`added` highlight spans for the raw-vs-final transcript. |
 | `TranscriptPreviewState` | `Core/Preview/TranscriptPreviewState.cs` | Shared "latest comparison entry" state, injected into the controller so the bulb/comparison popup can retrieve it without a direct call-site dependency. |
-| `TranscriptHistoryService` | `Infrastructure/History/TranscriptHistoryService.cs` | Loads/saves bounded (50-entry) transcript comparison history to `%LOCALAPPDATA%\VoiceType\history.json`. |
+| `TranscriptHistoryService` | `Infrastructure/History/TranscriptHistoryService.cs` | Loads/saves bounded (50-entry) transcript comparison history to `%LOCALAPPDATA%\VoiceType\history.json`; `ClearAll()` empties and persists an empty store. |
 | `TranscriptHistoryStore` | `Infrastructure/History/TranscriptHistoryStore.cs` | Versioned JSON root (`version` + `entries`) persisted by `TranscriptHistoryService`. |
 | `ComparisonEntry`, `HighlightKind`, `HighlightSpan` | `Models/*.cs` | DTOs for one You-spoke/Final-text comparison and its semantic highlight spans. |
 | `TranscriptBulbWindow` | `UI/TranscriptBulbWindow.xaml(.cs)` | Non-activating, cursor-adjacent bulb shown after an insertion that changed the transcript; dismisses on typing/foreground change. |
-| `ComparisonWindow` | `UI/ComparisonWindow.xaml(.cs)` | Non-modal chat-card popup/history browser rendering `ComparisonEntry` highlights. |
+| `ComparisonWindow` | `UI/ComparisonWindow.xaml(.cs)` | Non-modal chat-card popup/history browser rendering `ComparisonEntry` highlights; has a "Clear History" button (visible when `HistoryService` is set) and tracks all open instances statically so `NotifyNewEntry`/`GetOpenWindow` can push live updates and let callers reuse an already-open window instead of stacking duplicates. |
 
 ## Key flows
 

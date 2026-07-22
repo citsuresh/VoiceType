@@ -94,3 +94,29 @@
   needed to simply view history) and auto-showing history on startup (rejected as intrusive for a
   windowless app).
 
+- **2026-07-22 — History is always persisted; the bulb is shown only when text actually
+  changed.** `RecordComparisonAndShowBulb` used to skip persisting a `ComparisonEntry` entirely
+  when raw and final text were identical, so unmodified dictations never appeared in history.
+  Changed to always persist an entry (with empty highlight spans when nothing changed) and notify
+  any open `ComparisonWindow` immediately, while still only showing the post-insertion bulb when
+  post-processing actually altered the text. Rationale: history should be a complete record of
+  what was dictated, not just a diff log; the bulb remains change-triggered since there is nothing
+  meaningful to compare otherwise.
+
+- **2026-07-22 — Case-only token differences are treated as `Modified`, not silently equal.**
+  `TranscriptDiffService.ComputeDiffOps` matches tokens with `OrdinalIgnoreCase` (so token
+  alignment is robust to capitalization), but this meant a sentence-capitalization change (e.g.
+  `interesting` → `Interesting` from `CapitalizeSentences`) produced zero highlight spans and,
+  combined with the previous history-skip behavior, silently suppressed both the bulb and the
+  history entry. Matched-but-case-differing tokens now emit a `Modified` highlight span on both
+  sides. Alternatives considered: switching the LCS match to `Ordinal` (rejected — would fragment
+  otherwise-identical runs into spurious delete/insert pairs for every capitalization change).
+
+- **2026-07-22 — Hardcoded (non-configurable) stray-punctuation stripping after parenthesis
+  replacements.** whisper.cpp's punctuation model frequently emits a spurious `?`/`.`/`,`
+  immediately after a spoken "open parenthesis"/"close parenthesis" phrase (an ASR artifact, not
+  something the user said). `ApplySpokenPunctuation` now swallows one such trailing mark, but only
+  for the two parenthesis rules specifically, and only as a hardcoded pattern extension — not a
+  user-facing setting, since this is a narrow, deterministic ASR-artifact cleanup rather than a
+  general punctuation preference.
+
