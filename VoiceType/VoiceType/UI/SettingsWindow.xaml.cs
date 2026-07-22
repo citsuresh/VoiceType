@@ -37,23 +37,41 @@ namespace VoiceType.UI
             _settings = Application.Current?.Resources["Settings"] as VoiceTypeSettings
                         ?? SettingsLoader.Load();
 
+            var generalSection = new GeneralSection();
+            var transcriptionSection = new TranscriptionSection();
+            var dictationSection = new DictationSection();
+            var textInsertionSection = new TextInsertionSection();
+            var normalizationSection = new NormalizationSection();
+            var fillerWordsSection = new FillerWordsSection();
+
             _sections = new List<UserControl>
             {
-                new GeneralSection(),
-                new TranscriptionSection(),
-                new DictationSection(),
-                new TextInsertionSection(),
-                new PostProcessingSection(),
+                generalSection,
+                transcriptionSection,
+                dictationSection,
+                textInsertionSection,
+                normalizationSection,
+                fillerWordsSection,
             };
 
             foreach (var section in _sections)
                 ((ISettingsSection)section).Load(_settings);
 
-            // Flat for now: every section is a selectable leaf. Nesting real child pages (e.g.
-            // future Post-processing sub-pages) only requires populating a node's Children.
-            _rootNodes = _sections
-                .Select(s => new NavNode(((ISettingsSection)s).Title, s))
-                .ToList();
+            _rootNodes = new List<NavNode>
+            {
+                new(((ISettingsSection)generalSection).Title, generalSection),
+                new(((ISettingsSection)transcriptionSection).Title, transcriptionSection),
+                new(((ISettingsSection)dictationSection).Title, dictationSection),
+                new(((ISettingsSection)textInsertionSection).Title, textInsertionSection),
+                new("Post-processing")
+                {
+                    Children =
+                    {
+                        new(((ISettingsSection)normalizationSection).Title, normalizationSection),
+                        new(((ISettingsSection)fillerWordsSection).Title, fillerWordsSection),
+                    }
+                }
+            };
 
             RefreshNavTree(string.Empty);
         }

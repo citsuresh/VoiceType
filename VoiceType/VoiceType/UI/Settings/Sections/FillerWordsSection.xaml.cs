@@ -8,34 +8,26 @@ using VoiceType.Infrastructure.Config;
 namespace VoiceType.UI.Settings.Sections
 {
     /// <summary>
-    /// Post-processing settings: the toggleable transcript normalization steps (trim, collapse
-    /// spaces, capitalize sentences, add trailing period) and the editable filler-word list.
-    /// These feed the pipeline in <see cref="Core.DictationSessionController"/>.
+    /// Settings for optional removal of configured filler words and phrases.
     /// </summary>
-    public partial class PostProcessingSection : UserControl, ISettingsSection
+    public partial class FillerWordsSection : UserControl, ISettingsSection
     {
-        // Backing collection for the filler-word ListBox so Add/Edit/Remove update the UI live.
         private readonly ObservableCollection<string> _fillerWords = new();
 
-        public PostProcessingSection()
+        public FillerWordsSection()
         {
             InitializeComponent();
             FillerWordsListBox.ItemsSource = _fillerWords;
         }
 
-        public string Title => "Post-processing";
+        public string Title => "Filler words";
 
         public string SearchKeywords =>
-            "post-processing punctuation capitalize capitalization filler whitespace trim collapse spaces cleanup normalize period sentence";
+            "post-processing filler words phrases remove um uh uhm er erm ah mm mhm hmm";
 
         public void Load(VoiceTypeSettings settings)
         {
             ArgumentNullException.ThrowIfNull(settings);
-
-            TrimWhitespaceCheckBox.IsChecked = settings.PostProcessTrimWhitespace;
-            CollapseSpacesCheckBox.IsChecked = settings.PostProcessCollapseSpaces;
-            CapitalizeSentencesCheckBox.IsChecked = settings.PostProcessCapitalizeSentences;
-            AddTrailingPeriodCheckBox.IsChecked = settings.PostProcessAddTrailingPeriod;
 
             RemoveFillerWordsCheckBox.IsChecked = settings.RemoveFillerWords;
 
@@ -51,7 +43,6 @@ namespace VoiceType.UI.Settings.Sections
 
         public bool Validate()
         {
-            // Reject blank or duplicate (case-insensitive) filler entries.
             var seen = new System.Collections.Generic.HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var word in _fillerWords)
             {
@@ -76,11 +67,6 @@ namespace VoiceType.UI.Settings.Sections
         public void Save(VoiceTypeSettings settings)
         {
             ArgumentNullException.ThrowIfNull(settings);
-
-            settings.PostProcessTrimWhitespace = TrimWhitespaceCheckBox.IsChecked == true;
-            settings.PostProcessCollapseSpaces = CollapseSpacesCheckBox.IsChecked == true;
-            settings.PostProcessCapitalizeSentences = CapitalizeSentencesCheckBox.IsChecked == true;
-            settings.PostProcessAddTrailingPeriod = AddTrailingPeriodCheckBox.IsChecked == true;
 
             settings.RemoveFillerWords = RemoveFillerWordsCheckBox.IsChecked == true;
             settings.FillerWords = _fillerWords.Select(w => w.Trim()).ToList();
@@ -144,7 +130,6 @@ namespace VoiceType.UI.Settings.Sections
             _fillerWords.RemoveAt(FillerWordsListBox.SelectedIndex);
         }
 
-        // Shows a small modal prompt for a single filler word/phrase. Returns null on cancel.
         private string? PromptForWord(string title, string initial)
         {
             var dialog = new Window

@@ -1,0 +1,22 @@
+<UserControl x:Class="VoiceType.UI.Settings.Sections.NormalizationSection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,12" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Text="Normalization" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" />
+
+        <GroupBox Header="Transcript cleanup">
+            <StackPanel>
+                <CheckBox x:Name="TrimWhitespaceCheckBox" Margin="0,6" Content="Trim leading and trailing whitespace" />
+                <CheckBox x:Name="CollapseSpacesCheckBox" Margin="0,6" Content="Collapse repeated spaces" />
+                <CheckBox x:Name="CapitalizeSentencesCheckBox" Margin="0,6" Content="Capitalize the start of each sentence" />
+                <CheckBox x:Name="AddTrailingPeriodCheckBox" Margin="0,6" Content="Add a trailing period when missing" />
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>
