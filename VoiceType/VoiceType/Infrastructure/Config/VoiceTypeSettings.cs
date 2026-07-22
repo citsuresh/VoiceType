@@ -143,7 +143,10 @@ namespace VoiceType.Infrastructure.Config
         // because they are often meaningful.
         public bool RemoveFillerWords { get; set; } = false;
         public System.Collections.Generic.List<string> FillerWords { get; set; } =
-            new System.Collections.Generic.List<string> { "um", "uh", "er", "ah", "mm", "hmm", "uh-huh" };
+            new System.Collections.Generic.List<string>
+            {
+                "um", "uh", "uhm", "er", "erm", "ah", "mm", "mhm", "hmm", "uh-huh", "uh huh", "mm-hmm"
+            };
 
         // Captures any JSON properties not represented by the strongly-typed members above so
         // they round-trip untouched through Load/Save. This keeps future (or non-settings)
