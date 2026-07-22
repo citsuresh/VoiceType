@@ -43,11 +43,7 @@ Commits (and pushes) in this repository must use:
 - Author/committer name: `Suresh Kumar Veluswamy`
 - Author/committer email: `citsuresh@rediffmail.com`
 
-Example:
-```powershell
-git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@rediffmail.com" commit --author="Suresh Kumar Veluswamy <citsuresh@rediffmail.com>" -m "..."
-```
-
+Example:git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@rediffmail.com" commit --author="Suresh Kumar Veluswamy <citsuresh@rediffmail.com>" -m "..."
 ## Documentation
 - Update `README.md` when user-visible behavior changes; update `ROADMAP.md` (remove + renumber,
   no gaps) when a backlog item ships.
@@ -74,6 +70,9 @@ Update them as follows:
 
 Keep all memory files concise — they exist to reduce token usage on future re-reads, not to serve
 as exhaustive documentation.
+
+## External Project Exploration
+When exploring external projects for VoiceType, use them only as conceptual references; do not copy their code, and record relevant repository references in the roadmap where useful.
 
 ## Build & verify
 - Build via the solution `VoiceType/VoiceType.slnx` (or `dotnet build`).

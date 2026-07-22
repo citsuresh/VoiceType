@@ -50,3 +50,16 @@
 - **Git identity is fixed for this repository.** All commits/pushes use
   `Suresh Kumar Veluswamy <citsuresh@rediffmail.com>` regardless of the local git config, to keep
   authorship consistent. See `.github/copilot-instructions.md`.
+
+## 2026
+
+- **2026-07-22 — Defer global TreeView migration while separating post-processing rule categories.**
+  The current implementation should retain the existing flat settings ListBox and add the
+  post-processing categories as separate right-side GroupBoxes; a later navigation enhancement
+  can migrate the full settings shell to a hierarchical TreeView. Additional rule-based settings
+  will remain separate categories for normalization, filler words, spoken punctuation, custom word
+  replacements, and initially empty `CustomRemovalRules`. Rationale: this keeps the immediate
+  post-processing work compatible with the current `ISettingsSection` architecture while avoiding
+  a large settings-page form. Alternatives considered: migrate the whole navigation immediately,
+  or place every rule list in one undifferentiated dictionary; both were rejected in favor of a
+  staged navigation change and explicit rule semantics.

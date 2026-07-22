@@ -4,34 +4,34 @@
 > tasks/bugs, and recently changed files as of the last session.
 
 ## Current focus
-Post-processing pipeline for transcripts (roadmap item, now shipped) plus persistent project
-memory bootstrap (this `docs/` folder).
+Designing the next settings and transcript post-processing work. The current sequence is to
+implement TreeView settings navigation first, followed by additional rule-based post-processing.
+The rule-based design intentionally excludes semantic understanding and LLMs.
 
 ## Recently changed files
-- `VoiceType/VoiceType/Core/DictationSessionController.cs` — `CleanTranscript` refactored into an
-  instance-based, ordered, toggleable pipeline; `NonSpeechMarkers` expanded with `(indistinct)`,
-  `[indistinct]`, `(mouse clicking)`, `(mouse click)`, `(clicking)`, `(keyboard clicking)`,
-  `(typing)`.
-- `VoiceType/VoiceType/Infrastructure/Config/VoiceTypeSettings.cs` — added
-  `PostProcessTrimWhitespace`, `PostProcessCollapseSpaces`, `PostProcessCapitalizeSentences`,
-  `PostProcessAddTrailingPeriod`, `RemoveFillerWords`, `FillerWords`.
-- `VoiceType/VoiceType/appsettings.json` — matching keys/defaults added.
-- `VoiceType/VoiceType/UI/Settings/Sections/PostProcessingSection.xaml(.cs)` — new Settings page
-  (normalization toggles + editable filler-word list), registered in `SettingsWindow.xaml.cs`.
-- `README.md` — new "Post-processing" section documenting the pipeline and marker examples.
-- `ROADMAP.md` — removed the shipped "Auto-punctuation / post-processing rules" item; remaining
-  items renumbered 1–6.
-- `.github/copilot-instructions.md` — created, then compacted to avoid duplicating detail already
-  in `README.md`/`ROADMAP.md`.
+- `VoiceType/VoiceType/Infrastructure/Config/VoiceTypeSettings.cs` — expanded the default
+  non-lexical filler list with `uhm`, `erm`, `mhm`, `uh huh`, and `mm-hmm`.
+- `VoiceType/VoiceType/appsettings.json` — synchronized the additional filler-word defaults.
+- `VoiceType/ROADMAP.md` — added roadmap items for local concise-prompt transformation, future
+  TreeView settings navigation, and additional post-processing settings.
+- `VoiceType/docs/FEATURE_COMPARISON.md` — added the feature comparison and local transformation
+  discussion.
+- `VoiceType/docs/PROJECT_STATE.md` — overwritten for this session's snapshot.
+- `VoiceType/docs/DESIGN_DECISIONS.md` — appended the settings-navigation and post-processing
+  design decision.
 
 ## Open tasks / backlog
-See root `ROADMAP.md` for the full, ordered backlog. Top of list as of this session:
-1. Custom word replacements / dictionary (extension point already left in `CleanTranscript`).
-2. Streaming (live) transcription polish.
-3. Language selection UI (ComboBox instead of free-text).
-4. First-run setup / model download helper.
-5. Tray-click toggle (hands-free) dictation mode.
-6. Installer and auto-start on Windows login *(deferred)*.
+See root `ROADMAP.md` for the full, ordered backlog. Current planned sequence:
+1. Implement TreeView navigation for the Settings window.
+2. Add independently configurable post-processing categories: normalization, filler words,
+   spoken punctuation, custom word replacements, and `CustomRemovalRules`.
+3. Keep `CustomRemovalRules` empty by default; users define phrase and sentence scope themselves.
+4. Keep semantic concise-prompt transformation and any `flan-t5-small` work separate from the
+   rule-based post-processing implementation.
+5. Consider TreeView migration before implementing the additional post-processing pages.
 
 ## Known issues
-None tracked as of this session.
+- The current settings UI still uses a flat ListBox; TreeView navigation is planned but not yet
+  implemented.
+- The additional post-processing settings and rule application are planned but not implemented.
+- The concise-prompt transformation provider is planned but not implemented.
