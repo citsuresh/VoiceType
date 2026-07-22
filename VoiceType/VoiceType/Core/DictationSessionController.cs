@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -422,6 +423,9 @@ namespace VoiceType.Core
             if (_settings.PostProcessCollapseSpaces)
                 text = Regex.Replace(text, @"[ \t]{2,}", " ");
 
+            if (_settings.EnableSpokenPunctuation)
+                text = ApplySpokenPunctuation(text);
+
             if (_settings.PostProcessCapitalizeSentences)
                 text = CapitalizeSentences(text);
 
@@ -478,6 +482,39 @@ namespace VoiceType.Core
         {
             if (string.IsNullOrEmpty(text)) return text;
             return SentenceStartRegex.Replace(text, m => m.Groups[1].Value + m.Groups[2].Value.ToUpperInvariant());
+        }
+
+        // Replaces enabled spoken-punctuation phrases (e.g. "comma", "new paragraph") with their
+        // literal output. Matching is whole-phrase and case-insensitive; longer phrases are applied
+        // first so "question mark" wins over "mark". Punctuation marks attach to the preceding word
+        // (the leading space is removed), while newline tokens expand to real line breaks.
+        private string ApplySpokenPunctuation(string text)
+        {
+            if (string.IsNullOrEmpty(text) || _settings.SpokenPunctuationRules is null) return text;
+
+            var rules = _settings.SpokenPunctuationRules
+                .Where(r => r.IsEnabled && !string.IsNullOrWhiteSpace(r.Phrase))
+                .OrderByDescending(r => r.Phrase.Trim().Length);
+
+            foreach (var rule in rules)
+            {
+                var replacement = rule.Replacement switch
+                {
+                    VoiceTypeSettings.LineBreakToken => "\n",
+                    VoiceTypeSettings.ParagraphBreakToken => "\n\n",
+                    _ => rule.Replacement
+                };
+
+                var pattern = @"(?<![\w-])" + Regex.Escape(rule.Phrase.Trim()) + @"(?![\w-])";
+                text = Regex.Replace(text, pattern, replacement.Replace("$", "$$"), RegexOptions.IgnoreCase);
+            }
+
+            // Attach punctuation to the preceding word and tidy spacing left by replacements.
+            text = Regex.Replace(text, @"[ \t]+([,.;:!?)])", "$1");
+            text = Regex.Replace(text, @"[ \t]{2,}", " ");
+            text = Regex.Replace(text, @"[ \t]+\n", "\n");
+            text = Regex.Replace(text, @"\n[ \t]+", "\n");
+            return text.Trim();
         }
 
         // Removes configured filler words/phrases using whole-word, case-insensitive matching, then

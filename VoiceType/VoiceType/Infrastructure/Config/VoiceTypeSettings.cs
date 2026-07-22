@@ -148,6 +148,64 @@ namespace VoiceType.Infrastructure.Config
                 "um", "uh", "uhm", "er", "erm", "ah", "mm", "mhm", "hmm", "uh-huh", "uh huh", "mm-hmm"
             };
 
+        // Master toggle for spoken-punctuation replacement plus the user-editable rule list. When
+        // enabled, each enabled rule converts a dictated phrase (e.g. "comma", "new paragraph")
+        // into its literal replacement. Matching is whole-phrase, case-insensitive, and applies
+        // longest phrases first (so "question mark" wins over "mark"). Enabled by default; disable
+        // to leave ordinary dictation unchanged.
+        public bool EnableSpokenPunctuation { get; set; } = true;
+        public System.Collections.Generic.List<SpokenPunctuationRule> SpokenPunctuationRules { get; set; } =
+            DefaultSpokenPunctuationRules();
+
+        // Sentinel replacement tokens persisted for the two whitespace outputs so the settings
+        // file and editor never store raw invisible newline characters. Expanded to real newlines
+        // by the post-processing pipeline.
+        public const string LineBreakToken = "<Line break>";
+        public const string ParagraphBreakToken = "<Paragraph break>";
+
+        /// <summary>
+        /// The built-in recommended spoken-punctuation rules. Standard punctuation is enabled by
+        /// default; technical-dictation rules are present but disabled so users can opt in without
+        /// re-typing them.
+        /// </summary>
+        public static System.Collections.Generic.List<SpokenPunctuationRule> DefaultSpokenPunctuationRules() =>
+            new System.Collections.Generic.List<SpokenPunctuationRule>
+            {
+                // Standard punctuation (enabled).
+                new("comma", ",", true),
+                new("period", ".", true),
+                new("full stop", ".", true),
+                new("question mark", "?", true),
+                new("exclamation mark", "!", true),
+                new("colon", ":", true),
+                new("semicolon", ";", true),
+                new("ellipsis", "...", true),
+                new("hyphen", "-", true),
+                new("dash", "-", true),
+                new("quote", "\"", true),
+                new("open quote", "\"", true),
+                new("close quote", "\"", true),
+                new("single quote", "'", true),
+                new("open parenthesis", "(", true),
+                new("close parenthesis", ")", true),
+                new("new line", LineBreakToken, true),
+                new("new paragraph", ParagraphBreakToken, true),
+
+                // Technical-dictation rules (present but disabled by default).
+                new("slash", "/", false),
+                new("backslash", "\\", false),
+                new("underscore", "_", false),
+                new("at sign", "@", false),
+                new("hash", "#", false),
+                new("asterisk", "*", false),
+                new("equals", "=", false),
+                new("plus", "+", false),
+                new("open bracket", "[", false),
+                new("close bracket", "]", false),
+                new("open brace", "{", false),
+                new("close brace", "}", false),
+            };
+
         // Captures any JSON properties not represented by the strongly-typed members above so
         // they round-trip untouched through Load/Save. This keeps future (or non-settings)
         // configuration sections in appsettings.json from being dropped when the user saves.
@@ -189,5 +247,26 @@ namespace VoiceType.Infrastructure.Config
             modifiers = (modifiers ?? string.Empty).Trim();
             return string.IsNullOrEmpty(modifiers) ? key : $"{modifiers}+{key}";
         }
+    }
+
+    /// <summary>
+    /// A single spoken-punctuation rule: a dictated <see cref="Phrase"/> that is replaced with
+    /// <see cref="Replacement"/> when <see cref="IsEnabled"/> is true. Replacement may be a
+    /// literal string or one of the newline tokens on <see cref="VoiceTypeSettings"/>.
+    /// </summary>
+    public class SpokenPunctuationRule
+    {
+        public SpokenPunctuationRule() { }
+
+        public SpokenPunctuationRule(string phrase, string replacement, bool isEnabled)
+        {
+            Phrase = phrase;
+            Replacement = replacement;
+            IsEnabled = isEnabled;
+        }
+
+        public string Phrase { get; set; } = string.Empty;
+        public string Replacement { get; set; } = string.Empty;
+        public bool IsEnabled { get; set; } = true;
     }
 }
