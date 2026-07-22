@@ -129,7 +129,16 @@ namespace VoiceType.Infrastructure.Config
         // paste the restored (old) content instead of the transcript.
         public bool EnableClipboardRestore { get; set; } = false;
 
-        // Post-processing pipeline toggles applied to the transcript before insertion (see
+        // Master toggle for persisted transcript history (see TranscriptHistoryService). Enabled
+        // by default; users can disable it from Settings if they don't want dictated text kept
+        // on disk. The ephemeral post-insertion comparison bulb/preview is unaffected by this setting.
+        public bool EnableTranscriptHistory { get; set; } = true;
+        // Maximum number of transcript-history entries retained on disk; oldest entries beyond
+        // this count are dropped as new ones are added. Matches TranscriptHistoryService's
+        // built-in default cap.
+        public int TranscriptHistoryRetentionLimit { get; set; } = 50;
+
+        // Post-processing pipeline toggles
         // DictationSessionController.CleanTranscript). Each normalization step is individually
         // toggleable; the built-in non-speech marker/ANSI cleanup always runs regardless.
         public bool PostProcessTrimWhitespace { get; set; } = true;
@@ -163,6 +172,14 @@ namespace VoiceType.Infrastructure.Config
         public bool EnableCustomWordReplacements { get; set; } = false;
         public System.Collections.Generic.List<WordReplacementRule> CustomWordReplacements { get; set; } =
             new System.Collections.Generic.List<WordReplacementRule>();
+
+        // Master toggle for custom phrase-removal rules plus the user-editable rule list. When
+        // enabled, each enabled rule strips a dictated phrase from the start, end, or anywhere in
+        // a sentence. Matching is whole-word/whole-phrase and case-insensitive. Empty and disabled
+        // by default since ordinary dictation should be unaffected unless explicitly configured.
+        public bool EnableCustomRemovalRules { get; set; } = false;
+        public System.Collections.Generic.List<PhraseRemovalRule> CustomRemovalRules { get; set; } =
+            new System.Collections.Generic.List<PhraseRemovalRule>();
 
         // Sentinel replacement tokens persisted for the two whitespace outputs so the settings
         // file and editor never store raw invisible newline characters. Expanded to real newlines
@@ -296,6 +313,42 @@ namespace VoiceType.Infrastructure.Config
 
         public string From { get; set; } = string.Empty;
         public string To { get; set; } = string.Empty;
+        public bool IsEnabled { get; set; } = true;
+    }
+
+    /// <summary>
+    /// Where within a sentence a <see cref="PhraseRemovalRule"/> phrase must appear to be removed.
+    /// </summary>
+    public enum RemovalScope
+    {
+        /// <summary>The phrase must appear at the start of a sentence.</summary>
+        StartOfSentence = 0,
+
+        /// <summary>The phrase must appear at the end of a sentence.</summary>
+        EndOfSentence = 1,
+
+        /// <summary>The phrase may appear anywhere within a sentence.</summary>
+        Anywhere = 2
+    }
+
+    /// <summary>
+    /// A single custom removal rule: a dictated <see cref="Phrase"/> that is stripped out when
+    /// <see cref="IsEnabled"/> is true and it appears within the sentence position described by
+    /// <see cref="Scope"/>. Matching is whole-word/whole-phrase and case-insensitive.
+    /// </summary>
+    public class PhraseRemovalRule
+    {
+        public PhraseRemovalRule() { }
+
+        public PhraseRemovalRule(string phrase, RemovalScope scope, bool isEnabled)
+        {
+            Phrase = phrase;
+            Scope = scope;
+            IsEnabled = isEnabled;
+        }
+
+        public string Phrase { get; set; } = string.Empty;
+        public RemovalScope Scope { get; set; } = RemovalScope.Anywhere;
         public bool IsEnabled { get; set; } = true;
     }
 }

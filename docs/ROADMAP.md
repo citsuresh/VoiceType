@@ -11,10 +11,6 @@ Status legend: 🟢 planned · 🟡 idea / needs design · ✅ done
 
 *Items are listed in intended implementation order.*
 
-> **External reference:** [FluidVoice for Windows](https://github.com/huslermaniac/fluidvoice-windows)
-> can be consulted for product ideas where noted below. It is GPLv3; use it only for conceptual
-> reference and independently design and implement all VoiceType code.
-
 ### 1. 🟡 Streaming (live) transcription polish
 Refine the existing `Stream` mode UX and partial-result handling.
 
@@ -45,20 +41,7 @@ Guide new users to download a Whisper model on first launch.
 - **Open question:** download source/URLs and checksum verification; whether to bundle a tiny
   model vs. always download.
 
-### 3. 🟡 Transcription history
-Keep an opt-in, local-only record of completed transcriptions.
-
-- **Why:** users often need to recover, copy, or reuse text after it has been inserted.
-- **Data:** persist timestamp, text, selected model/language, and insertion outcome in a bounded
-  local store. Do not record audio by default.
-- **UI:** add an on-demand History window with copy, delete, clear, and retention-limit controls.
-- **Privacy:** history is disabled by default or clearly consented to on first enable; provide a
-  one-click clear action and a documented on-disk location.
-- **Reference:** FluidVoice includes transcription-history workflows; use it only to inform
-  feature scope and privacy expectations.
-- **Open question:** JSON versus SQLite, and whether failed/empty transcriptions belong in history.
-
-### 4. 🟡 Selected-text voice rewrite
+### 3. 🟡 Selected-text voice rewrite
 Allow users to select text, dictate an editing instruction, and replace the selection with a
 locally processed rewrite.
 
@@ -77,7 +60,7 @@ locally processed rewrite.
 - **Open question:** define the initial local transformation set and preview UX before considering
   remote or local model providers.
 
-### 5. 🟡 Hardware capability guidance
+### 4. 🟡 Hardware capability guidance
 Detect the available transcription runtime and guide users toward a practical model and mode.
 
 - **Why:** model size, RAM, CPU features, and installed whisper.cpp backends strongly affect the
@@ -92,7 +75,7 @@ Detect the available transcription runtime and guide users toward a practical mo
   detection against VoiceType's whisper.cpp runtimes and validate every recommendation locally.
 - **Open question:** which GPU/runtime checks are sufficiently reliable across packaged builds.
 
-### 6. 🟡 Installer and startup at Windows login *(deferred)*
+### 5. 🟡 Installer and startup at Windows login *(deferred)*
 Package VoiceType with a proper installer and offer startup at login as an independently usable
 setting.
 
@@ -107,7 +90,7 @@ setting.
   the checkbox is toggled (add on enable, remove on disable).
 - **Deferred:** implement alongside the installer effort so exe paths and lifecycle are stable.
 
-### 7. 🟡 Local concise-prompt transformation for AI coding assistants
+### 6. 🟡 Local concise-prompt transformation for AI coding assistants
 Convert long natural-language dictation into a concise, technically precise prompt when the user is
 dictating into an AI coding assistant such as GitHub Copilot.
 
@@ -131,20 +114,6 @@ dictating into an AI coding assistant such as GitHub Copilot.
 - **Open questions:** ONNX Runtime versus a separate local process, transformation hotkey versus
   automatic application profiles, model output-quality benchmarks, and the idle timeout for
   unloading the transformation model.
-
-### 8. 🟡 Custom removal rules
-Add a further post-processing setting under the `Post-processing` navigation category: a
-user-editable collection of phrase-removal rules, alongside the existing normalization,
-filler-word-removal, spoken-punctuation, and custom-word-replacement settings.
-
-- **Data:** an initially empty, independently enabled user-editable collection named
-  `CustomRemovalRules`. Each rule supports a phrase and scope: start of sentence, end of
-  sentence, or anywhere in a sentence.
-- **Safety:** keep ordinary dictation behavior unchanged unless the setting is enabled; do not
-  add built-in conversational removal phrases or attempt semantic task/context/constraint
-  extraction.
-- **Open question:** whether these rules apply to all dictation or only to a future explicit
-  concise-prompt mode; concise-prompt-only is the safer default.
 
 ---
 

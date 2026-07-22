@@ -41,10 +41,12 @@ namespace VoiceType.UI
             var transcriptionSection = new TranscriptionSection();
             var dictationSection = new DictationSection();
             var textInsertionSection = new TextInsertionSection();
+            var historySection = new HistorySection();
             var normalizationSection = new NormalizationSection();
             var fillerWordsSection = new FillerWordsSection();
             var spokenPunctuationSection = new SpokenPunctuationSection();
             var customWordReplacementsSection = new CustomWordReplacementsSection();
+            var customRemovalRulesSection = new CustomRemovalRulesSection();
 
             _sections = new List<UserControl>
             {
@@ -52,10 +54,12 @@ namespace VoiceType.UI
                 transcriptionSection,
                 dictationSection,
                 textInsertionSection,
+                historySection,
                 normalizationSection,
                 fillerWordsSection,
                 spokenPunctuationSection,
                 customWordReplacementsSection,
+                customRemovalRulesSection,
             };
 
             foreach (var section in _sections)
@@ -67,6 +71,7 @@ namespace VoiceType.UI
                 new(((ISettingsSection)transcriptionSection).Title, transcriptionSection),
                 new(((ISettingsSection)dictationSection).Title, dictationSection),
                 new(((ISettingsSection)textInsertionSection).Title, textInsertionSection),
+                new(((ISettingsSection)historySection).Title, historySection),
                 new("Post-processing")
                 {
                     Children =
@@ -75,6 +80,7 @@ namespace VoiceType.UI
                         new(((ISettingsSection)fillerWordsSection).Title, fillerWordsSection),
                         new(((ISettingsSection)spokenPunctuationSection).Title, spokenPunctuationSection),
                         new(((ISettingsSection)customWordReplacementsSection).Title, customWordReplacementsSection),
+                        new(((ISettingsSection)customRemovalRulesSection).Title, customRemovalRulesSection),
                     }
                 }
             };
@@ -191,6 +197,8 @@ namespace VoiceType.UI
             var previousServerHost = _settings.WhisperServerHost ?? string.Empty;
             var previousServerPort = _settings.WhisperServerPort;
             var previousServerArgs = _settings.WhisperServerArguments ?? string.Empty;
+            var previousHistoryEnabled = _settings.EnableTranscriptHistory;
+            var previousRetentionLimit = _settings.TranscriptHistoryRetentionLimit;
 
             foreach (var section in _sections)
                 ((ISettingsSection)section).Save(_settings);
@@ -256,6 +264,17 @@ namespace VoiceType.UI
 
             // Reflect the (possibly changed) tray-toggle setting on the tray context menu.
             app?.SyncTrayToggleMode(_settings.UseTrayIconToggle);
+
+            // History enabled/disabled: hide or show the tray "View Transcript History" item live.
+            if (previousHistoryEnabled != _settings.EnableTranscriptHistory)
+                app?.SyncTrayHistoryEnabled(_settings.EnableTranscriptHistory);
+
+            // Retention-limit change: trim the on-disk store to the new cap immediately.
+            if (previousRetentionLimit != _settings.TranscriptHistoryRetentionLimit &&
+                Application.Current?.Resources["TranscriptHistoryService"] is Infrastructure.History.TranscriptHistoryService historyService)
+            {
+                historyService.SetMaxEntries(_settings.TranscriptHistoryRetentionLimit);
+            }
 
             Close();
         }

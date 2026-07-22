@@ -42,6 +42,7 @@ namespace VoiceType.UI
         private readonly Action _onToggleDictation;
         private readonly Action<bool> _onToggleModeChanged;
         private readonly Action? _onViewHistory;
+        private readonly ToolStripMenuItem _viewHistoryItem;
         private Icon? _ownedIcon;
         private Icon? _recordingIconToggle;
         private Icon? _recordingIconHotkey;
@@ -71,7 +72,8 @@ namespace VoiceType.UI
             Action onToggleDictation,
             Action<bool> onToggleModeChanged,
             bool toggleModeEnabled,
-            Action? onViewHistory = null)
+            Action? onViewHistory = null,
+            bool historyEnabled = false)
         {
             ArgumentNullException.ThrowIfNull(onOpenSettings);
             ArgumentNullException.ThrowIfNull(onExit);
@@ -113,8 +115,11 @@ namespace VoiceType.UI
             var openSettingsItem = new ToolStripMenuItem("Open Settings");
             openSettingsItem.Click += (_, _) => SafeInvoke(onOpenSettings, "Open Settings");
 
-            var viewHistoryItem = new ToolStripMenuItem("View Transcript History");
-            viewHistoryItem.Click += (_, _) => SafeInvoke(() => _onViewHistory?.Invoke(), "View Transcript History");
+            _viewHistoryItem = new ToolStripMenuItem("View Transcript History")
+            {
+                Visible = _onViewHistory != null && historyEnabled
+            };
+            _viewHistoryItem.Click += (_, _) => SafeInvoke(() => _onViewHistory?.Invoke(), "View Transcript History");
 
             var exitItem = new ToolStripMenuItem("Exit");
             exitItem.Click += (_, _) => SafeInvoke(onExit, "Exit");
@@ -124,7 +129,7 @@ namespace VoiceType.UI
             _menu.Items.Add(_toggleModeItem);
             _menu.Items.Add(openSettingsItem);
             if (_onViewHistory != null)
-                _menu.Items.Add(viewHistoryItem);
+                _menu.Items.Add(_viewHistoryItem);
             _menu.Items.Add(new ToolStripSeparator());
             _menu.Items.Add(exitItem);
 
@@ -244,6 +249,24 @@ namespace VoiceType.UI
                 if (!_isListening)
                     _notifyIcon.Text = IdleTooltip();
             }
+
+            var dispatcher = System.Windows.Application.Current?.Dispatcher;
+            if (dispatcher != null && !dispatcher.CheckAccess())
+                dispatcher.Invoke(Apply);
+            else
+                Apply();
+        }
+
+        /// <summary>
+        /// Shows or hides the "View Transcript History" menu item to match the persisted
+        /// EnableTranscriptHistory setting (e.g. after the user changes it in the Settings window).
+        /// No-ops if no history callback was ever supplied. Safe to call from any thread.
+        /// </summary>
+        public void SetHistoryEnabled(bool enabled)
+        {
+            if (_disposed || _onViewHistory is null) return;
+
+            void Apply() => _viewHistoryItem.Visible = enabled;
 
             var dispatcher = System.Windows.Application.Current?.Dispatcher;
             if (dispatcher != null && !dispatcher.CheckAccess())

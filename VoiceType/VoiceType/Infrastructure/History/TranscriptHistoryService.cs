@@ -14,16 +14,47 @@ namespace VoiceType.Infrastructure.History
     /// </summary>
     public class TranscriptHistoryService
     {
-        public const int MaxEntries = 50;
+        public const int DefaultMaxEntries = 50;
 
         private readonly string _filePath;
         private readonly object _sync = new();
         private TranscriptHistoryStore _store;
 
-        public TranscriptHistoryService(string? filePath = null)
+        /// <summary>
+        /// Maximum number of entries retained on disk. Defaults to <see cref="DefaultMaxEntries"/>
+        /// but can be changed at runtime via <see cref="SetMaxEntries"/> (e.g. from a user-configurable
+        /// retention-limit setting).
+        /// </summary>
+        public int MaxEntries { get; private set; } = DefaultMaxEntries;
+
+        public TranscriptHistoryService(string? filePath = null, int maxEntries = DefaultMaxEntries)
         {
             _filePath = filePath ?? GetDefaultFilePath();
+            MaxEntries = maxEntries > 0 ? maxEntries : DefaultMaxEntries;
             _store = LoadFromDisk(_filePath);
+        }
+
+        /// <summary>
+        /// Updates the retention limit and immediately trims any excess oldest entries, saving the
+        /// result. Safe to call from any thread; used when the user changes the retention-limit
+        /// setting without restarting the app.
+        /// </summary>
+        public void SetMaxEntries(int maxEntries)
+        {
+            if (maxEntries <= 0) maxEntries = DefaultMaxEntries;
+            lock (_sync)
+            {
+                MaxEntries = maxEntries;
+                var trimmed = false;
+                while (_store.Entries.Count > MaxEntries)
+                {
+                    _store.Entries.RemoveAt(0);
+                    trimmed = true;
+                }
+
+                if (trimmed)
+                    SaveLocked();
+            }
         }
 
         /// <summary>

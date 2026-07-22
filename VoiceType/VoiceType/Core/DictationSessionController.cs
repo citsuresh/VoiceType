@@ -449,6 +449,9 @@ namespace VoiceType.Core
             if (_settings.EnableCustomWordReplacements)
                 text = ApplyCustomWordReplacements(text);
 
+            if (_settings.EnableCustomRemovalRules)
+                text = ApplyCustomRemovalRules(text);
+
             return text;
         }
 
@@ -576,6 +579,57 @@ namespace VoiceType.Core
             }
 
             return text;
+        }
+
+        // Removes enabled custom removal-rule phrases from the transcript. Each rule's scope
+        // determines where within a sentence the phrase must appear: at the start, at the end
+        // (just before the sentence-ending punctuation), or anywhere. Sentences are split on
+        // end punctuation (., !, ?); matching is whole-word/whole-phrase and case-insensitive,
+        // with longer phrases applied first so multi-word rules take precedence.
+        private string ApplyCustomRemovalRules(string text)
+        {
+            if (string.IsNullOrEmpty(text) || _settings.CustomRemovalRules is null) return text;
+
+            var rules = _settings.CustomRemovalRules
+                .Where(r => r.IsEnabled && !string.IsNullOrWhiteSpace(r.Phrase))
+                .OrderByDescending(r => r.Phrase.Trim().Length)
+                .ToList();
+            if (rules.Count == 0) return text;
+
+            // Split into sentences, keeping the trailing end-punctuation attached to each sentence.
+            var sentences = Regex.Split(text, @"(?<=[.!?])\s+");
+
+            for (int i = 0; i < sentences.Length; i++)
+            {
+                var sentence = sentences[i];
+                if (string.IsNullOrWhiteSpace(sentence)) continue;
+
+                foreach (var rule in rules)
+                {
+                    var phrase = Regex.Escape(rule.Phrase.Trim());
+                    switch (rule.Scope)
+                    {
+                        case RemovalScope.StartOfSentence:
+                            sentence = Regex.Replace(sentence, @"^\s*" + phrase + @"(?![\w-])[,]?\s*",
+                                string.Empty, RegexOptions.IgnoreCase);
+                            break;
+                        case RemovalScope.EndOfSentence:
+                            sentence = Regex.Replace(sentence, @"(?<![\w-])\s*" + phrase + @"\s*([.!?]*)$",
+                                "$1", RegexOptions.IgnoreCase);
+                            break;
+                        default:
+                            sentence = Regex.Replace(sentence, @"(?<![\w-])" + phrase + @"(?![\w-])",
+                                string.Empty, RegexOptions.IgnoreCase);
+                            break;
+                    }
+                }
+
+                sentences[i] = sentence.Trim();
+            }
+
+            var result = string.Join(" ", sentences.Where(s => !string.IsNullOrWhiteSpace(s)));
+            result = Regex.Replace(result, @"[ \t]{2,}", " ");
+            return result.Trim();
         }
 
         public DictationSessionController(VoiceTypeSettings settings)
@@ -1375,7 +1429,8 @@ namespace VoiceType.Core
                     finalHighlights,
                     CurrentModelDisplayName);
 
-                HistoryService?.AddEntry(entry);
+                if (_settings.EnableTranscriptHistory)
+                    HistoryService?.AddEntry(entry);
                 PreviewState?.SetCurrent(entry);
 
                 Application.Current?.Dispatcher?.BeginInvoke(new Action(() =>

@@ -66,7 +66,7 @@ namespace VoiceType
 
             // Transcript-comparison history persistence and shared "latest comparison" state for
             // the post-insertion bulb/comparison popup (see docs/NEW_FEATURE_SPECS.md).
-            var historyService = new Infrastructure.History.TranscriptHistoryService();
+            var historyService = new Infrastructure.History.TranscriptHistoryService(maxEntries: settings.TranscriptHistoryRetentionLimit);
             var previewState = new Core.Preview.TranscriptPreviewState();
             controller.HistoryService = historyService;
             controller.PreviewState = previewState;
@@ -148,6 +148,7 @@ namespace VoiceType
                 onToggleDictation: ToggleDictationFromTray,
                 onToggleModeChanged: OnTrayToggleModeChanged,
                 toggleModeEnabled: settings.UseTrayIconToggle,
+                historyEnabled: settings.EnableTranscriptHistory,
                 onViewHistory: () =>
                 {
                     var existing = UI.ComparisonWindow.GetOpenWindow();
@@ -328,6 +329,15 @@ namespace VoiceType
         public void SyncTrayToggleMode(bool enabled)
         {
             _trayIcon?.SetToggleModeEnabled(enabled);
+        }
+
+        /// <summary>
+        /// Updates the tray context-menu "View Transcript History" item visibility to match the
+        /// persisted EnableTranscriptHistory setting after the user changes it in the Settings window.
+        /// </summary>
+        public void SyncTrayHistoryEnabled(bool enabled)
+        {
+            _trayIcon?.SetHistoryEnabled(enabled);
         }
 
         /// <summary>
