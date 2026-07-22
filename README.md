@@ -138,6 +138,7 @@ toggleable steps in order:
 | Collapse repeated spaces | Reduces runs of spaces/tabs to a single space | On |
 | Capitalize sentences | Capitalizes the first letter of each sentence | On |
 | Remove filler words | Strips configured filler words/phrases | Off |
+| Custom word replacements | Replaces configured mis-heard words/phrases with a corrected spelling | Off |
 
 **Filler words** are matched **whole-word** and **case-insensitively**, so `um` is removed as a
 standalone word but left untouched inside `aluminum` or `album`. Multi-token phrases like
@@ -146,7 +147,15 @@ standalone word but left untouched inside `aluminum` or `album`. Multi-token phr
 disabled while **Remove filler words** is off. Lexical fillers (like/so/actually) are
 deliberately not seeded because they are often meaningful.
 
-All toggles and the filler-word list are persisted to
+**Custom word replacements** let you fix names, jargon, and acronyms that Whisper tends to
+mis-hear (e.g. `co pilot` → `Copilot`). Each rule maps a **From** word/phrase to a **To**
+replacement; matching is **whole-word/whole-phrase** and **case-insensitive**, and the
+replacement is always inserted exactly as typed (no attempt is made to preserve the casing of
+the matched text). The list starts empty and is edited with **Add / Edit / Remove**, with a
+per-row checkbox to enable/disable individual rules without deleting them; it's disabled while
+**Custom word replacements** is off. Replacements run after filler-word removal.
+
+All toggles and lists are persisted to
 [`appsettings.json`](VoiceType/VoiceType/appsettings.json) and take effect on the next
 dictation session. The built-in non-speech marker list lives in code and is not configurable.
 

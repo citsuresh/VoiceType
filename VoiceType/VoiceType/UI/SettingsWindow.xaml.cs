@@ -44,6 +44,7 @@ namespace VoiceType.UI
             var normalizationSection = new NormalizationSection();
             var fillerWordsSection = new FillerWordsSection();
             var spokenPunctuationSection = new SpokenPunctuationSection();
+            var customWordReplacementsSection = new CustomWordReplacementsSection();
 
             _sections = new List<UserControl>
             {
@@ -54,6 +55,7 @@ namespace VoiceType.UI
                 normalizationSection,
                 fillerWordsSection,
                 spokenPunctuationSection,
+                customWordReplacementsSection,
             };
 
             foreach (var section in _sections)
@@ -72,6 +74,7 @@ namespace VoiceType.UI
                         new(((ISettingsSection)normalizationSection).Title, normalizationSection),
                         new(((ISettingsSection)fillerWordsSection).Title, fillerWordsSection),
                         new(((ISettingsSection)spokenPunctuationSection).Title, spokenPunctuationSection),
+                        new(((ISettingsSection)customWordReplacementsSection).Title, customWordReplacementsSection),
                     }
                 }
             };

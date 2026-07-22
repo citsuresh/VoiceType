@@ -446,7 +446,8 @@ namespace VoiceType.Core
             if (_settings.RemoveFillerWords)
                 text = RemoveFillerWords(text);
 
-            // Extension point: word-replacement rules (roadmap item #2) go here, after filler removal.
+            if (_settings.EnableCustomWordReplacements)
+                text = ApplyCustomWordReplacements(text);
 
             return text;
         }
@@ -553,6 +554,28 @@ namespace VoiceType.Core
             text = Regex.Replace(text, @"[ \t]{2,}", " ");
             text = Regex.Replace(text, @"\s+([,.!?])", "$1");
             return text.Trim();
+        }
+
+        // Replaces enabled custom word-replacement rules (e.g. "co pilot" -> "Copilot") with
+        // their configured replacement text. Matching is whole-word/whole-phrase and
+        // case-insensitive; longer phrases are applied first so multi-word rules take
+        // precedence over single-word ones. The replacement is always inserted exactly as
+        // authored (no case-preservation of the matched text).
+        private string ApplyCustomWordReplacements(string text)
+        {
+            if (string.IsNullOrEmpty(text) || _settings.CustomWordReplacements is null) return text;
+
+            var rules = _settings.CustomWordReplacements
+                .Where(r => r.IsEnabled && !string.IsNullOrWhiteSpace(r.From))
+                .OrderByDescending(r => r.From.Trim().Length);
+
+            foreach (var rule in rules)
+            {
+                var pattern = @"(?<![\w-])" + Regex.Escape(rule.From.Trim()) + @"(?![\w-])";
+                text = Regex.Replace(text, pattern, rule.To.Replace("$", "$$"), RegexOptions.IgnoreCase);
+            }
+
+            return text;
         }
 
         public DictationSessionController(VoiceTypeSettings settings)

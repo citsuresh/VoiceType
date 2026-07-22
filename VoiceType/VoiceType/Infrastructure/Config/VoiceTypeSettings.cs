@@ -156,6 +156,14 @@ namespace VoiceType.Infrastructure.Config
         public System.Collections.Generic.List<SpokenPunctuationRule> SpokenPunctuationRules { get; set; } =
             DefaultSpokenPunctuationRules();
 
+        // Master toggle for custom word replacements plus the user-editable "from -> to" list.
+        // Matching is whole-word/whole-phrase and case-insensitive; the replacement text is
+        // always inserted exactly as authored (no case-preservation). Empty by default since
+        // useful entries are personal/domain-specific (names, jargon, acronyms).
+        public bool EnableCustomWordReplacements { get; set; } = false;
+        public System.Collections.Generic.List<WordReplacementRule> CustomWordReplacements { get; set; } =
+            new System.Collections.Generic.List<WordReplacementRule>();
+
         // Sentinel replacement tokens persisted for the two whitespace outputs so the settings
         // file and editor never store raw invisible newline characters. Expanded to real newlines
         // by the post-processing pipeline.
@@ -266,6 +274,28 @@ namespace VoiceType.Infrastructure.Config
 
         public string Phrase { get; set; } = string.Empty;
         public string Replacement { get; set; } = string.Empty;
+        public bool IsEnabled { get; set; } = true;
+    }
+
+    /// <summary>
+    /// A single custom word-replacement rule: a dictated <see cref="From"/> phrase that is
+    /// replaced with <see cref="To"/> when <see cref="IsEnabled"/> is true. Matching is
+    /// whole-word/whole-phrase and case-insensitive; <see cref="To"/> is inserted exactly as
+    /// authored.
+    /// </summary>
+    public class WordReplacementRule
+    {
+        public WordReplacementRule() { }
+
+        public WordReplacementRule(string from, string to, bool isEnabled)
+        {
+            From = from;
+            To = to;
+            IsEnabled = isEnabled;
+        }
+
+        public string From { get; set; } = string.Empty;
+        public string To { get; set; } = string.Empty;
         public bool IsEnabled { get; set; } = true;
     }
 }

@@ -15,21 +15,7 @@ Status legend: 🟢 planned · 🟡 idea / needs design · ✅ done
 > can be consulted for product ideas where noted below. It is GPLv3; use it only for conceptual
 > reference and independently design and implement all VoiceType code.
 
-### 1. 🟡 Custom word replacements / dictionary
-Per-user substitutions for names, jargon, and acronyms whisper tends to mis-hear.
-
-- **Why:** proper nouns and domain terms (product names, people, acronyms) are commonly wrong.
-- **Data:** a user-editable list of `from → to` pairs (case-insensitive match, whole-word by
-  default), stored in settings or a sidecar file (e.g. `replacements.json`).
-- **UI:** a small editable grid in the Settings window (add/remove rows).
-- **Integration:** apply at the dedicated extension point in the `CleanTranscript` pipeline,
-  after filler-word removal.
-- **Reference:** FluidVoice has a user-configured custom dictionary; use it only as product
-  inspiration for defining a focused VoiceType experience.
-- **Open question:** plain string replace vs. regex support; word-boundary handling and
-  preserving surrounding casing.
-
-### 2. 🟡 Streaming (live) transcription polish
+### 1. 🟡 Streaming (live) transcription polish
 Refine the existing `Stream` mode UX and partial-result handling.
 
 - **Why:** the backend already supports a `Stream` mode alongside `Server`/`Cli`, but its UX
@@ -40,7 +26,7 @@ Refine the existing `Stream` mode UX and partial-result handling.
   status-pill sizing work already done are a foundation for a live-preview affordance.
 - **Open question:** insert-as-you-go vs. insert-on-finalize; how to correct earlier partials.
 
-### 3. 🟡 First-run setup / model download helper
+### 2. 🟡 First-run setup / model download helper
 Guide new users to download a Whisper model on first launch.
 
 - **Why:** model binaries are intentionally **not** committed to git (too large for GitHub's
@@ -59,7 +45,7 @@ Guide new users to download a Whisper model on first launch.
 - **Open question:** download source/URLs and checksum verification; whether to bundle a tiny
   model vs. always download.
 
-### 4. 🟡 Transcription history
+### 3. 🟡 Transcription history
 Keep an opt-in, local-only record of completed transcriptions.
 
 - **Why:** users often need to recover, copy, or reuse text after it has been inserted.
@@ -72,7 +58,7 @@ Keep an opt-in, local-only record of completed transcriptions.
   feature scope and privacy expectations.
 - **Open question:** JSON versus SQLite, and whether failed/empty transcriptions belong in history.
 
-### 5. 🟡 Selected-text voice rewrite
+### 4. 🟡 Selected-text voice rewrite
 Allow users to select text, dictate an editing instruction, and replace the selection with a
 locally processed rewrite.
 
@@ -91,7 +77,7 @@ locally processed rewrite.
 - **Open question:** define the initial local transformation set and preview UX before considering
   remote or local model providers.
 
-### 6. 🟡 Hardware capability guidance
+### 5. 🟡 Hardware capability guidance
 Detect the available transcription runtime and guide users toward a practical model and mode.
 
 - **Why:** model size, RAM, CPU features, and installed whisper.cpp backends strongly affect the
@@ -106,7 +92,7 @@ Detect the available transcription runtime and guide users toward a practical mo
   detection against VoiceType's whisper.cpp runtimes and validate every recommendation locally.
 - **Open question:** which GPU/runtime checks are sufficiently reliable across packaged builds.
 
-### 7. 🟡 Installer and startup at Windows login *(deferred)*
+### 6. 🟡 Installer and startup at Windows login *(deferred)*
 Package VoiceType with a proper installer and offer startup at login as an independently usable
 setting.
 
@@ -121,7 +107,7 @@ setting.
   the checkbox is toggled (add on enable, remove on disable).
 - **Deferred:** implement alongside the installer effort so exe paths and lifecycle are stable.
 
-### 8. 🟡 Local concise-prompt transformation for AI coding assistants
+### 7. 🟡 Local concise-prompt transformation for AI coding assistants
 Convert long natural-language dictation into a concise, technically precise prompt when the user is
 dictating into an AI coding assistant such as GitHub Copilot.
 
@@ -146,26 +132,19 @@ dictating into an AI coding assistant such as GitHub Copilot.
   automatic application profiles, model output-quality benchmarks, and the idle timeout for
   unloading the transformation model.
 
-### 9. 🟡 Additional post-processing settings
-Expand transcript post-processing into independently configurable settings pages under the
-`Post-processing` navigation category.
+### 8. 🟡 Custom removal rules
+Add a further post-processing setting under the `Post-processing` navigation category: a
+user-editable collection of phrase-removal rules, alongside the existing normalization,
+filler-word-removal, spoken-punctuation, and custom-word-replacement settings.
 
-- **Normalization:** retain the existing whitespace, capitalization, and trailing-punctuation
-  options.
-- **Filler word removal:** retain the existing user-editable filler list and add the conservative
-  non-lexical defaults already identified; keep removal independently enableable.
-- **Spoken punctuation:** add an independently enabled, user-editable phrase-to-punctuation rule
-  list for terms such as `comma`, `period`, `question mark`, `new line`, and `new paragraph`.
-- **Custom word replacements:** add an independently enabled user-editable dictionary for technical
-  terms, names, acronyms, and application-specific replacements.
-- **Custom removal rules:** add an initially empty, independently enabled user-editable collection
-  named `CustomRemovalRules`. Each rule supports a phrase and scope: start of sentence, end of
+- **Data:** an initially empty, independently enabled user-editable collection named
+  `CustomRemovalRules`. Each rule supports a phrase and scope: start of sentence, end of
   sentence, or anywhere in a sentence.
-- **Safety:** keep ordinary dictation behavior unchanged unless the relevant setting is enabled;
-  do not add built-in conversational removal phrases or attempt semantic task/context/constraint
+- **Safety:** keep ordinary dictation behavior unchanged unless the setting is enabled; do not
+  add built-in conversational removal phrases or attempt semantic task/context/constraint
   extraction.
-- **Open question:** whether spoken-punctuation and custom-rule settings apply to all dictation or
-  only to a future explicit concise-prompt mode; concise-prompt-only is the safer default.
+- **Open question:** whether these rules apply to all dictation or only to a future explicit
+  concise-prompt mode; concise-prompt-only is the safer default.
 
 ---
 

@@ -1,0 +1,54 @@
+<UserControl x:Class="VoiceType.UI.Settings.Sections.CustomWordReplacementsSection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,12" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+        <Style TargetType="Button" x:Key="ListButton">
+            <Setter Property="Margin" Value="0,0,0,6" />
+            <Setter Property="Padding" Value="10,4" />
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Text="Custom word replacements" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" />
+
+        <GroupBox Header="Custom word replacements">
+            <StackPanel>
+                <CheckBox x:Name="EnableCustomWordReplacementsCheckBox" Margin="0,6" Content="Enable custom word replacements"
+                          Checked="EnableCustomWordReplacementsCheckBox_Changed" Unchecked="EnableCustomWordReplacementsCheckBox_Changed" />
+                <TextBlock Text="Replace a mis-heard name, term, or acronym with the correct spelling (e.g. &quot;co pilot&quot; -&gt; &quot;Copilot&quot;). Whole-word, case-insensitive. Uncheck a row to disable a rule without deleting it."
+                           Foreground="Gray" Margin="0,0,0,6" TextWrapping="Wrap" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="RulesGrid" Grid.Column="0" Height="240" Margin="0,0,8,0"
+                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                              HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" Width="Auto">
+                                <DataGridCheckBoxColumn.Header>
+                                    <CheckBox x:Name="EnableAllCheckBox" IsThreeState="True"
+                                              ToolTip="Enable or disable all rules"
+                                              Click="EnableAllCheckBox_Click" />
+                                </DataGridCheckBoxColumn.Header>
+                            </DataGridCheckBoxColumn>
+                            <DataGridTextColumn Header="From" Binding="{Binding From}" IsReadOnly="True" Width="*" />
+                            <DataGridTextColumn Header="To" Binding="{Binding To}" IsReadOnly="True" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Column="1">
+                        <Button x:Name="AddRuleButton" Content="Add" Style="{StaticResource ListButton}" Click="AddRuleButton_Click" />
+                        <Button x:Name="EditRuleButton" Content="Edit" Style="{StaticResource ListButton}" Click="EditRuleButton_Click" />
+                        <Button x:Name="RemoveRuleButton" Content="Remove" Style="{StaticResource ListButton}" Click="RemoveRuleButton_Click" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>
