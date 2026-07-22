@@ -27,6 +27,9 @@ namespace VoiceType.UI
         // Every section control, in navigation order. Each is a UserControl implementing ISettingsSection.
         private readonly List<UserControl> _sections;
 
+        // Root nodes of the navigation tree; leaves wrap a section from _sections.
+        private List<NavNode> _rootNodes = new();
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -46,52 +49,97 @@ namespace VoiceType.UI
             foreach (var section in _sections)
                 ((ISettingsSection)section).Load(_settings);
 
-            RefreshNavList(string.Empty);
-            if (NavList.Items.Count > 0)
-                NavList.SelectedIndex = 0;
+            // Flat for now: every section is a selectable leaf. Nesting real child pages (e.g.
+            // future Post-processing sub-pages) only requires populating a node's Children.
+            _rootNodes = _sections
+                .Select(s => new NavNode(((ISettingsSection)s).Title, s))
+                .ToList();
+
+            RefreshNavTree(string.Empty);
         }
 
         /// <summary>
-        /// Rebuilds the navigation list, filtering section titles by <paramref name="filter"/>.
-        /// The currently selected section is preserved when it still matches.
+        /// Rebuilds the navigation tree, filtering by <paramref name="filter"/> against each
+        /// selectable node's title and search keywords. A parent node is kept (with only its
+        /// matching children) when any descendant matches. The currently selected section is
+        /// preserved when it still matches.
         /// </summary>
-        private void RefreshNavList(string filter)
+        private void RefreshNavTree(string filter)
         {
-            var previous = NavList.SelectedItem as UserControl;
+            var previousSection = _rootNodes.SelectMany(FlattenNodes).FirstOrDefault(n => n.IsSelected)?.Section;
 
-            IEnumerable<UserControl> matches = _sections;
-            if (!string.IsNullOrWhiteSpace(filter))
+            List<NavNode> matches;
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                matches = _rootNodes;
+            }
+            else
             {
                 var term = filter.Trim();
-                matches = _sections.Where(s =>
-                {
-                    var section = (ISettingsSection)s;
-                    return section.Title.Contains(term, StringComparison.OrdinalIgnoreCase)
-                        || section.SearchKeywords.Contains(term, StringComparison.OrdinalIgnoreCase);
-                });
+                matches = _rootNodes
+                    .Select(n => FilterNode(n, term))
+                    .Where(n => n is not null)
+                    .Select(n => n!)
+                    .ToList();
             }
 
-            NavList.ItemsSource = matches
-                .Select(s => new NavItem(((ISettingsSection)s).Title, s))
+            NavTree.ItemsSource = matches;
+
+            var flattened = matches.SelectMany(FlattenNodes).Where(n => n.Section is not null).ToList();
+            var restored = previousSection is not null
+                ? flattened.FirstOrDefault(n => ReferenceEquals(n.Section, previousSection))
+                : null;
+
+            if (restored is not null)
+                restored.IsSelected = true;
+            else if (flattened.Count > 0)
+                flattened[0].IsSelected = true;
+        }
+
+        /// <summary>
+        /// Returns a filtered copy of <paramref name="node"/> (with only matching descendants)
+        /// when it or any descendant matches <paramref name="term"/>; otherwise null.
+        /// </summary>
+        private static NavNode? FilterNode(NavNode node, string term)
+        {
+            var section = node.Section as ISettingsSection;
+            var selfMatch = section is not null &&
+                (section.Title.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                 section.SearchKeywords.Contains(term, StringComparison.OrdinalIgnoreCase));
+
+            var filteredChildren = node.Children
+                .Select(c => FilterNode(c, term))
+                .Where(c => c is not null)
+                .Select(c => c!)
                 .ToList();
 
-            if (previous is not null)
-            {
-                var restored = NavList.Items.Cast<NavItem>().FirstOrDefault(n => ReferenceEquals(n.Section, previous));
-                if (restored is not null)
-                    NavList.SelectedItem = restored;
-            }
+            if (!selfMatch && filteredChildren.Count == 0)
+                return null;
 
-            if (NavList.SelectedItem is null && NavList.Items.Count > 0)
-                NavList.SelectedIndex = 0;
+            var result = new NavNode(node.Title, node.Section) { IsExpanded = true };
+            result.Children.AddRange(selfMatch ? node.Children : filteredChildren);
+            return result;
+        }
+
+        private static IEnumerable<NavNode> FlattenNodes(NavNode node)
+        {
+            yield return node;
+            foreach (var child in node.Children)
+                foreach (var descendant in FlattenNodes(child))
+                    yield return descendant;
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-            => RefreshNavList(SearchTextBox.Text);
+            => RefreshNavTree(SearchTextBox.Text);
 
-        private void NavList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void NavTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            SectionHost.Content = (NavList.SelectedItem as NavItem)?.Section;
+            // A parent category node (no Section) is non-selectable: it only groups children, so
+            // ignore its selection and leave the previously displayed section in place.
+            if (e.NewValue is not NavNode { Section: not null } node)
+                return;
+
+            SectionHost.Content = node.Section;
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -190,16 +238,16 @@ namespace VoiceType.UI
 
         /// <summary>
         /// Selects the navigation entry for <paramref name="section"/>, clearing any active search
-        /// filter first so the section is guaranteed to be present in the list.
+        /// filter first so the section is guaranteed to be present in the tree.
         /// </summary>
         private void SelectSection(UserControl section)
         {
             if (!string.IsNullOrEmpty(SearchTextBox.Text))
                 SearchTextBox.Text = string.Empty;
 
-            var item = NavList.Items.Cast<NavItem>().FirstOrDefault(n => ReferenceEquals(n.Section, section));
-            if (item is not null)
-                NavList.SelectedItem = item;
+            var node = _rootNodes.SelectMany(FlattenNodes).FirstOrDefault(n => ReferenceEquals(n.Section, section));
+            if (node is not null)
+                node.IsSelected = true;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
@@ -244,7 +292,5 @@ namespace VoiceType.UI
                 hotkeyManager.IsSuspended = suspended;
         }
 
-        /// <summary>Navigation list entry pairing a display title with its section control.</summary>
-        private sealed record NavItem(string Title, UserControl Section);
-    }
-}
+            }
+        }

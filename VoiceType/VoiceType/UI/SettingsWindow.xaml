@@ -22,15 +22,26 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Master: search + navigation list -->
+            <!-- Master: search + navigation tree --> 
             <DockPanel Grid.Column="0">
                 <TextBox x:Name="SearchTextBox" DockPanel.Dock="Top" Margin="0,0,0,8"
                          VerticalContentAlignment="Center" Padding="4,3"
                          TextChanged="SearchTextBox_TextChanged"
                          ToolTip="Filter settings sections" />
-                <ListBox x:Name="NavList" DisplayMemberPath="Title"
-                         SelectionChanged="NavList_SelectionChanged"
-                         HorizontalContentAlignment="Stretch" />
+                <TreeView x:Name="NavTree"
+                          SelectedItemChanged="NavTree_SelectedItemChanged">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <TextBlock Text="{Binding Title}" />
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
             </DockPanel>
 
             <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" />
