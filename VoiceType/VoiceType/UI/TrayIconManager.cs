@@ -41,6 +41,7 @@ namespace VoiceType.UI
         private readonly Action _onOpenSettings;
         private readonly Action _onToggleDictation;
         private readonly Action<bool> _onToggleModeChanged;
+        private readonly Action? _onViewHistory;
         private Icon? _ownedIcon;
         private Icon? _recordingIconToggle;
         private Icon? _recordingIconHotkey;
@@ -69,7 +70,8 @@ namespace VoiceType.UI
             Func<string, Task> onModelSelected,
             Action onToggleDictation,
             Action<bool> onToggleModeChanged,
-            bool toggleModeEnabled)
+            bool toggleModeEnabled,
+            Action? onViewHistory = null)
         {
             ArgumentNullException.ThrowIfNull(onOpenSettings);
             ArgumentNullException.ThrowIfNull(onExit);
@@ -78,6 +80,7 @@ namespace VoiceType.UI
             ArgumentNullException.ThrowIfNull(onModelSelected);
             ArgumentNullException.ThrowIfNull(onToggleDictation);
             ArgumentNullException.ThrowIfNull(onToggleModeChanged);
+            _onViewHistory = onViewHistory;
 
             _getModels = getModels;
             _getActiveModel = getActiveModel;
@@ -110,6 +113,9 @@ namespace VoiceType.UI
             var openSettingsItem = new ToolStripMenuItem("Open Settings");
             openSettingsItem.Click += (_, _) => SafeInvoke(onOpenSettings, "Open Settings");
 
+            var viewHistoryItem = new ToolStripMenuItem("View Transcript History");
+            viewHistoryItem.Click += (_, _) => SafeInvoke(() => _onViewHistory?.Invoke(), "View Transcript History");
+
             var exitItem = new ToolStripMenuItem("Exit");
             exitItem.Click += (_, _) => SafeInvoke(onExit, "Exit");
 
@@ -117,6 +123,8 @@ namespace VoiceType.UI
             _menu.Items.Add(new ToolStripSeparator());
             _menu.Items.Add(_toggleModeItem);
             _menu.Items.Add(openSettingsItem);
+            if (_onViewHistory != null)
+                _menu.Items.Add(viewHistoryItem);
             _menu.Items.Add(new ToolStripSeparator());
             _menu.Items.Add(exitItem);
 

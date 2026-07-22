@@ -15,7 +15,6 @@
                 <CheckBox x:Name="TrimWhitespaceCheckBox" Margin="0,6" Content="Trim leading and trailing whitespace" />
                 <CheckBox x:Name="CollapseSpacesCheckBox" Margin="0,6" Content="Collapse repeated spaces" />
                 <CheckBox x:Name="CapitalizeSentencesCheckBox" Margin="0,6" Content="Capitalize the start of each sentence" />
-                <CheckBox x:Name="AddTrailingPeriodCheckBox" Margin="0,6" Content="Add a trailing period when missing" />
             </StackPanel>
         </GroupBox>
     </StackPanel>

@@ -64,6 +64,15 @@ namespace VoiceType
             _settings = settings;
             _controller = controller;
 
+            // Transcript-comparison history persistence and shared "latest comparison" state for
+            // the post-insertion bulb/comparison popup (see docs/NEW_FEATURE_SPECS.md).
+            var historyService = new Infrastructure.History.TranscriptHistoryService();
+            var previewState = new Core.Preview.TranscriptPreviewState();
+            controller.HistoryService = historyService;
+            controller.PreviewState = previewState;
+            Resources["TranscriptHistoryService"] = historyService;
+            Resources["TranscriptPreviewState"] = previewState;
+
             // Start the foreground-window monitor on the UI thread (it needs a message pump) so we
             // always know the user's last real target window for tray-toggle dictation.
             _foregroundMonitor = new Infrastructure.Windowing.ForegroundWindowMonitor();
@@ -138,7 +147,20 @@ namespace VoiceType
                 onModelSelected: SwitchModelAsync,
                 onToggleDictation: ToggleDictationFromTray,
                 onToggleModeChanged: OnTrayToggleModeChanged,
-                toggleModeEnabled: settings.UseTrayIconToggle);
+                toggleModeEnabled: settings.UseTrayIconToggle,
+                onViewHistory: () =>
+                {
+                    var existing = UI.ComparisonWindow.GetOpenWindow();
+                    if (existing is not null)
+                    {
+                        existing.Activate();
+                        return;
+                    }
+
+                    var popup = new UI.ComparisonWindow { ShowActivated = true, HistoryService = historyService };
+                    popup.LoadEntries(historyService.GetEntries());
+                    popup.Show();
+                });
 
             // Reflect dictation state on the tray icon (mode-specific recording indicator) and
             // drive idle auto-stop only for tray-toggle sessions.

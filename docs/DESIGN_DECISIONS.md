@@ -32,11 +32,13 @@
 - **Transcript post-processing as a fixed-order, always-partially-on pipeline.** A first stage
   (ANSI escapes, transcript gutters, duplicate lines, a literal non-speech marker list) always
   runs and is not configurable. Subsequent normalization steps (trim, collapse spaces, capitalize
-  sentences, remove filler words, add trailing period) are individually toggleable via settings,
-  in a fixed code order. Rationale: keep behavior deterministic and cheap (runs on the UI/insert
-  path); a blanket `[...]`/`(...)` regex for non-speech tags was rejected because it could eat
-  legitimate dictation — an explicit, expandable literal list is used instead
-  (`NonSpeechMarkers` in `DictationSessionController.cs`).
+  sentences, remove filler words) are individually toggleable via settings, in a fixed code order.
+  Rationale: keep behavior deterministic and cheap (runs on the UI/insert path); a blanket
+  `[...]`/`(...)` regex for non-speech tags was rejected because it could eat legitimate dictation
+  — an explicit, expandable literal list is used instead (`NonSpeechMarkers` in
+  `DictationSessionController.cs`). A "trailing period" auto-add setting was removed after
+  discovering whisper.cpp already emits its own terminal punctuation for complete sentences,
+  making the setting a no-op in practice.
 
 - **Filler-word matching is whole-word and case-insensitive, not substring.** E.g. `um` must not
   match inside `aluminum`. Rationale: avoid corrupting legitimate words while still catching
@@ -81,3 +83,14 @@
   `Post-processing` child pages. Alternatives considered: extend `ISettingsSection` with hierarchy
   metadata or create selectable summary pages for every parent; both were unnecessary for the
   current navigation scope.
+
+- **2026-07-23 — Tray "View Transcript History" as the always-available history entry point.**
+  The comparison popup was only reachable by clicking the post-insertion bulb, so history built up
+  silently with no way to browse it outside that narrow window right after a dictation. Added an
+  optional `onViewHistory` callback to `TrayIconManager` that opens `ComparisonWindow` pre-loaded
+  with all persisted entries. Rationale: reuses the existing chat-card UI and `TranscriptHistoryService`
+  without new windows or view models; keeps the tray as the single control-center entry point.
+  Alternatives considered: a dedicated Settings section for history (deferred — no settings are
+  needed to simply view history) and auto-showing history on startup (rejected as intrusive for a
+  windowless app).
+

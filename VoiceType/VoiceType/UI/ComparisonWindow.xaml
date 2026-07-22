@@ -1,0 +1,41 @@
+<Window x:Class="VoiceType.UI.ComparisonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Transcript Comparison"
+        Height="560" Width="480"
+        MinHeight="300" MinWidth="360"
+        WindowStartupLocation="Manual"
+        ShowInTaskbar="False" Topmost="True"
+        Background="#FFF5F5F7"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="12,10,8,6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Transcript History" FontSize="15" FontWeight="SemiBold"
+                       Foreground="#FF202024" VerticalAlignment="Center" />
+            <Button x:Name="ClearHistoryButton" Grid.Column="1" Content="Clear History" Height="28"
+                    Padding="10,0" Margin="0,0,8,0" Background="Transparent" BorderThickness="1"
+                    BorderBrush="#FFC9C9CF" Foreground="#FF202024" FontSize="12" Visibility="Collapsed"
+                    Cursor="Hand" Click="ClearHistoryButton_Click" ToolTip="Delete all persisted history entries" />
+            <Button x:Name="CloseButton" Grid.Column="2" Content="&#10005;" Width="28" Height="28"
+                    Background="Transparent" BorderThickness="0" Foreground="#FF202024" FontSize="13"
+                    Cursor="Hand" Click="CloseButton_Click" ToolTip="Close (Esc)" />
+        </Grid>
+
+        <!-- Cards -->
+        <ScrollViewer x:Name="EntriesScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                      Padding="12,0,12,12">
+            <StackPanel x:Name="EntriesPanel" />
+        </ScrollViewer>
+    </Grid>
+</Window>

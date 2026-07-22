@@ -135,7 +135,6 @@ namespace VoiceType.Infrastructure.Config
         public bool PostProcessTrimWhitespace { get; set; } = true;
         public bool PostProcessCollapseSpaces { get; set; } = true;
         public bool PostProcessCapitalizeSentences { get; set; } = true;
-        public bool PostProcessAddTrailingPeriod { get; set; } = false;
 
         // Master toggle for filler-word removal plus the user-editable list of filler words/phrases.
         // Matching is whole-word and case-insensitive (so "um" isn't stripped from "aluminum").

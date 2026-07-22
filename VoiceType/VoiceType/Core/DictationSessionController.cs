@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -7,6 +8,10 @@ using System.Windows;
 using VoiceType.Infrastructure.Config;
 using VoiceType.Infrastructure.Logging;
 using System.Text.RegularExpressions;
+using VoiceType.Core.Diff;
+using VoiceType.Core.Preview;
+using VoiceType.Infrastructure.History;
+using VoiceType.Models;
 
 namespace VoiceType.Core
 {
@@ -20,6 +25,15 @@ namespace VoiceType.Core
         // Optional long-lived whisper-server client, injected by App when Mode == Server.
         // When set and ready, the non-stream transcription path uses it (with CLI fallback).
         public Infrastructure.Whisper.WhisperServerClient? ServerClient { get; set; }
+
+        // Optional transcript-comparison history persistence, injected by App at startup. When
+        // set, a successful insertion whose post-processing changed the transcript is recorded here
+        // and surfaced via a post-insertion bulb (see RecordComparisonAndShowBulb).
+        public TranscriptHistoryService? HistoryService { get; set; }
+
+        // Optional shared "latest comparison" state, injected by App at startup, so the bulb/
+        // comparison popup can retrieve the current entry without a direct call-site dependency.
+        public TranscriptPreviewState? PreviewState { get; set; }
         private DictationState _state = DictationState.Idle;
         private bool _pendingStartRequest = false;
         // Monotonic id bumped each time a session transitions Idle -> Listening. A start runs
@@ -409,8 +423,8 @@ namespace VoiceType.Core
         // Cleans and normalizes a raw transcript before insertion. This is a small, deterministic,
         // allocation-light pipeline. The first stage (ANSI/marker/gutter/duplicate-line cleanup)
         // always runs; the subsequent normalization steps are individually toggleable via settings:
-        // trim -> collapse double spaces -> capitalize sentences -> remove filler words ->
-        // add trailing period. Word-replacement rules (roadmap item #2) plug in after filler removal.
+        // trim -> collapse double spaces -> capitalize sentences -> remove filler words.
+        // Word-replacement rules (roadmap item #2) plug in after filler removal.
         private string CleanTranscript(string raw)
         {
             if (string.IsNullOrWhiteSpace(raw)) return string.Empty;
@@ -433,9 +447,6 @@ namespace VoiceType.Core
                 text = RemoveFillerWords(text);
 
             // Extension point: word-replacement rules (roadmap item #2) go here, after filler removal.
-
-            if (_settings.PostProcessAddTrailingPeriod)
-                text = AddTrailingPeriod(text);
 
             return text;
         }
@@ -506,6 +517,14 @@ namespace VoiceType.Core
                 };
 
                 var pattern = @"(?<![\w-])" + Regex.Escape(rule.Phrase.Trim()) + @"(?![\w-])";
+
+                // Hardcoded (not user-configurable): whisper.cpp's punctuation model frequently
+                // attaches a stray "?"/"."/"," right after a spoken parenthesis phrase (e.g. "...open
+                // parenthesis? Can we..."), which is not something the user actually said. Swallow one
+                // such trailing mark for parenthesis replacements only.
+                if (replacement is "(" or ")")
+                    pattern += @"[?.,]?";
+
                 text = Regex.Replace(text, pattern, replacement.Replace("$", "$$"), RegexOptions.IgnoreCase);
             }
 
@@ -534,14 +553,6 @@ namespace VoiceType.Core
             text = Regex.Replace(text, @"[ \t]{2,}", " ");
             text = Regex.Replace(text, @"\s+([,.!?])", "$1");
             return text.Trim();
-        }
-
-        // Ensures the text ends with terminal punctuation, adding a period when it doesn't.
-        private static string AddTrailingPeriod(string text)
-        {
-            if (string.IsNullOrEmpty(text)) return text;
-            var last = text[^1];
-            return last is '.' or '!' or '?' ? text : text + ".";
         }
 
         public DictationSessionController(VoiceTypeSettings settings)
@@ -1047,7 +1058,7 @@ namespace VoiceType.Core
                                 }
                                 catch { }
 
-                                await InsertTextOrNotifyAsync(cleaned);
+                                await InsertTextOrNotifyAsync(cleaned, result.Text);
 
                                 // If result.Text is empty, show buffered output for debugging
                                 if (string.IsNullOrWhiteSpace(cleaned))
@@ -1101,7 +1112,7 @@ namespace VoiceType.Core
                             // [BLANK_AUDIO]) so silence collapses to empty and shows the "no speech"
                             // pill instead of typing the marker at the cursor.
                             var finalText = CleanTranscript(result.Text ?? string.Empty);
-                            await InsertTextOrNotifyAsync(finalText);
+                            await InsertTextOrNotifyAsync(finalText, result.Text);
                         }
                         else if (result.TimedOut)
                         {
@@ -1211,7 +1222,13 @@ namespace VoiceType.Core
         /// before inserting text. If focus cannot be confirmed, the text is left on the
         /// clipboard and a non-intrusive notification tells the user it was copied.
         /// </summary>
-        private async Task InsertTextOrNotifyAsync(string text)
+        /// <param name="text">The post-processed ("Final text") transcript to insert.</param>
+        /// <param name="rawText">
+        /// The raw ("You spoke") transcript before <see cref="CleanTranscript"/>, used to record a
+        /// comparison-history entry and show the post-insertion bulb when it differs from
+        /// <paramref name="text"/>. Pass null when unavailable (comparison/bulb features are skipped).
+        /// </param>
+        private async Task InsertTextOrNotifyAsync(string text, string? rawText = null)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -1276,7 +1293,11 @@ namespace VoiceType.Core
                 try
                 {
                     var inserted = await injector.InsertTextAsync(text);
-                    if (inserted) Logger.Info("Text inserted into target application.");
+                    if (inserted)
+                    {
+                        Logger.Info("Text inserted into target application.");
+                        RecordComparisonAndShowBulb(rawText, text);
+                    }
                     else Logger.Error("Failed to insert text into target application.");
                 }
                 catch (Exception ex)
@@ -1299,6 +1320,114 @@ namespace VoiceType.Core
             }
 
             ShowClipboardFallbackNotification(text);
+        }
+
+        /// <summary>
+        /// Builds a comparison entry for the just-inserted text and persists it to
+        /// <see cref="HistoryService"/> (updating any open history window immediately) and
+        /// publishes it to <see cref="PreviewState"/>, regardless of whether post-processing
+        /// changed anything. The post-insertion bulb is only shown when post-processing actually
+        /// altered the text, since there is nothing meaningful to compare otherwise. No-ops
+        /// silently when the raw transcript is unavailable, or when history/preview services were
+        /// never wired up by the host application.
+        /// </summary>
+        private void RecordComparisonAndShowBulb(string? rawText, string finalText)
+        {
+            if (string.IsNullOrWhiteSpace(rawText)) return;
+
+            var textChanged = !string.Equals(rawText, finalText, StringComparison.Ordinal);
+
+            try
+            {
+                var (spokenHighlights, finalHighlights) = textChanged
+                    ? TranscriptDiffService.BuildHighlights(rawText, finalText)
+                    : (new List<HighlightSpan>(), new List<HighlightSpan>());
+
+                var entry = new ComparisonEntry(
+                    Guid.NewGuid(),
+                    DateTime.UtcNow,
+                    rawText,
+                    finalText,
+                    spokenHighlights,
+                    finalHighlights,
+                    CurrentModelDisplayName);
+
+                HistoryService?.AddEntry(entry);
+                PreviewState?.SetCurrent(entry);
+
+                Application.Current?.Dispatcher?.BeginInvoke(new Action(() =>
+                {
+                    UI.ComparisonWindow.NotifyNewEntry(entry);
+                    if (textChanged)
+                        ShowTranscriptBulb(entry);
+                }));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error recording transcript comparison: {ex}");
+            }
+        }
+
+        private UI.TranscriptBulbWindow? _transcriptBulb;
+
+        // Shows the post-insertion bulb near the current mouse cursor. Must run on the UI thread.
+        private void ShowTranscriptBulb(ComparisonEntry entry)
+        {
+            try
+            {
+                try { _transcriptBulb?.Close(); } catch { }
+
+                var targetHwnd = Native.GetForegroundWindow();
+                Native.GetCursorPos(out var cursorPos);
+
+                var bulb = new UI.TranscriptBulbWindow(targetHwnd) { ShowActivated = false };
+                bulb.PositionNear(new System.Drawing.Point(cursorPos.X, cursorPos.Y));
+                bulb.BulbClicked += (_, _) =>
+                {
+                    try
+                    {
+                        var existing = UI.ComparisonWindow.GetOpenWindow();
+                        if (existing is not null)
+                        {
+                            existing.Activate();
+                        }
+                        else
+                        {
+                            var popup = new UI.ComparisonWindow { ShowActivated = true, HistoryService = HistoryService };
+                            popup.LoadEntries(HistoryService?.GetEntries() ?? new[] { entry });
+                            popup.PositionNear(new Point(cursorPos.X, cursorPos.Y));
+                            popup.Show();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error($"Error opening comparison popup: {ex}");
+                    }
+                    finally
+                    {
+                        try { bulb.Close(); } catch { }
+                    }
+                };
+                bulb.Show();
+                _transcriptBulb = bulb;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error showing transcript bulb: {ex}");
+            }
+        }
+
+        // Minimal native helpers for cursor/foreground-window queries used by the transcript bulb.
+        private static class Native
+        {
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            public static extern IntPtr GetForegroundWindow();
+
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+            public static extern bool GetCursorPos(out POINT lpPoint);
+
+            public struct POINT { public int X; public int Y; }
         }
 
         /// <summary>

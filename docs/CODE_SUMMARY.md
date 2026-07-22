@@ -24,6 +24,11 @@ graph LR
     Controller --> Input[Infrastructure.Input.InputInjectionService]
     Controller --> Overlay[UI.BreathingOverlayWindow / FloatingOverlayViewModel]
     Controller --> Windowing[Infrastructure.Windowing.*]
+    Controller --> Diff[Core.Diff.TranscriptDiffService]
+    Controller --> History[Infrastructure.History.TranscriptHistoryService]
+    Controller --> Preview[Core.Preview.TranscriptPreviewState]
+    Controller --> Bulb[UI.TranscriptBulbWindow]
+    Bulb --> Comparison[UI.ComparisonWindow]
     Audio --> WavWriter[Infrastructure.Audio.WavFileSessionWriter]
     Whisper --> ChildJob[Infrastructure.Whisper.ChildProcessJob]
     App[App.xaml.cs] --> Tray
@@ -66,11 +71,19 @@ graph LR
 | `NavNode` | `UI/Settings/NavNode.cs` | Hierarchical Settings navigation node with an optional selectable `ISettingsSection` host and child nodes. |
 | `SettingsInput` | `UI/Settings/SettingsInput.cs` | Shared helpers: positive-int/port parsing with validation, executable file picker. |
 | `GeneralSection`, `TranscriptionSection`, `DictationSection`, `TextInsertionSection`, `PostProcessingSection` | `UI/Settings/Sections/*.xaml(.cs)` | One `UserControl` per Settings page, registered in `SettingsWindow.xaml.cs`'s `_sections` list. |
+| `TranscriptDiffService` | `Core/Diff/TranscriptDiffService.cs` | Word/token-aware diff producing `removed`/`modified`/`added` highlight spans for the raw-vs-final transcript. |
+| `TranscriptPreviewState` | `Core/Preview/TranscriptPreviewState.cs` | Shared "latest comparison entry" state, injected into the controller so the bulb/comparison popup can retrieve it without a direct call-site dependency. |
+| `TranscriptHistoryService` | `Infrastructure/History/TranscriptHistoryService.cs` | Loads/saves bounded (50-entry) transcript comparison history to `%LOCALAPPDATA%\VoiceType\history.json`. |
+| `TranscriptHistoryStore` | `Infrastructure/History/TranscriptHistoryStore.cs` | Versioned JSON root (`version` + `entries`) persisted by `TranscriptHistoryService`. |
+| `ComparisonEntry`, `HighlightKind`, `HighlightSpan` | `Models/*.cs` | DTOs for one You-spoke/Final-text comparison and its semantic highlight spans. |
+| `TranscriptBulbWindow` | `UI/TranscriptBulbWindow.xaml(.cs)` | Non-activating, cursor-adjacent bulb shown after an insertion that changed the transcript; dismisses on typing/foreground change. |
+| `ComparisonWindow` | `UI/ComparisonWindow.xaml(.cs)` | Non-modal chat-card popup/history browser rendering `ComparisonEntry` highlights. |
 
 ## Key flows
 
 - **Hold-to-talk dictation:** `GlobalHotkeyManager` (key down) → `DictationSessionController` starts session → `AudioCaptureService` records → (key up) → transcribe via `WhisperServerClient`/`WhisperProcessRunner`/`WhisperStreamClient` → `CleanTranscript` pipeline → `InputInjectionService` inserts text.
 - **Toggle (hands-free) dictation:** Tray single-click or toggle hotkey → same session/transcribe/insert path as above, plus optional idle auto-stop.
-- **Settings save:** `SettingsWindow.SaveButton_Click` → `Validate()` + `Save()` across all `ISettingsSection`s → `SettingsLoader.SaveAsync` → diff old/new values → live-apply (hotkeys, server restart, model switch, etc.).
+- **Settings save:** `SettingsWindow.SaveButton_Click` → `Validate()` + `Save()` across all `ISettingsSection`s → `SettingsLoader.SaveAsync` → diff old/new values → live
+- **Transcript comparison:** after a successful insertion, `DictationSessionController.RecordComparisonAndShowBulb` diffs raw vs. final text via `TranscriptDiffService`, appends a `ComparisonEntry` to `TranscriptHistoryService` (persisted to `history.json`), publishes it to `TranscriptPreviewState`, and shows `TranscriptBulbWindow` near the cursor; clicking the bulb (or the tray's "View Transcript History") opens `ComparisonWindow`.
 - **Model switch (tray menu):** `TrayIconManager` menu click → `WhisperProcessRunner.EnumerateModels()` list → update `VoiceTypeSettings.WhisperModelPath` → `WhisperServerClient` restarts (Server mode) or picked up next dictation (Cli/Stream).
 - **Text insertion fallback:** `FocusedControlInspector` checks focus → if not editable, `CopyToClipboardWhenNoEditable` copies text to clipboard + optional notification instead of typing/pasting.

@@ -1,0 +1,18 @@
+<Window x:Class="VoiceType.UI.TranscriptBulbWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TranscriptBulbWindow"
+        Height="30" Width="30"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize"
+        WindowStartupLocation="Manual">
+    <Border x:Name="BulbBorder" Width="28" Height="28" CornerRadius="14"
+            Background="#FFF4C430" Cursor="Hand"
+            MouseLeftButtonUp="BulbBorder_MouseLeftButtonUp">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="2" Opacity="0.45" />
+        </Border.Effect>
+        <TextBlock Text="&#128161;" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   IsHitTestVisible="False" />
+    </Border>
+</Window>

@@ -138,7 +138,6 @@ toggleable steps in order:
 | Collapse repeated spaces | Reduces runs of spaces/tabs to a single space | On |
 | Capitalize sentences | Capitalizes the first letter of each sentence | On |
 | Remove filler words | Strips configured filler words/phrases | Off |
-| Add trailing period | Appends a period when the text has no ending punctuation | Off |
 
 **Filler words** are matched **whole-word** and **case-insensitively**, so `um` is removed as a
 standalone word but left untouched inside `aluminum` or `album`. Multi-token phrases like
@@ -150,6 +149,23 @@ deliberately not seeded because they are often meaningful.
 All toggles and the filler-word list are persisted to
 [`appsettings.json`](VoiceType/VoiceType/appsettings.json) and take effect on the next
 dictation session. The built-in non-speech marker list lives in code and is not configurable.
+
+---
+
+## Transcript comparison and history
+
+After a successful insertion whose post-processing actually changed the text, a small yellow
+bulb appears near your cursor. It never takes focus, so it doesn't interrupt what you're doing,
+and it dismisses itself as soon as you start typing or switch windows.
+
+Clicking the bulb opens a non-modal **comparison** window with chat-style cards: **You spoke**
+(the raw Whisper output) and **Final text** (what was actually inserted). Individual changed
+words are highlighted — red for removed, green for added, yellow for modified — while unchanged
+text stays plain, so you can select and copy from either card.
+
+Every comparison is also appended to a bounded history (most recent 50 entries), persisted to
+`%LOCALAPPDATA%\VoiceType\history.json`. Use the tray icon's **View Transcript History** menu
+item to browse past comparisons at any time, not just right after a dictation.
 
 ---
 
