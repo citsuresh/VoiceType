@@ -128,6 +128,19 @@ namespace VoiceType.UI
             }
         }
 
+        /// <summary>
+        /// Applies the configured pill background color and opacity from settings. Falls back to
+        /// the default look if the configured color string fails to parse. Must be called on the
+        /// UI thread.
+        /// </summary>
+        public void ApplyAppearance(Infrastructure.Config.VoiceTypeSettings settings)
+        {
+            ArgumentNullException.ThrowIfNull(settings);
+            var brush = PillAppearance.CreateBrush(settings);
+            Pill.Background = brush;
+            ModelBubble.Background = brush;
+        }
+
         /// <summary>Positions the window at the bottom-center of the primary screen.</summary>
         public void PositionBottomCenter()
         {

@@ -43,7 +43,8 @@ Commits (and pushes) in this repository must use:
 - Author/committer name: `Suresh Kumar Veluswamy`
 - Author/committer email: `citsuresh@rediffmail.com`
 
-Example:git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@rediffmail.com" commit --author="Suresh Kumar Veluswamy <citsuresh@rediffmail.com>" -m "..."
+Example: `git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@rediffmail.com" commit --author="Suresh Kumar Veluswamy <citsuresh@rediffmail.com>" -m "..."`
+
 ## Documentation
 - Update `README.md` when user-visible behavior changes; update `docs/ROADMAP.md` (remove + renumber,
   no gaps) when a backlog item ships.
@@ -77,3 +78,9 @@ When exploring external projects for VoiceType, use them only as conceptual refe
 - Build via the solution `VoiceType/VoiceType.slnx` (or `dotnet build`).
 - The app must not be running when rebuilding, or the `Copy`/link step fails with a file-lock error
   (`VoiceType.exe` in use) — exit the tray app first.
+
+## File Editing Instructions
+- If a file edit tool fails to edit a file, ask the user to either close the file or reopen/restart Visual Studio so the edit can be retried, before falling back to other editing methods.
+
+## Response Guidelines
+- Keep responses minimal — short phrases only, no full sentences, just essential facts/actions.

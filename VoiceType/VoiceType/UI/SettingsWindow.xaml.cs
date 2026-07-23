@@ -42,6 +42,7 @@ namespace VoiceType.UI
             var dictationSection = new DictationSection();
             var textInsertionSection = new TextInsertionSection();
             var historySection = new HistorySection();
+            var appearanceSection = new AppearanceSection();
             var normalizationSection = new NormalizationSection();
             var fillerWordsSection = new FillerWordsSection();
             var spokenPunctuationSection = new SpokenPunctuationSection();
@@ -51,6 +52,7 @@ namespace VoiceType.UI
             _sections = new List<UserControl>
             {
                 generalSection,
+                appearanceSection,
                 transcriptionSection,
                 dictationSection,
                 textInsertionSection,
@@ -68,6 +70,7 @@ namespace VoiceType.UI
             _rootNodes = new List<NavNode>
             {
                 new(((ISettingsSection)generalSection).Title, generalSection),
+                new(((ISettingsSection)appearanceSection).Title, appearanceSection),
                 new(((ISettingsSection)transcriptionSection).Title, transcriptionSection),
                 new(((ISettingsSection)dictationSection).Title, dictationSection),
                 new(((ISettingsSection)textInsertionSection).Title, textInsertionSection),
@@ -199,6 +202,8 @@ namespace VoiceType.UI
             var previousServerArgs = _settings.WhisperServerArguments ?? string.Empty;
             var previousHistoryEnabled = _settings.EnableTranscriptHistory;
             var previousRetentionLimit = _settings.TranscriptHistoryRetentionLimit;
+            var previousPillColor = _settings.PillColor ?? string.Empty;
+            var previousPillOpacity = _settings.PillOpacity;
 
             foreach (var section in _sections)
                 ((ISettingsSection)section).Save(_settings);
@@ -274,6 +279,13 @@ namespace VoiceType.UI
                 Application.Current?.Resources["TranscriptHistoryService"] is Infrastructure.History.TranscriptHistoryService historyService)
             {
                 historyService.SetMaxEntries(_settings.TranscriptHistoryRetentionLimit);
+            }
+
+            // Pill appearance change: refresh any currently open overlay pills immediately.
+            if (!string.Equals(previousPillColor, _settings.PillColor, StringComparison.OrdinalIgnoreCase) ||
+                previousPillOpacity != _settings.PillOpacity)
+            {
+                controller?.ApplyPillAppearance();
             }
 
             Close();

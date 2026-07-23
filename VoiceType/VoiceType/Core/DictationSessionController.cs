@@ -187,6 +187,7 @@ namespace VoiceType.Core
                         };
                         _statusWindow.Closed += (_, _) => _statusWindow = null;
                         _statusWindow.Show();
+                        _statusWindow.ApplyAppearance(_settings);
                         _statusWindow.SetModelName(CurrentModelDisplayName);
                         _statusWindow.PositionBottomCenter();
                     }
@@ -690,6 +691,36 @@ namespace VoiceType.Core
             }
         }
 
+        /// <summary>
+        /// Re-applies the configured pill color/opacity to any currently open overlay windows
+        /// (compact, breathing, and standalone status pill). Safe to call from any thread; used
+        /// by the Settings window to apply appearance changes live on Save.
+        /// </summary>
+        public void ApplyPillAppearance()
+        {
+            var dispatcher = Application.Current?.Dispatcher;
+            if (dispatcher == null) return;
+
+            void Apply()
+            {
+                try
+                {
+                    _overlayWindow?.ApplyAppearance(_settings);
+                    _breathingWindow?.ApplyAppearance(_settings);
+                    _statusWindow?.ApplyAppearance(_settings);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"Error applying pill appearance: {ex}");
+                }
+            }
+
+            if (!dispatcher.CheckAccess())
+                dispatcher.Invoke(Apply);
+            else
+                Apply();
+        }
+
         // Closes the compact and breathing overlays created during session startup. Used when a
         // start is aborted because it was superseded by a fast release before the mic engaged.
         private async Task CloseStartupOverlayAsync()
@@ -794,6 +825,7 @@ namespace VoiceType.Core
                     ShowActivated = false,
                     Topmost = true
                 };
+                _overlayWindow.ApplyAppearance(_settings);
                 _breathingWindow = new UI.BreathingOverlayWindow
                 {
                     ShowActivated = false,
@@ -803,6 +835,7 @@ namespace VoiceType.Core
                 try
                 {
                     _breathingWindow.Show();
+                    _breathingWindow.ApplyAppearance(_settings);
                     _breathingWindow.SetModelName(_overlayViewModel?.ModelName);
                     _breathingWindow.PositionBottomCenter();
                     // Show a "Starting mic" progress state until the first real audio buffer arrives,
@@ -1536,6 +1569,7 @@ namespace VoiceType.Core
                             Topmost = true
                         };
                         window.Show();
+                        window.ApplyAppearance(_settings);
                         window.ShowMessage(message, autoCloseMs);
                     }
                     catch (Exception ex)

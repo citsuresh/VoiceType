@@ -8,7 +8,7 @@
         ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize"
         WindowStartupLocation="Manual">
     <!-- Pill-shaped container -->
-    <Border Background="#E6111118" CornerRadius="22" SnapsToDevicePixels="True">
+    <Border x:Name="Pill" Background="#E6111118" CornerRadius="22" SnapsToDevicePixels="True">
         <Border.Effect>
             <DropShadowEffect Color="#000000" BlurRadius="18" ShadowDepth="4" Opacity="0.55" />
         </Border.Effect>

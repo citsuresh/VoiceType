@@ -72,6 +72,13 @@ namespace VoiceType.Infrastructure.Config
         public int PreviewChunkMilliseconds { get; set; } = 2000;
         public int PreviewThrottleMilliseconds { get; set; } = 1000;
 
+        // Background color of the floating waveform pill overlay, as a "#RRGGBB" hex string
+        // (no alpha - opacity is controlled separately via PillOpacity).
+        public string PillColor { get; set; } = "#283593";
+
+        // Opacity (0.0-1.0) applied to the pill background color.
+        public double PillOpacity { get; set; } = 0.9;
+
         // The dictation (hold-to-talk) hotkey as a single "+"-separated combo, e.g. "Ctrl+LeftAlt"
         // or "F9". The LAST token is the target key; any preceding tokens are modifiers
         // (Ctrl/Shift/Alt/Win). A future voice-command feature will add its own hotkey setting.
