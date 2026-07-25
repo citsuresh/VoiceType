@@ -4,29 +4,37 @@
 > tasks/bugs, and recently changed files as of the last session.
 
 ## Current focus
-Fixed a tray-icon bug reported by the user: double-clicking the tray icon (to open Settings)
-would also start a dictation session. Root cause: single-vs-double-click disambiguation relied on
-`NotifyIcon.DoubleClick`, a separate OS-raised event that isn't always reliable/timely (e.g. for
-tray icons hosted in the Windows 11 "show hidden icons" overflow flyout), racing against a
-`DispatcherTimer` used to defer the single-click toggle action. Replaced this with fully
-self-contained double-click detection in `TrayIconManager.OnTrayMouseUp`: it now compares the
-current `MouseUp` timestamp against the previous one (`SystemInformation.DoubleClickTime`) itself,
-with no dependency on the `DoubleClick` event at all. Also added a new feature in the same
-handler/session: middle-click on the tray icon now opens the transcript history window (reuses
-the existing `_onViewHistory` callback already wired for the "View Transcript History" menu item).
-Both changes were committed and pushed to `origin/main` (commit `d62959b`).
+Ran the `project-memory-management` skill's Initialize and Bootstrap workflows while testing the
+skill itself (files under `.github/` and `docs/` were deliberately deleted/reset multiple times
+during testing). Along the way, found and fixed a real mistake: when `.github/copilot-instructions.md`
+had been deleted, it was recreated from a generic template instead of the actual committed
+version, silently dropping real project-specific sections ("External Project Exploration",
+"Build & verify", "File Editing Instructions", "Git commit identity", etc.). Restored the file via
+`git checkout HEAD -- .github/copilot-instructions.md`, then merge-safe-added only what the skill's
+Bootstrap steps 7/8 require (a "Project Guidelines" section with the 2 mandated bullets, and an
+extension to the existing "Response Guidelines" section with the required exception list) without
+touching any other existing content. Also updated
+`~/.copilot/skills/project-memory-management/SKILL.md` to require resolving the repo root to an
+absolute path (`git rev-parse --show-toplevel`) before any file operation, after an earlier mistake
+where memory files were written to the nested solution subfolder (`VoiceType\VoiceType\.github` /
+`...\docs`) instead of the true repo root.
 
 ## Recently changed files
-- `VoiceType/VoiceType/UI/TrayIconManager.cs` — removed `_notifyIcon.DoubleClick` subscription and
-  the `_suppressClickUntilUtc`/`OnTrayDoubleClick` race-prone logic; `OnTrayMouseUp` now (1) detects
-  double-click itself from `MouseUp` timestamps to open Settings, and (2) handles
-  `MouseButtons.Middle` to invoke `_onViewHistory` and open transcript history.
+- `.github/copilot-instructions.md` — restored from git HEAD (undoing an earlier accidental
+  generic-template overwrite), then merge-safe-extended with a "Project Guidelines" section and
+  additions to "Response Guidelines" per the skill's Bootstrap steps.
+- `.github/prompts/bootstrap.prompt.md`, `.github/prompts/end-session.prompt.md` — created/moved
+  to the true repo root (`C:\MyFiles\Git\VoiceType\.github\prompts\`) via the Initialize workflow.
+- `~/.copilot/skills/project-memory-management/SKILL.md` — added absolute-path repo-root
+  resolution requirement to the Path resolution section.
+- `docs/CODE_SUMMARY.md`, `docs/DESIGN_DECISIONS.md`, `docs/ROADMAP.md` — confirmed intact/current
+  (restored via git during this session's testing; no structural changes to merge in).
 
 ## Open tasks / backlog
-- No further roadmap items were addressed this session.
+- No roadmap items were addressed this session (see `docs/ROADMAP.md` for actual priorities,
+  which is unchanged).
 
 ## Known issues
-- None known from this session's changes; solution build succeeded after the fix. (Note: while
-  the app was actively being debugged/running, a rebuild attempt reported the change wasn't
-  applied to the running process — expected, not a bug; requires stopping debugging to pick up
-  the new build.)
+- `run_build` failed once this session with MSB3021/MSB3027 (file lock on `VoiceType.exe`)
+  because the app was running at the time — not a code regression; re-run after stopping the
+  running instance.

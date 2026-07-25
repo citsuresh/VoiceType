@@ -71,6 +71,11 @@ Update them as follows:
 Keep all memory files concise — they exist to reduce token usage on future re-reads, not to serve
 as exhaustive documentation.
 
+## Project Guidelines
+- Manual commit review before any commit.
+- Build/test verification after every change.
+- Do not commit or push automatically — wait for explicit user confirmation first.
+
 ## External Project Exploration
 When exploring external projects for VoiceType, use them only as conceptual references; do not copy their code, and record relevant repository references in the roadmap where useful.
 
@@ -84,3 +89,10 @@ When exploring external projects for VoiceType, use them only as conceptual refe
 
 ## Response Guidelines
 - Keep responses minimal — short phrases only, no full sentences, just essential facts/actions.
+- Keep replies concise and minimal by default (no filler, no restating the question, no
+  unnecessary preamble), EXCEPT in these cases where full detail is required:
+  - Design rationale discussions.
+  - Build/error diagnosis.
+  - Before any destructive action.
+  - When multiple approaches exist.
+  - When generating docs/*.md content itself.
