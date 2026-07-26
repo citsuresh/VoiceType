@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-26T12:49:22.0584426Z",
+  "solutionPath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType.slnx",
+  "projects": [
+    {
+      "name": "VoiceType",
+      "path": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\VoiceType.csproj",
+      "references": []
+    }
+  ]
+}
