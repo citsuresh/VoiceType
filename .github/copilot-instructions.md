@@ -58,6 +58,25 @@ re-summarizing prior conversation history for a new task:
 - `docs/PROJECT_STATE.md` and `docs/ROADMAP.md` — read when the user asks "do you remember",
   references prior work, or asks what's next. `docs/ROADMAP.md` is the single source of truth
   for planned work.
+- `docs/full-graph.json` and `docs/project-dependencies.json` — a Roslyn-based code knowledge
+  graph, queried via `GraphTools.Query.exe` (located at
+  `C:\MyFiles\Git\GraphTools\GraphTools.Query\bin\Debug\net8.0\GraphTools.Query.exe`), never read
+  wholesale. This is a default, not a judgment call: before using a general-purpose search tool
+  (text search, symbol search, grep, or similar) to locate a class/interface/enum, find a
+  method's definition, find its callers, find its callees, check how two types relate, or
+  otherwise answer "where is X" / "what uses X" for any C# symbol — even a simple "find this
+  file/class" request — first check whether `docs/full-graph.json` exists, and if so, query it
+  instead:
+  ```
+  GraphTools.Query.exe --graph "<repo root>\docs\full-graph.json" --symbol "<fully-qualified-id>"
+  GraphTools.Query.exe --graph "<path>" --symbol "<id>" --direction callers
+  GraphTools.Query.exe --graph "<path>" --symbol "<id>" --direction callees
+  GraphTools.Query.exe --graph "<path>" --list-symbols --project "<project name>"
+  ```
+  Use `--list-symbols --project` first if the exact symbol ID isn't already known. Fallback: if
+  `docs/full-graph.json` doesn't exist, `GraphTools.Query.exe` errors or exits non-zero, or the
+  graph doesn't contain an answer (e.g. non-code content, file layout), fall back to normal
+  search tools — a missing/failed graph query is not a blocking error.
 
 Update them as follows:
 - `docs/CODE_SUMMARY.md`: when a new structural class/service is added, a component's
