@@ -131,6 +131,8 @@ namespace VoiceType.Infrastructure.Hotkeys
 
                         if (kb.vkCode == _targetVk)
                         {
+                            bool suppressThisEvent = false;
+
                             if (isKeyDown)
                             {
                                 // Engage only when the full hotkey combo is held. A plain
@@ -142,9 +144,16 @@ namespace VoiceType.Infrastructure.Hotkeys
                                     _suppressingTarget = true;
                                     HotkeyPressed?.Invoke(this, EventArgs.Empty);
                                 }
+
+                                // Once engaged, also swallow the OS's auto-repeat key-downs
+                                // that fire while the key is held, so a printable/actionable
+                                // target key (e.g. Space) doesn't keep leaking into the
+                                // focused app for the whole duration of the hold.
+                                suppressThisEvent = _suppressingTarget;
                             }
                             else if (isKeyUp)
                             {
+                                suppressThisEvent = _suppressingTarget;
                                 if (_suppressingTarget)
                                 {
                                     _suppressingTarget = false;
@@ -152,12 +161,15 @@ namespace VoiceType.Infrastructure.Hotkeys
                                 }
                             }
 
-                            // NOTE: We intentionally do NOT suppress the target key here.
-                            // Swallowing the physical Alt key-up freezes the OS async key
-                            // state as "Alt down", which then turns our injected typing into
-                            // Alt+char. Letting the real up through keeps the key state
-                            // accurate. Menu activation is avoided because the hotkey is a
-                            // chord (Ctrl+Alt), not a lone Alt tap.
+                            // Alt-family keys are never suppressed: swallowing the physical Alt
+                            // key-up freezes the OS async key state as "Alt down", which then
+                            // turns our injected typing into Alt+char. All other target keys
+                            // (e.g. Space) are suppressed while part of an active hotkey combo
+                            // so they don't leak into the focused application.
+                            if (suppressThisEvent && !IsAltVk(_targetVk))
+                            {
+                                return (IntPtr)1;
+                            }
                         }
                     }
                 }
@@ -228,6 +240,12 @@ namespace VoiceType.Infrastructure.Hotkeys
             return targetDown && ModifiersMatch();
         }
 
+        // True for any Alt-family virtual-key code (generic, left, or right Alt). Alt is the one
+        // target key we deliberately never suppress - see the suppression comment in
+        // HookCallback for why.
+        private static bool IsAltVk(int vk) =>
+            vk == NativeMethods.VK_MENU || vk == NativeMethods.VK_LMENU || vk == NativeMethods.VK_RMENU;
+
         public void Dispose()
         {
             if (_isDisposed) return;
@@ -249,6 +267,8 @@ namespace VoiceType.Infrastructure.Hotkeys
             public const int VK_SHIFT = 0x10;
             public const int VK_CONTROL = 0x11;
             public const int VK_MENU = 0x12; // Alt
+            public const int VK_LMENU = 0xA4; // Left Alt
+            public const int VK_RMENU = 0xA5; // Right Alt
             public const int VK_LWIN = 0x5B;
             public const int VK_RWIN = 0x5C;
 

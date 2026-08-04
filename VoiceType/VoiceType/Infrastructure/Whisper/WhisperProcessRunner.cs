@@ -20,10 +20,12 @@ namespace VoiceType.Infrastructure.Whisper
 
         public async Task<FinalTranscriptionResult> RunAsync(string wavPath)
         {
-            // Choose which executable to prefer based on transcription mode
-            var configuredExecutable = _settings.Mode == TranscriptionMode.Cli
-                ? (_settings.WhisperCliExecutablePath ?? _settings.WhisperStreamExecutablePath)
-                : (_settings.WhisperStreamExecutablePath ?? _settings.WhisperCliExecutablePath);
+            // RunAsync is only ever used for one-shot/batch WAV transcription - WavFile mode,
+            // Cli mode, and the Server-mode CLI fallback. Stream mode has its own separate client
+            // and never reaches here. whisper-cli.exe is therefore always the right tool; only
+            // fall back to the stream executable if no CLI path is configured at all (better than
+            // failing outright, even though it won't transcribe a WAV correctly).
+            var configuredExecutable = _settings.WhisperCliExecutablePath ?? _settings.WhisperStreamExecutablePath;
             var exePath = ResolveExecutablePath(configuredExecutable);
             if (string.IsNullOrEmpty(exePath) || !File.Exists(exePath))
             {

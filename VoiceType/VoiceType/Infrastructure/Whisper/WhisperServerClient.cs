@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -25,7 +27,13 @@ namespace VoiceType.Infrastructure.Whisper
         private readonly HttpClient _http;
         private readonly ChildProcessJob? _job;
         private Process? _proc;
-        private readonly StringBuilder _stderrBuffer = new StringBuilder();
+
+        // Bounded ring buffer of the server's own stdout/stderr lines. Only ever written to
+        // voicetype.log when a request comes back empty or fails (see TranscribeAsync) - not on
+        // every successful call - so normal dictation doesn't bloat the log file. Capped so the
+        // buffer itself can't grow unbounded even during a long-running server.
+        private readonly List<string> _serverOutputLog = new List<string>();
+        private const int MaxServerOutputLines = 300;
         private volatile bool _ready;
 
         // Serializes process lifecycle operations (start/stop/restart) so a runtime model switch
@@ -137,15 +145,11 @@ namespace VoiceType.Infrastructure.Whisper
                 if (_job != null && !_job.AssignProcess(_proc.Handle))
                     Logger.Error("WhisperServerClient: failed to assign server to child-process job.");
 
-                // Drain stdout/stderr so the child never blocks on a full pipe; capture stderr
-                // for diagnostics. Readiness itself is detected by HTTP polling below, which is
-                // far more reliable than scraping the console banner.
-                _proc.OutputDataReceived += (_, __) => { };
-                _proc.ErrorDataReceived += (_, e) =>
-                {
-                    if (e.Data == null) return;
-                    lock (_stderrBuffer) { _stderrBuffer.AppendLine(e.Data); }
-                };
+                // Drain stdout/stderr so the child never blocks on a full pipe; capture both into
+                // a bounded ring buffer for diagnostics. Readiness itself is detected by HTTP
+                // polling below, which is far more reliable than scraping the console banner.
+                _proc.OutputDataReceived += (_, e) => AppendServerOutputLine(e.Data);
+                _proc.ErrorDataReceived += (_, e) => AppendServerOutputLine(e.Data);
                 _proc.EnableRaisingEvents = true;
                 _proc.Exited += (_, __) => exitedTcs.TrySetResult(true);
                 _proc.BeginOutputReadLine();
@@ -159,6 +163,7 @@ namespace VoiceType.Infrastructure.Whisper
                 }
 
                 Logger.Error($"WhisperServerClient: server did not become ready within {readyTimeoutMs} ms.");
+                LogServerOutputSince(0, "server did not become ready within timeout");
                 return false;
             }
             catch (Exception ex)
@@ -180,6 +185,7 @@ namespace VoiceType.Infrastructure.Whisper
                 if (processExited.IsCompleted)
                 {
                     Logger.Error("WhisperServerClient: server process exited before becoming ready.");
+                    LogServerOutputSince(0, "server exited before becoming ready");
                     return false;
                 }
 
@@ -270,7 +276,7 @@ namespace VoiceType.Infrastructure.Whisper
             {
                 try { _proc?.Dispose(); } catch { }
                 _proc = null;
-                lock (_stderrBuffer) { _stderrBuffer.Clear(); }
+                lock (_serverOutputLog) { _serverOutputLog.Clear(); }
             }
         }
 
@@ -285,6 +291,11 @@ namespace VoiceType.Infrastructure.Whisper
 
             if (string.IsNullOrWhiteSpace(wavPath) || !File.Exists(wavPath))
                 return new FinalTranscriptionResult { Success = false, ErrorMessage = "Input WAV not found." };
+
+            // Mark where this request's server console output starts so we can log just the
+            // relevant slice (see LogServerOutputSince) if the result turns out empty or failed.
+            int outputStartIndex;
+            lock (_serverOutputLog) { outputStartIndex = _serverOutputLog.Count; }
 
             try
             {
@@ -307,6 +318,7 @@ namespace VoiceType.Infrastructure.Whisper
                 using var resp = await _http.PostAsync(url, form, timeoutCts.Token).ConfigureAwait(false);
                 if (!resp.IsSuccessStatusCode)
                 {
+                    LogServerOutputSince(outputStartIndex, $"server returned {(int)resp.StatusCode} {resp.ReasonPhrase}");
                     return new FinalTranscriptionResult
                     {
                         Success = false,
@@ -321,13 +333,18 @@ namespace VoiceType.Infrastructure.Whisper
                     ? textEl.GetString() ?? string.Empty
                     : string.Empty;
 
-                return new FinalTranscriptionResult { Success = true, Text = text.Trim() };
+                var trimmed = text.Trim();
+                if (string.IsNullOrEmpty(trimmed))
+                    LogServerOutputSince(outputStartIndex, "server returned an empty transcription");
+
+                return new FinalTranscriptionResult { Success = true, Text = trimmed };
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
                 // The linked token fired but the caller did not cancel: this is our inference timeout.
                 var seconds = (int)InferenceTimeout.TotalSeconds;
                 Logger.Error($"WhisperServerClient: inference timed out after {seconds}s.");
+                LogServerOutputSince(outputStartIndex, "inference timed out");
                 return new FinalTranscriptionResult
                 {
                     Success = false,
@@ -338,8 +355,45 @@ namespace VoiceType.Infrastructure.Whisper
             catch (Exception ex)
             {
                 Logger.Error($"WhisperServerClient: inference request failed: {ex.Message}");
+                LogServerOutputSince(outputStartIndex, $"inference request failed: {ex.Message}");
                 return new FinalTranscriptionResult { Success = false, ErrorMessage = ex.Message };
             }
+        }
+
+        // Appends one line of the server's stdout/stderr to the bounded ring buffer, trimming the
+        // oldest lines once the cap is exceeded so long-running sessions can't grow it unbounded.
+        private void AppendServerOutputLine(string? line)
+        {
+            if (line == null) return;
+            lock (_serverOutputLog)
+            {
+                _serverOutputLog.Add(line);
+                var excess = _serverOutputLog.Count - MaxServerOutputLines;
+                if (excess > 0) _serverOutputLog.RemoveRange(0, excess);
+            }
+        }
+
+        // Writes the server's console output captured since <paramref name="startIndex"/> to
+        // voicetype.log. Only called for empty/failed transcriptions (see TranscribeAsync) so
+        // normal, successful dictations never grow the log with per-request server chatter.
+        private void LogServerOutputSince(int startIndex, string reason)
+        {
+            string[] lines;
+            lock (_serverOutputLog)
+            {
+                // startIndex may be stale if the buffer was trimmed/cleared since the request
+                // started (e.g. a restart raced this call); clamp defensively.
+                var clamped = Math.Min(startIndex, _serverOutputLog.Count);
+                lines = _serverOutputLog.Skip(clamped).ToArray();
+            }
+
+            if (lines.Length == 0)
+            {
+                Logger.Info($"WhisperServerClient: {reason}; no whisper-server console output was captured for this request.");
+                return;
+            }
+
+            Logger.Info($"WhisperServerClient: {reason}; whisper-server output for this request:{Environment.NewLine}{string.Join(Environment.NewLine, lines)}");
         }
 
         // Resolves the whisper-server.exe path: prefer the configured path, otherwise place it

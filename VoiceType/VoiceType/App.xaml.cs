@@ -57,12 +57,21 @@ namespace VoiceType
             DispatcherUnhandledException += OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += OnAppDomainUnhandledException;
 
+            // Re-verify (and self-heal) the long-lived whisper-server process after the machine
+            // wakes from sleep/hibernate - see OnPowerModeChanged for rationale.
+            Microsoft.Win32.SystemEvents.PowerModeChanged += OnPowerModeChanged;
+
             var settings = SettingsLoader.Load();
             var controller = new DictationSessionController(settings);
             Resources["DictationController"] = controller;
             Resources["Settings"] = settings;
             _settings = settings;
             _controller = controller;
+
+            // Sweep orphaned session WAVs left behind by a prior crash/force-kill (the normal
+            // cleanup in DictationSessionController only runs when finalization completes
+            // normally, so an app that dies mid-session leaks its temp WAV otherwise).
+            CleanupStaleTempWavFiles(settings);
 
             // Transcript-comparison history persistence and shared "latest comparison" state for
             // the post-insertion bulb/comparison popup (see docs/NEW_FEATURE_SPECS.md).
@@ -434,6 +443,65 @@ namespace VoiceType
             }
         }
 
+        // Deletes leftover "voicetype_session_*.wav" files in the configured temp directory.
+        // These are normally deleted right after each dictation finalizes; a file only survives
+        // here if the app was killed/crashed mid-session, so it's always safe to remove them all
+        // on the next startup.
+        private static void CleanupStaleTempWavFiles(VoiceTypeSettings settings)
+        {
+            try
+            {
+                var tempDir = settings.TempDirectory ?? "./temp";
+                if (!System.IO.Directory.Exists(tempDir)) return;
+
+                var staleFiles = System.IO.Directory.GetFiles(tempDir, "voicetype_session_*.wav");
+                foreach (var file in staleFiles)
+                {
+                    try
+                    {
+                        System.IO.File.Delete(file);
+                        Logger.Info($"Deleted stale temp WAV from previous session: {file}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error($"Failed to delete stale temp WAV '{file}': {ex.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error sweeping stale temp WAV files: {ex.Message}");
+            }
+        }
+
+        // Sleep/hibernate leaves no trace in this app's own state: whisper-server.exe can be
+        // killed by the OS/drivers during suspend while WhisperServerClient.IsReady still only
+        // reflects "process handle hasn't exited", not real liveness. On resume, re-check and
+        // transparently restart the server if it's no longer alive so the next dictation doesn't
+        // silently fail. StartAsync() is a no-op if the server is still ready.
+        private async void OnPowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e)
+        {
+            if (e.Mode != Microsoft.Win32.PowerModes.Resume) return;
+            if (_serverClient == null) return;
+
+            Logger.Info("System resumed from sleep/hibernate; verifying whisper-server health.");
+            try
+            {
+                if (!_serverClient.IsReady)
+                {
+                    Logger.Info("whisper-server not ready after resume; restarting.");
+                    var restarted = await _serverClient.StartAsync();
+                    Logger.Info(restarted
+                        ? "whisper-server restarted successfully after resume."
+                        : "whisper-server failed to restart after resume; will fall back to CLI.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error verifying/restarting whisper-server after resume: {ex}");
+            }
+        }
+
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             Logger.Error($"Unhandled UI exception: {e.Exception}");
@@ -455,6 +523,8 @@ namespace VoiceType
         {
             try
             {
+                Microsoft.Win32.SystemEvents.PowerModeChanged -= OnPowerModeChanged;
+
                 // Dispose the tray icon first so it never lingers as a ghost in the notification area.
                 _trayIcon?.Dispose();
                 _trayIcon = null;
