@@ -49,19 +49,26 @@ Example: `git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@red
 - Update `README.md` when user-visible behavior changes; update `docs/ROADMAP.md` (remove + renumber,
   no gaps) when a backlog item ships.
 
-<!-- project-memory-management-graph: skill-version=4 -->
+<!-- project-memory-management-graph: skill-version=9 -->
 ## Persistent Project Memory
 Low-token memory files live in `docs/` — read them before re-exploring the codebase or
 re-summarizing prior conversation history for a new task:
 - `docs/CODE_SUMMARY.md` and `docs/DESIGN_DECISIONS.md` — read before exploring the codebase with
   search tools for a new task. If these files don't exist, fall back to normal exploration; their
   absence is not an error.
+- `docs/KEY_FLOWS.md` — traced end-to-end call flows as short symbol arrow-chains. Read alongside
+  `docs/CODE_SUMMARY.md`, which just points to it.
 - `docs/PROJECT_STATE.md` and `docs/ROADMAP.md` — read when the user asks "do you remember",
   references prior work, or asks what's next. `docs/ROADMAP.md` is the single source of truth
   for planned work.
 - `docs/domain-lookup-patterns.md` — read when a task requires domain conventions, naming
   schemes, or business logic that the graph doesn't represent. If this file doesn't exist, that's
   normal (it's only created once a pattern is actually confirmed).
+- `docs/KNOWN_OPEN_FINDINGS.md` — a passive, user-controlled list of open/unresolved findings the
+  user chose not to act on immediately. Never add, edit, or remove entries without the user
+  explicitly asking to; the one exception is flagging a possible recurrence as a suggestion only.
+  If this file doesn't exist, that's normal (only created the first time the user explicitly asks
+  to add something).
 - `docs/full-graph.json` and `docs/project-dependencies.json` — a Roslyn-based code knowledge
   graph, queried via the GraphTools wrapper script (located at
   `C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1`, invoked as
@@ -87,7 +94,9 @@ re-summarizing prior conversation history for a new task:
 Update them as follows:
 - `docs/CODE_SUMMARY.md`: when a new structural class/service is added, a component's
   responsibility changes, or a project/component dependency changes. Not for routine bug fixes.
-  Also update "Key Flows" when a new end-to-end flow spanning multiple C# symbols is fully traced.
+  Keep the pointer line to `docs/KEY_FLOWS.md` present; do not add Key Flows entries here directly.
+- `docs/KEY_FLOWS.md`: when a new end-to-end flow spanning multiple C# symbols is fully traced, add
+  it as a short arrow-chain (e.g. `A -> B -> C`).
 - `docs/DESIGN_DECISIONS.md`: append-only, dated entries, when a non-obvious architectural/design
   choice is made or reversed. Never delete prior entries.
 - `docs/PROJECT_STATE.md`: overwrite (not append) at the end of a working session with current
@@ -95,9 +104,31 @@ Update them as follows:
 - `docs/ROADMAP.md`: update when priorities or plans deliberately change.
 - `docs/domain-lookup-patterns.md`: manually curated; only add/update after the user explicitly
   confirms a domain lookup pattern is worth recording.
+- `docs/KNOWN_OPEN_FINDINGS.md`: manually curated by the user only; before adding, check for a
+  similar existing entry and ask the user whether it's a recurrence (update in place: last-seen
+  date + occurrence count) or a new entry — never decide this on your own.
 
 Keep all memory files concise — they exist to reduce token usage on future re-reads, not to serve
 as exhaustive documentation.
+
+## Regression Auditor Protocol
+Continuous code-review discipline that applies whenever code changes are made in this project
+(see `~/.copilot/skills/project-memory-management-graph/SKILL.md` "Regression Auditor Protocol"
+section for full detail): propose a breakdown of non-trivial multi-part changes before writing
+code (Pre-Build Decomposition) and confirm it with the user; after each meaningful part and once
+more after completion, run an independent Regression Auditor subagent reviewing the diff alone
+(no builder rationale passed in) for regressions/contradictions/duplication, running
+build/tests where possible, and classifying every finding as out-of-scope or "expected in Part N";
+out-of-scope findings are reported only (never touched), with unrelated confirmed issues offered
+as `docs/KNOWN_OPEN_FINDINGS.md` candidates (same explicit-confirmation rule as above); in-scope
+fixes are proposed as diffs only, never auto-applied. If the same issue recurs across 2+ fix
+attempts, stop and recommend a fresh context instead of continuing to iterate. Anchor quality
+judgments to existing conventions, written acceptance criteria, or passing tests — never
+open-ended opinion — and never use confidence language ("robust", "production-ready", etc.) in
+audit reports. Always show the full Review Report; never apply a fix without explicit approval.
+The user may suspend both Pre-Build Decomposition and the Regression Audit together for the
+current session only (e.g. "skip regression review for this session," POC/throwaway work); this
+never persists past the session and must be re-requested each time.
 
 ## Project Guidelines
 - Manual commit review before any commit.

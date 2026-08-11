@@ -4,37 +4,27 @@
 > tasks/bugs, and recently changed files as of the last session.
 
 ## Current focus
-Ran the `project-memory-management` skill's Initialize and Bootstrap workflows while testing the
-skill itself (files under `.github/` and `docs/` were deliberately deleted/reset multiple times
-during testing). Along the way, found and fixed a real mistake: when `.github/copilot-instructions.md`
-had been deleted, it was recreated from a generic template instead of the actual committed
-version, silently dropping real project-specific sections ("External Project Exploration",
-"Build & verify", "File Editing Instructions", "Git commit identity", etc.). Restored the file via
-`git checkout HEAD -- .github/copilot-instructions.md`, then merge-safe-added only what the skill's
-Bootstrap steps 7/8 require (a "Project Guidelines" section with the 2 mandated bullets, and an
-extension to the existing "Response Guidelines" section with the required exception list) without
-touching any other existing content. Also updated
-`~/.copilot/skills/project-memory-management/SKILL.md` to require resolving the repo root to an
-absolute path (`git rev-parse --show-toplevel`) before any file operation, after an earlier mistake
-where memory files were written to the nested solution subfolder (`VoiceType\VoiceType\.github` /
-`...\docs`) instead of the true repo root.
+Ran the `project-memory-management-graph` skill's Begin Session workflow, which detected the
+project was synced at stale skill version 4 (current is 9). Ran Bootstrap to re-sync: migrated
+"Key Flows" out of `docs/CODE_SUMMARY.md` into a new dedicated `docs/KEY_FLOWS.md` (per the v5
+change), and fully regenerated the "Persistent Project Memory" section in
+`.github/copilot-instructions.md` (bumped marker to skill-version=9, added
+`docs/KEY_FLOWS.md`/`docs/KNOWN_OPEN_FINDINGS.md` references, and added the new "Regression
+Auditor Protocol" section per v9). Rebuilt the code knowledge graph fully. No other project code
+changes were made this session.
 
 ## Recently changed files
-- `.github/copilot-instructions.md` — restored from git HEAD (undoing an earlier accidental
-  generic-template overwrite), then merge-safe-extended with a "Project Guidelines" section and
-  additions to "Response Guidelines" per the skill's Bootstrap steps.
-- `.github/prompts/bootstrap.prompt.md`, `.github/prompts/end-session.prompt.md` — created/moved
-  to the true repo root (`C:\MyFiles\Git\VoiceType\.github\prompts\`) via the Initialize workflow.
-- `~/.copilot/skills/project-memory-management/SKILL.md` — added absolute-path repo-root
-  resolution requirement to the Path resolution section.
-- `docs/CODE_SUMMARY.md`, `docs/DESIGN_DECISIONS.md`, `docs/ROADMAP.md` — confirmed intact/current
-  (restored via git during this session's testing; no structural changes to merge in).
+- `docs/CODE_SUMMARY.md` — removed the inline "Key Flows" section, replaced with a pointer to
+  `docs/KEY_FLOWS.md`.
+- `docs/KEY_FLOWS.md` — created; holds the 6 previously-inline flow entries.
+- `.github/copilot-instructions.md` — "Persistent Project Memory" section fully regenerated
+  (skill-version marker bumped 4 → 9; added Regression Auditor Protocol section).
+- `docs/full-graph.json`, `docs/project-dependencies.json` — full rebuild (1042 nodes, 2373 edges).
 
 ## Open tasks / backlog
 - No roadmap items were addressed this session (see `docs/ROADMAP.md` for actual priorities,
   which is unchanged).
 
 ## Known issues
-- `run_build` failed once this session with MSB3021/MSB3027 (file lock on `VoiceType.exe`)
-  because the app was running at the time — not a code regression; re-run after stopping the
-  running instance.
+- None new this session.
+

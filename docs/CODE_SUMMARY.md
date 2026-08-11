@@ -79,11 +79,4 @@ graph LR
 | `TranscriptBulbWindow` | `UI/TranscriptBulbWindow.xaml(.cs)` | Non-activating, cursor-adjacent bulb shown after an insertion that changed the transcript; dismisses on typing/foreground change. |
 | `ComparisonWindow` | `UI/ComparisonWindow.xaml(.cs)` | Non-modal chat-card popup/history browser rendering `ComparisonEntry` highlights; has a "Clear History" button (visible when `HistoryService` is set) and tracks all open instances statically so `NotifyNewEntry`/`GetOpenWindow` can push live updates and let callers reuse an already-open window instead of stacking duplicates. |
 
-## Key flows
-
-- **Hold-to-talk dictation:** `GlobalHotkeyManager` (key down) → `DictationSessionController` starts session → `AudioCaptureService` records → (key up) → transcribe via `WhisperServerClient`/`WhisperProcessRunner`/`WhisperStreamClient` → `CleanTranscript` pipeline → `InputInjectionService` inserts text.
-- **Toggle (hands-free) dictation:** Tray single-click or toggle hotkey → same session/transcribe/insert path as above, plus optional idle auto-stop.
-- **Settings save:** `SettingsWindow.SaveButton_Click` → `Validate()` + `Save()` across all `ISettingsSection`s → `SettingsLoader.SaveAsync` → diff old/new values → live
-- **Transcript comparison:** after a successful insertion, `DictationSessionController.RecordComparisonAndShowBulb` diffs raw vs. final text via `TranscriptDiffService`, appends a `ComparisonEntry` to `TranscriptHistoryService` (persisted to `history.json`), publishes it to `TranscriptPreviewState`, and shows `TranscriptBulbWindow` near the cursor; clicking the bulb (or the tray's "View Transcript History") opens `ComparisonWindow`.
-- **Model switch (tray menu):** `TrayIconManager` menu click → `WhisperProcessRunner.EnumerateModels()` list → update `VoiceTypeSettings.WhisperModelPath` → `WhisperServerClient` restarts (Server mode) or picked up next dictation (Cli/Stream).
-- **Text insertion fallback:** `FocusedControlInspector` checks focus → if not editable, `CopyToClipboardWhenNoEditable` copies text to clipboard + optional notification instead of typing/pasting.
+See `docs/KEY_FLOWS.md` for traced end-to-end call flows.

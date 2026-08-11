@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-04T15:18:16.7804286Z",
+  "generatedAt": "2026-08-11T12:01:16.8736752Z",
   "solutionPath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType.slnx",
-  "mode": "full",
-  "commitSha": "e6065d5658279ddd87f17f4c3b727d6ee5f4199b",
+  "mode": "incremental",
+  "commitSha": "397521760d8c2940c73130f3ef34093c32deb13c",
   "nodes": [
     {
       "id": "VoiceType.App",
@@ -13,7 +13,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "startLine": 14,
-      "endLine": 498,
+      "endLine": 568,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -156,7 +156,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "startLine": 38,
-      "endLine": 176,
+      "endLine": 185,
       "accessibility": "protected",
       "isStatic": false,
       "isAbstract": false
@@ -168,8 +168,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 180,
-      "endLine": 219,
+      "startLine": 189,
+      "endLine": 228,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -181,8 +181,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 222,
-      "endLine": 233,
+      "startLine": 231,
+      "endLine": 242,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -194,8 +194,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 238,
-      "endLine": 277,
+      "startLine": 247,
+      "endLine": 286,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -207,8 +207,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 283,
-      "endLine": 313,
+      "startLine": 292,
+      "endLine": 322,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -220,8 +220,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 320,
-      "endLine": 323,
+      "startLine": 329,
+      "endLine": 332,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -233,8 +233,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 329,
-      "endLine": 332,
+      "startLine": 338,
+      "endLine": 341,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -246,8 +246,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 338,
-      "endLine": 341,
+      "startLine": 347,
+      "endLine": 350,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -259,8 +259,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 349,
-      "endLine": 402,
+      "startLine": 358,
+      "endLine": 411,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -272,9 +272,35 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 410,
-      "endLine": 435,
+      "startLine": 419,
+      "endLine": 444,
       "accessibility": "public",
+      "isStatic": false,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "kind": "method",
+      "name": "CleanupStaleTempWavFiles",
+      "containingType": "VoiceType.App",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "startLine": 450,
+      "endLine": 475,
+      "accessibility": "private",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.App.OnPowerModeChanged(object,PowerModeChangedEventArgs)",
+      "kind": "method",
+      "name": "OnPowerModeChanged",
+      "containingType": "VoiceType.App",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "startLine": 482,
+      "endLine": 503,
+      "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
     },
@@ -285,8 +311,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 437,
-      "endLine": 444,
+      "startLine": 505,
+      "endLine": 512,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -298,8 +324,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 446,
-      "endLine": 452,
+      "startLine": 514,
+      "endLine": 520,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -311,8 +337,8 @@
       "containingType": "VoiceType.App",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "startLine": 454,
-      "endLine": 497,
+      "startLine": 522,
+      "endLine": 567,
       "accessibility": "protected",
       "isStatic": false,
       "isAbstract": false
@@ -3718,7 +3744,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
       "startLine": 23,
-      "endLine": 291,
+      "endLine": 311,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -3952,7 +3978,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
       "startLine": 110,
-      "endLine": 171,
+      "endLine": 183,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -3964,8 +3990,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 173,
-      "endLine": 217,
+      "startLine": 185,
+      "endLine": 229,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -3977,10 +4003,23 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 225,
-      "endLine": 229,
+      "startLine": 237,
+      "endLine": 241,
       "accessibility": "public",
       "isStatic": false,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.IsAltVk(int)",
+      "kind": "method",
+      "name": "IsAltVk",
+      "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
+      "startLine": 246,
+      "endLine": 247,
+      "accessibility": "private",
+      "isStatic": true,
       "isAbstract": false
     },
     {
@@ -3990,8 +4029,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 231,
-      "endLine": 236,
+      "startLine": 249,
+      "endLine": 254,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4003,8 +4042,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 238,
-      "endLine": 290,
+      "startLine": 256,
+      "endLine": 310,
       "accessibility": "private",
       "isStatic": true,
       "isAbstract": false
@@ -4016,8 +4055,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 240,
-      "endLine": 240,
+      "startLine": 258,
+      "endLine": 258,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4029,8 +4068,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 241,
-      "endLine": 241,
+      "startLine": 259,
+      "endLine": 259,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4042,8 +4081,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 242,
-      "endLine": 242,
+      "startLine": 260,
+      "endLine": 260,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4055,8 +4094,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 243,
-      "endLine": 243,
+      "startLine": 261,
+      "endLine": 261,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4068,8 +4107,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 244,
-      "endLine": 244,
+      "startLine": 262,
+      "endLine": 262,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4081,8 +4120,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 247,
-      "endLine": 247,
+      "startLine": 265,
+      "endLine": 265,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4094,8 +4133,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 249,
-      "endLine": 249,
+      "startLine": 267,
+      "endLine": 267,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4107,8 +4146,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 250,
-      "endLine": 250,
+      "startLine": 268,
+      "endLine": 268,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4120,8 +4159,34 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 251,
-      "endLine": 251,
+      "startLine": 269,
+      "endLine": 269,
+      "accessibility": "public",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.VK_LMENU",
+      "kind": "field",
+      "name": "VK_LMENU",
+      "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
+      "startLine": 270,
+      "endLine": 270,
+      "accessibility": "public",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.VK_RMENU",
+      "kind": "field",
+      "name": "VK_RMENU",
+      "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
+      "startLine": 271,
+      "endLine": 271,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4133,8 +4198,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 252,
-      "endLine": 252,
+      "startLine": 272,
+      "endLine": 272,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4146,8 +4211,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 253,
-      "endLine": 253,
+      "startLine": 273,
+      "endLine": 273,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4159,8 +4224,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 267,
-      "endLine": 268,
+      "startLine": 287,
+      "endLine": 288,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4172,8 +4237,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 270,
-      "endLine": 271,
+      "startLine": 290,
+      "endLine": 291,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4185,8 +4250,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 273,
-      "endLine": 275,
+      "startLine": 293,
+      "endLine": 295,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4198,8 +4263,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 277,
-      "endLine": 278,
+      "startLine": 297,
+      "endLine": 298,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4211,8 +4276,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 280,
-      "endLine": 281,
+      "startLine": 300,
+      "endLine": 301,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4224,8 +4289,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 283,
-      "endLine": 289,
+      "startLine": 303,
+      "endLine": 309,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -4237,8 +4302,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 255,
-      "endLine": 255,
+      "startLine": 275,
+      "endLine": 275,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4250,8 +4315,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 257,
-      "endLine": 265,
+      "startLine": 277,
+      "endLine": 285,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4263,8 +4328,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.KBDLLHOOKSTRUCT",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 260,
-      "endLine": 260,
+      "startLine": 280,
+      "endLine": 280,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4276,8 +4341,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.KBDLLHOOKSTRUCT",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 261,
-      "endLine": 261,
+      "startLine": 281,
+      "endLine": 281,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4289,8 +4354,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.KBDLLHOOKSTRUCT",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 262,
-      "endLine": 262,
+      "startLine": 282,
+      "endLine": 282,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4302,8 +4367,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.KBDLLHOOKSTRUCT",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 263,
-      "endLine": 263,
+      "startLine": 283,
+      "endLine": 283,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -4315,8 +4380,8 @@
       "containingType": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.KBDLLHOOKSTRUCT",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "startLine": 264,
-      "endLine": 264,
+      "startLine": 284,
+      "endLine": 284,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5187,7 +5252,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
       "startLine": 7,
-      "endLine": 31,
+      "endLine": 70,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -5206,14 +5271,53 @@
       "isAbstract": false
     },
     {
+      "id": "VoiceType.Infrastructure.Logging.Logger.BackupLogFile",
+      "kind": "field",
+      "name": "BackupLogFile",
+      "containingType": "VoiceType.Infrastructure.Logging.Logger",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "startLine": 13,
+      "endLine": 13,
+      "accessibility": "private",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Logging.Logger.MaxLogSizeBytes",
+      "kind": "field",
+      "name": "MaxLogSizeBytes",
+      "containingType": "VoiceType.Infrastructure.Logging.Logger",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "startLine": 14,
+      "endLine": 14,
+      "accessibility": "private",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Logging.Logger.WriteLock",
+      "kind": "field",
+      "name": "WriteLock",
+      "containingType": "VoiceType.Infrastructure.Logging.Logger",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "startLine": 18,
+      "endLine": 18,
+      "accessibility": "private",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
       "id": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
       "kind": "method",
       "name": "Info",
       "containingType": "VoiceType.Infrastructure.Logging.Logger",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
-      "startLine": 10,
-      "endLine": 19,
+      "startLine": 20,
+      "endLine": 29,
       "accessibility": "public",
       "isStatic": true,
       "isAbstract": false
@@ -5225,9 +5329,35 @@
       "containingType": "VoiceType.Infrastructure.Logging.Logger",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
-      "startLine": 21,
-      "endLine": 30,
+      "startLine": 31,
+      "endLine": 40,
       "accessibility": "public",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Logging.Logger.WriteLine(string)",
+      "kind": "method",
+      "name": "WriteLine",
+      "containingType": "VoiceType.Infrastructure.Logging.Logger",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "startLine": 45,
+      "endLine": 56,
+      "accessibility": "private",
+      "isStatic": true,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Logging.Logger.RotateIfNeeded()",
+      "kind": "method",
+      "name": "RotateIfNeeded",
+      "containingType": "VoiceType.Infrastructure.Logging.Logger",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "startLine": 58,
+      "endLine": 69,
+      "accessibility": "private",
       "isStatic": true,
       "isAbstract": false
     },
@@ -5746,7 +5876,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "startLine": 12,
-      "endLine": 222,
+      "endLine": 224,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5785,7 +5915,7 @@
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "startLine": 21,
-      "endLine": 101,
+      "endLine": 103,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5797,8 +5927,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "startLine": 103,
-      "endLine": 145,
+      "startLine": 105,
+      "endLine": 147,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5810,8 +5940,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "startLine": 147,
-      "endLine": 173,
+      "startLine": 149,
+      "endLine": 175,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5823,8 +5953,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "startLine": 175,
-      "endLine": 180,
+      "startLine": 177,
+      "endLine": 182,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5836,8 +5966,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "startLine": 187,
-      "endLine": 206,
+      "startLine": 189,
+      "endLine": 208,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5849,8 +5979,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "startLine": 212,
-      "endLine": 221,
+      "startLine": 214,
+      "endLine": 223,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5862,8 +5992,8 @@
       "containingType": null,
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 22,
-      "endLine": 390,
+      "startLine": 24,
+      "endLine": 444,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5875,8 +6005,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 24,
-      "endLine": 24,
+      "startLine": 26,
+      "endLine": 26,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5888,8 +6018,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 25,
-      "endLine": 25,
+      "startLine": 27,
+      "endLine": 27,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5901,8 +6031,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 26,
-      "endLine": 26,
+      "startLine": 28,
+      "endLine": 28,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5914,23 +6044,36 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 27,
-      "endLine": 27,
+      "startLine": 29,
+      "endLine": 29,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
     },
     {
-      "id": "VoiceType.Infrastructure.Whisper.WhisperServerClient._stderrBuffer",
+      "id": "VoiceType.Infrastructure.Whisper.WhisperServerClient._serverOutputLog",
       "kind": "field",
-      "name": "_stderrBuffer",
+      "name": "_serverOutputLog",
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 28,
-      "endLine": 28,
+      "startLine": 35,
+      "endLine": 35,
       "accessibility": "private",
       "isStatic": false,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Whisper.WhisperServerClient.MaxServerOutputLines",
+      "kind": "field",
+      "name": "MaxServerOutputLines",
+      "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "startLine": 36,
+      "endLine": 36,
+      "accessibility": "private",
+      "isStatic": true,
       "isAbstract": false
     },
     {
@@ -5940,8 +6083,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 29,
-      "endLine": 29,
+      "startLine": 37,
+      "endLine": 37,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5953,8 +6096,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 33,
-      "endLine": 33,
+      "startLine": 41,
+      "endLine": 41,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5966,8 +6109,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 35,
-      "endLine": 48,
+      "startLine": 43,
+      "endLine": 56,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -5979,8 +6122,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 51,
-      "endLine": 52,
+      "startLine": 59,
+      "endLine": 60,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -5992,8 +6135,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 54,
-      "endLine": 55,
+      "startLine": 62,
+      "endLine": 63,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -6005,8 +6148,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 60,
-      "endLine": 60,
+      "startLine": 68,
+      "endLine": 68,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -6018,8 +6161,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 66,
-      "endLine": 77,
+      "startLine": 74,
+      "endLine": 85,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -6031,8 +6174,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 81,
-      "endLine": 169,
+      "startLine": 89,
+      "endLine": 174,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -6044,8 +6187,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 173,
-      "endLine": 208,
+      "startLine": 178,
+      "endLine": 214,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -6057,8 +6200,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 214,
-      "endLine": 225,
+      "startLine": 220,
+      "endLine": 231,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -6070,8 +6213,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 233,
-      "endLine": 250,
+      "startLine": 239,
+      "endLine": 256,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -6083,8 +6226,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 254,
-      "endLine": 275,
+      "startLine": 260,
+      "endLine": 281,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -6096,9 +6239,35 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 281,
-      "endLine": 343,
+      "startLine": 287,
+      "endLine": 361,
       "accessibility": "public",
+      "isStatic": false,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Whisper.WhisperServerClient.AppendServerOutputLine(string?)",
+      "kind": "method",
+      "name": "AppendServerOutputLine",
+      "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "startLine": 365,
+      "endLine": 374,
+      "accessibility": "private",
+      "isStatic": false,
+      "isAbstract": false
+    },
+    {
+      "id": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "kind": "method",
+      "name": "LogServerOutputSince",
+      "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
+      "project": "VoiceType",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "startLine": 379,
+      "endLine": 397,
+      "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
     },
@@ -6109,8 +6278,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 348,
-      "endLine": 371,
+      "startLine": 402,
+      "endLine": 425,
       "accessibility": "private",
       "isStatic": false,
       "isAbstract": false
@@ -6122,8 +6291,8 @@
       "containingType": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "project": "VoiceType",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "startLine": 373,
-      "endLine": 389,
+      "startLine": 427,
+      "endLine": 443,
       "accessibility": "public",
       "isStatic": false,
       "isAbstract": false
@@ -13494,49 +13663,42 @@
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Config.SettingsLoader.Load(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 60
+      "line": 64
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
+      "targetId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 74
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Windowing.ForegroundWindowMonitor.Start()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 79
+      "line": 88
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 84
+      "line": 93
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 85
+      "line": 94
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 98
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 104
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.Core.DictationSessionController.StartSessionAsync(CancellationToken,nint,nint,Func\u003Cbool\u003E?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 109
+      "line": 107
     },
     {
       "type": "calls",
@@ -13548,114 +13710,128 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.Core.DictationSessionController.StopSessionAsync(CancellationToken)",
+      "targetId": "VoiceType.Core.DictationSessionController.StartSessionAsync(CancellationToken,nint,nint,Func\u003Cbool\u003E?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 114
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 117
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 122
+      "line": 118
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 129
+      "line": 122
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.App.ToggleDictationFromTray()",
+      "targetId": "VoiceType.Core.DictationSessionController.StopSessionAsync(CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 132
+      "line": 123
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 134
+      "line": 126
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 139
+      "line": 131
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
-      "targetId": "VoiceType.UI.SettingsWindow.ShowSingleInstance()",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 138
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
+      "targetId": "VoiceType.App.ToggleDictationFromTray()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 141
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 143
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 148
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
+      "targetId": "VoiceType.UI.SettingsWindow.ShowSingleInstance()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 152
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "System.Windows.Application.Shutdown()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 144
+      "line": 153
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 145
+      "line": 154
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.UI.ComparisonWindow.GetOpenWindow()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 154
+      "line": 163
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "System.Windows.Window.Activate()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 157
+      "line": 166
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.UI.ComparisonWindow.LoadEntries(IReadOnlyList\u003CComparisonEntry\u003E)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 162
+      "line": 171
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.History.TranscriptHistoryService.GetEntries()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 162
+      "line": 171
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "System.Windows.Window.Show()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 163
+      "line": 172
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.UI.TrayIconManager.SetListeningState(ListeningMode)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 174
+      "line": 183
     },
     {
       "type": "uses",
@@ -13669,439 +13845,425 @@
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Core.DictationSessionController",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 61
+      "line": 65
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.History.TranscriptHistoryService",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 69
+      "line": 78
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Core.Preview.TranscriptPreviewState",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 70
+      "line": 79
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Windowing.ForegroundWindowMonitor",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 78
+      "line": 87
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 84
+      "line": 93
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 94
+      "line": 103
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 101
+      "line": 110
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 126
+      "line": 135
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.UI.TrayIconManager",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 142
+      "line": 151
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 145
+      "line": 154
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.OnStartup(StartupEventArgs)",
       "targetId": "VoiceType.UI.ComparisonWindow",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 161
+      "line": 170
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "System.Threading.Tasks.Task.Run(Func\u003CTask?\u003E)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 186
+      "line": 195
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "VoiceType.Core.DictationSessionController.ArmIdleAutoStop(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 205
+      "line": 214
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 207
+      "line": 216
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "VoiceType.Core.DictationSessionController.StartSessionAsync(CancellationToken,nint,nint,Func\u003Cbool\u003E?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 207
+      "line": 216
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 211
+      "line": 220
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "VoiceType.Core.DictationSessionController.StopSessionAsync(CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 211
+      "line": 220
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ToggleDictationFromTray()",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 216
+      "line": 225
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnTrayToggleModeChanged(bool)",
       "targetId": "System.Threading.Tasks.Task.Run(Func\u003CTask?\u003E)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 228
+      "line": 237
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnTrayToggleModeChanged(bool)",
       "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 230
+      "line": 239
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnTrayToggleModeChanged(bool)",
       "targetId": "VoiceType.Infrastructure.Config.SettingsLoader.SaveAsync(VoiceTypeSettings,string?,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 230
+      "line": 239
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnTrayToggleModeChanged(bool)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 231
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 240
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "string.IsNullOrWhiteSpace(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 249
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 243
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 248
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "VoiceType.Infrastructure.Config.SettingsLoader.SaveAsync(VoiceTypeSettings,string?,CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 248
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 252
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 257
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "VoiceType.Infrastructure.Config.SettingsLoader.SaveAsync(VoiceTypeSettings,string?,CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 257
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 261
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 253
+      "line": 262
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SwitchModelAsync(string)",
       "targetId": "System.IO.Path.GetFileNameWithoutExtension(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 259
+      "line": 268
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SwitchModelAsync(string)",
       "targetId": "VoiceType.Core.DictationSessionController.ShowStatusPill(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 260
+      "line": 269
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SwitchModelAsync(string)",
       "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 263
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 263
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 266
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
-      "targetId": "VoiceType.Core.DictationSessionController.CloseStatusPill()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 272
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 272
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 275
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
+      "targetId": "VoiceType.Core.DictationSessionController.CloseStatusPill()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 281
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.SwitchModelAsync(string)",
       "targetId": "VoiceType.Core.DictationSessionController.RefreshModelName()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 276
+      "line": 285
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ReapplyHotkey()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.UpdateHotkey()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 287
+      "line": 296
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ReapplyHotkey()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.UpdateHotkey()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 288
+      "line": 297
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ReapplyHotkey()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 293
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ReapplyHotkey()",
-      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 295
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ReapplyHotkey()",
-      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 300
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ReapplyHotkey()",
-      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 302
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ReapplyHotkey()",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 305
+      "line": 304
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ReapplyHotkey()",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 309
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ReapplyHotkey()",
+      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Start()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 311
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ReapplyHotkey()",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 314
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ReapplyHotkey()",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 318
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ReapplyHotkey()",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 310
+      "line": 319
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ShowNote(string)",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 322
+      "line": 331
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SyncTrayToggleMode(bool)",
       "targetId": "VoiceType.UI.TrayIconManager.SetToggleModeEnabled(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 331
+      "line": 340
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.SyncTrayHistoryEnabled(bool)",
       "targetId": "VoiceType.UI.TrayIconManager.SetHistoryEnabled(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 340
+      "line": 349
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
       "targetId": "VoiceType.Core.DictationSessionController.ShowStatusPill(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 367
+      "line": 376
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
       "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 370
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
-      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 370
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
-      "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 373
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
-      "targetId": "VoiceType.Core.DictationSessionController.CloseStatusPill()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 379
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 379
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
+      "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 382
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
+      "targetId": "VoiceType.Core.DictationSessionController.CloseStatusPill()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 388
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
       "targetId": "System.Windows.ResourceDictionary.Remove(object)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 389
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
-      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 391
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 392
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 398
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 400
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 401
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 407
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 399
+      "line": 408
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.App.ApplyModeAsync(TranscriptionMode)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 361
+      "line": 370
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.RestartServerAsync()",
       "targetId": "VoiceType.Core.DictationSessionController.ShowStatusPill(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 415
+      "line": 424
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.RestartServerAsync()",
       "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 418
+      "line": 427
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.RestartServerAsync()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 418
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.RestartServerAsync()",
-      "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 421
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.App.RestartServerAsync()",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
       "line": 427
     },
@@ -14110,147 +14272,238 @@
       "sourceId": "VoiceType.App.RestartServerAsync()",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 428
+      "line": 430
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.RestartServerAsync()",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 436
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.RestartServerAsync()",
+      "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 437
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.RestartServerAsync()",
       "targetId": "VoiceType.Core.DictationSessionController.CloseStatusPill()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 433
+      "line": 442
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "targetId": "System.IO.Directory.Exists(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 455
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "targetId": "System.IO.Directory.GetFiles(string,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 457
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "targetId": "System.IO.File.Delete(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 462
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 463
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 467
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.CleanupStaleTempWavFiles(VoiceTypeSettings)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 473
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnPowerModeChanged(object,PowerModeChangedEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 487
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnPowerModeChanged(object,PowerModeChangedEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 492
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnPowerModeChanged(object,PowerModeChangedEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 493
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnPowerModeChanged(object,PowerModeChangedEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 494
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.App.OnPowerModeChanged(object,PowerModeChangedEventArgs)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
+      "line": 501
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnDispatcherUnhandledException(object,DispatcherUnhandledExceptionEventArgs)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 439
+      "line": 507
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnDispatcherUnhandledException(object,DispatcherUnhandledExceptionEventArgs)",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 440
+      "line": 508
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnAppDomainUnhandledException(object,UnhandledExceptionEventArgs)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 449
+      "line": 517
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnAppDomainUnhandledException(object,UnhandledExceptionEventArgs)",
       "targetId": "VoiceType.UI.TrayIconManager.ShowBalloon(string,string,ToolTipIcon,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 450
+      "line": 518
     },
     {
       "type": "overrides",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Windows.Application.OnExit(ExitEventArgs)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 454
+      "line": 522
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "VoiceType.UI.TrayIconManager.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 459
+      "line": 529
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "VoiceType.Infrastructure.Windowing.ForegroundWindowMonitor.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 462
+      "line": 532
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Windows.ResourceDictionary.Contains(object)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 465
+      "line": 535
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.IDisposable.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 467
+      "line": 537
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Windows.ResourceDictionary.Contains(object)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 470
+      "line": 540
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.IDisposable.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 472
+      "line": 542
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Windows.ResourceDictionary.Contains(object)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 475
+      "line": 545
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.IDisposable.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 477
+      "line": 547
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Windows.ResourceDictionary.Contains(object)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 480
+      "line": 550
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.IDisposable.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 482
+      "line": 552
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 487
+      "line": 557
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Threading.Mutex.ReleaseMutex()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 491
+      "line": 561
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Threading.WaitHandle.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 492
+      "line": 562
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.App.OnExit(ExitEventArgs)",
       "targetId": "System.Windows.Application.OnExit(ExitEventArgs)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\App.xaml.cs",
-      "line": 496
+      "line": 566
     },
     {
       "type": "implements",
@@ -18408,126 +18661,133 @@
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.HookCallback(int,nint,nint)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 140
+      "line": 142
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.HookCallback(int,nint,nint)",
       "targetId": "System.EventHandler.Invoke(object?,EventArgs)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 143
+      "line": 145
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.HookCallback(int,nint,nint)",
       "targetId": "System.EventHandler.Invoke(object?,EventArgs)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 151
+      "line": 160
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.HookCallback(int,nint,nint)",
+      "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.IsAltVk(int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
+      "line": 169
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.HookCallback(int,nint,nint)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.CallNextHookEx(nint,int,nint,nint)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 170
+      "line": 182
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "string.Split(char[]?,StringSplitOptions)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 180
+      "line": 192
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "string.ToLowerInvariant()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 183
+      "line": 195
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "string.Trim()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 183
+      "line": 195
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetAsyncKeyState(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 204
+      "line": 216
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetAsyncKeyState(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 205
+      "line": 217
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetAsyncKeyState(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 206
+      "line": 218
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetAsyncKeyState(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 207
+      "line": 219
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetAsyncKeyState(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 208
+      "line": 220
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.IsHotkeyPhysicallyDown()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetAsyncKeyState(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 227
+      "line": 239
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.IsHotkeyPhysicallyDown()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.ModifiersMatch()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 228
+      "line": 240
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Dispose()",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.Stop()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 234
+      "line": 252
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.SetHook(LowLevelKeyboardProc)",
       "targetId": "System.Diagnostics.Process.GetCurrentProcess()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 285
+      "line": 305
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.SetHook(LowLevelKeyboardProc)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.GetModuleHandle(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 287
+      "line": 307
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.SetHook(LowLevelKeyboardProc)",
       "targetId": "VoiceType.Infrastructure.Hotkeys.GlobalHotkeyManager.NativeMethods.SetWindowsHookEx(int,LowLevelKeyboardProc,nint,uint)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Hotkeys\\GlobalHotkeyManager.cs",
-      "line": 288
+      "line": 308
     },
     {
       "type": "calls",
@@ -19185,42 +19445,77 @@
       "sourceId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
       "targetId": "System.Diagnostics.Debug.WriteLine(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
-      "line": 14
+      "line": 24
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
       "targetId": "System.Console.WriteLine(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
-      "line": 15
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
-      "targetId": "System.IO.File.AppendAllText(string,string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
-      "line": 16
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
-      "targetId": "System.Diagnostics.Debug.WriteLine(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
       "line": 25
     },
     {
       "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
-      "targetId": "System.IO.TextWriter.WriteLine(string?)",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.WriteLine(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
       "line": 26
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "targetId": "System.Diagnostics.Debug.WriteLine(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 35
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "targetId": "System.IO.TextWriter.WriteLine(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 36
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.WriteLine(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 37
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.WriteLine(string)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.RotateIfNeeded()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 51
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.WriteLine(string)",
       "targetId": "System.IO.File.AppendAllText(string,string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
-      "line": 27
+      "line": 52
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.RotateIfNeeded()",
+      "targetId": "System.IO.File.Delete(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 65
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.RotateIfNeeded()",
+      "targetId": "System.IO.File.Move(string,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 66
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Logging.Logger.RotateIfNeeded()",
+      "targetId": "System.IO.FileInfo",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Logging\\Logger.cs",
+      "line": 62
     },
     {
       "type": "implements",
@@ -19381,77 +19676,63 @@
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 27
+      "line": 29
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 28
+      "line": 30
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 28
+      "line": 30
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 33
+      "line": 35
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 38
+      "line": 40
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 39
+      "line": 41
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 39
+      "line": 41
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 50
+      "line": 52
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 51
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 51
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder.Append(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 52
+      "line": 53
     },
     {
       "type": "calls",
@@ -19470,30 +19751,16 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder.Append(string?)",
+      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 55
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "string.IsNullOrWhiteSpace(string?)",
+      "targetId": "System.Text.StringBuilder.Append(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 56
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 56
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "string.IsNullOrWhiteSpace(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 57
     },
     {
       "type": "calls",
@@ -19505,105 +19772,84 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder.Append(char)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 57
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "string.Trim()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 57
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder.ToString()",
+      "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 58
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Diagnostics.Process.Start(ProcessStartInfo)",
+      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 79
+      "line": 58
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.IO.StreamReader.ReadToEndAsync()",
+      "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 82
+      "line": 59
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.IO.StreamReader.ReadToEndAsync()",
+      "targetId": "System.Text.StringBuilder.Append(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 83
+      "line": 59
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Diagnostics.Process.WaitForExit()",
+      "targetId": "System.Text.StringBuilder.Append(char)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 84
+      "line": 59
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "string.Trim()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 93
+      "line": 59
     },
     {
-      "type": "uses",
+      "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "targetId": "System.Text.StringBuilder.ToString()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 30
+      "line": 60
     },
     {
-      "type": "uses",
+      "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "targetId": "System.Diagnostics.Process.Start(ProcessStartInfo)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 35
+      "line": 81
     },
     {
-      "type": "uses",
+      "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Text.StringBuilder",
+      "targetId": "System.IO.StreamReader.ReadToEndAsync()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 49
+      "line": 84
     },
     {
-      "type": "uses",
+      "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "System.Diagnostics.ProcessStartInfo",
+      "targetId": "System.IO.StreamReader.ReadToEndAsync()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 66
+      "line": 85
     },
     {
-      "type": "uses",
+      "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "targetId": "System.Diagnostics.Process.WaitForExit()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 80
+      "line": 86
     },
     {
-      "type": "uses",
+      "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "VoiceType.Models.FinalTranscriptionResult",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 89
-    },
-    {
-      "type": "uses",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
-      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "targetId": "string.Trim()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 95
     },
@@ -19612,63 +19858,98 @@
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
       "targetId": "VoiceType.Models.FinalTranscriptionResult",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 99
+      "line": 32
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 37
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "System.Text.StringBuilder",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 51
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "System.Diagnostics.ProcessStartInfo",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 68
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 82
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 91
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 97
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.RunAsync(string)",
+      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 101
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 105
+      "line": 107
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 105
+      "line": 107
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "System.IO.Path.GetFullPath(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 105
+      "line": 107
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 109
+      "line": 111
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "System.IO.Path.Combine(string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 111
+      "line": 113
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 112
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
-      "targetId": "System.IO.Path.Combine(string[])",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 123
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
-      "targetId": "System.IO.Path.Combine(string[])",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 124
+      "line": 114
     },
     {
       "type": "calls",
@@ -19680,14 +19961,14 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
-      "targetId": "System.IO.Path.Combine(string,string,string,string)",
+      "targetId": "System.IO.Path.Combine(string[])",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 126
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
-      "targetId": "System.IO.Path.Combine(string,string,string,string)",
+      "targetId": "System.IO.Path.Combine(string[])",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 127
     },
@@ -19722,352 +20003,338 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
-      "targetId": "System.IO.Path.Combine(string,string,string)",
+      "targetId": "System.IO.Path.Combine(string,string,string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 132
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
-      "targetId": "System.IO.Path.Combine(string,string,string)",
+      "targetId": "System.IO.Path.Combine(string,string,string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 133
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
+      "targetId": "System.IO.Path.Combine(string,string,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 134
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
+      "targetId": "System.IO.Path.Combine(string,string,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 135
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 138
+      "line": 140
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "targetId": "System.IO.DirectoryInfo",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 116
+      "line": 118
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 149
+      "line": 151
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 149
+      "line": 151
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.Path.GetFullPath(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 149
+      "line": 151
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 153
+      "line": 155
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.Path.Combine(string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 155
+      "line": 157
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 156
+      "line": 158
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.Path.Combine(string,string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 163
+      "line": 165
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.Directory.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 164
+      "line": 166
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.Directory.GetFiles(string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 166
+      "line": 168
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "targetId": "System.IO.DirectoryInfo",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 160
+      "line": 162
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 177
+      "line": 179
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveExecutablePath(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 177
+      "line": 179
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 178
+      "line": 180
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelPath(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 190
+      "line": 192
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "string.IsNullOrEmpty(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 191
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
-      "targetId": "System.IO.Path.GetDirectoryName(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
       "line": 193
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
+      "targetId": "System.IO.Path.GetDirectoryName(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
+      "line": 195
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 194
+      "line": 196
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "System.IO.Directory.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 194
+      "line": 196
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "System.IO.Path.Combine(string,string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 200
+      "line": 202
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "System.IO.Directory.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 201
+      "line": 203
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "targetId": "System.IO.DirectoryInfo",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 197
+      "line": 199
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ResolveModelsDirectory()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 214
+      "line": 216
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 215
+      "line": 217
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "targetId": "System.IO.Directory.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 215
+      "line": 217
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "targetId": "System.Array.Empty\u00601()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 216
+      "line": 218
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "targetId": "System.IO.Directory.GetFiles(string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 218
+      "line": 220
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.EnumerateModels()",
       "targetId": "System.Array.Sort\u00601(string[],IComparer\u003Cstring\u003E?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperProcessRunner.cs",
-      "line": 219
+      "line": 221
     },
     {
       "type": "implements",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient",
       "targetId": "System.IDisposable",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 22
+      "line": 24
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient._settings",
       "targetId": "VoiceType.Infrastructure.Config.VoiceTypeSettings",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 24
+      "line": 26
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient._job",
       "targetId": "VoiceType.Infrastructure.Whisper.ChildProcessJob",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 26
+      "line": 28
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient..ctor(VoiceTypeSettings)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 47
+      "line": 55
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient..ctor(VoiceTypeSettings)",
       "targetId": "System.ArgumentNullException",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 37
+      "line": 45
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient..ctor(VoiceTypeSettings)",
       "targetId": "System.Net.Http.HttpClient",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 42
+      "line": 50
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient..ctor(VoiceTypeSettings)",
       "targetId": "VoiceType.Infrastructure.Whisper.ChildProcessJob",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 46
+      "line": 54
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.InferenceTimeout",
       "targetId": "System.TimeSpan.FromSeconds(double)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 52
+      "line": 60
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.InferenceTimeout",
       "targetId": "System.Math.Max(int,int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 52
+      "line": 60
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 68
+      "line": 76
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
       "targetId": "System.Threading.SemaphoreSlim.WaitAsync(CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 68
+      "line": 76
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 71
+      "line": 79
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 71
+      "line": 79
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartAsync(int,CancellationToken)",
       "targetId": "System.Threading.SemaphoreSlim.Release()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 75
+      "line": 83
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 85
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "string.IsNullOrEmpty(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 86
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.IO.File.Exists(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 86
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 88
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 92
+      "line": 93
     },
     {
       "type": "calls",
@@ -20093,100 +20360,114 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 101
+      "line": 100
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "string.IsNullOrWhiteSpace(string?)",
+      "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 102
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
+      "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 102
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 103
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "string.IsNullOrWhiteSpace(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 105
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.Append(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 106
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.Append(char)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 106
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "string.Trim()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 106
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.ToString()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 111
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.IO.Path.GetDirectoryName(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 112
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 126
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Diagnostics.Process.Start(ProcessStartInfo)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 127
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 130
+      "line": 104
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Whisper.ChildProcessJob.AssignProcess(nint)",
+      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 137
+      "line": 109
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "string.IsNullOrWhiteSpace(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 110
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 110
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Text.StringBuilder.Append(ref AppendInterpolatedStringHandler)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 111
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "string.IsNullOrWhiteSpace(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 113
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Text.StringBuilder.Append(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 114
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Text.StringBuilder.Append(char)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 114
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "string.Trim()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 114
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Text.StringBuilder.ToString()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 119
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.IO.Path.GetDirectoryName(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 120
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 134
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Diagnostics.Process.Start(ProcessStartInfo)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 135
     },
     {
       "type": "calls",
@@ -20198,56 +20479,70 @@
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Text.StringBuilder.AppendLine(string?)",
+      "targetId": "VoiceType.Infrastructure.Whisper.ChildProcessJob.AssignProcess(nint)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 147
+      "line": 145
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Threading.Tasks.TaskCompletionSource\u003Cbool\u003E.TrySetResult(bool)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 150
+      "line": 146
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Diagnostics.Process.BeginOutputReadLine()",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.AppendServerOutputLine(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 151
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Diagnostics.Process.BeginErrorReadLine()",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.AppendServerOutputLine(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 152
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
+      "targetId": "System.Threading.Tasks.TaskCompletionSource\u003Cbool\u003E.TrySetResult(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 154
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Diagnostics.Process.BeginOutputReadLine()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 155
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Diagnostics.Process.BeginErrorReadLine()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 156
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 158
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 154
+      "line": 158
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 157
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 161
     },
@@ -20256,432 +20551,481 @@
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 165
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 166
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 171
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 92
+      "line": 100
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "System.Text.StringBuilder",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 100
+      "line": 108
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "System.Diagnostics.ProcessStartInfo",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 108
+      "line": 116
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "targetId": "System.Threading.Tasks.TaskCompletionSource\u003Cbool\u003E",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 122
+      "line": 130
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.TimeSpan.FromSeconds(double)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 176
+      "line": 181
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 182
+      "line": 187
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 188
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.Threading.CancellationToken.ThrowIfCancellationRequested()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 186
+      "line": 192
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task\u003CSystem.Net.Http.HttpResponseMessage\u003E.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 191
+      "line": 197
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.Net.Http.HttpClient.GetAsync(string?,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 191
+      "line": 197
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 203
+      "line": 209
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task.Delay(int,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 203
+      "line": 209
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.WaitForServerReadyAsync(int,Task,CancellationToken)",
       "targetId": "System.Net.Http.HttpClient",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 176
+      "line": 181
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopAsync(CancellationToken)",
       "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 216
+      "line": 222
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopAsync(CancellationToken)",
       "targetId": "System.Threading.SemaphoreSlim.WaitAsync(CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 216
+      "line": 222
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopAsync(CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 219
+      "line": 225
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopAsync(CancellationToken)",
       "targetId": "System.Threading.SemaphoreSlim.Release()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 223
+      "line": 229
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 235
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
-      "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 238
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
-      "targetId": "System.Threading.SemaphoreSlim.WaitAsync(CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 238
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 241
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
+      "targetId": "System.Threading.Tasks.Task.ConfigureAwait(bool)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 244
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
+      "targetId": "System.Threading.SemaphoreSlim.WaitAsync(CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 244
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 247
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 243
+      "line": 249
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task\u003Cbool\u003E.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 244
+      "line": 250
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StartCoreAsync(int,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 244
+      "line": 250
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
       "targetId": "System.Threading.SemaphoreSlim.Release()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 248
+      "line": 254
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.RestartAsync(string,int,CancellationToken)",
       "targetId": "System.ArgumentException",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 236
+      "line": 242
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "targetId": "System.Diagnostics.Process.Kill(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 261
+      "line": 267
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "targetId": "System.Diagnostics.Process.WaitForExit(int)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 262
+      "line": 268
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 267
+      "line": 273
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "targetId": "System.ComponentModel.Component.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 271
+      "line": 277
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
-      "targetId": "System.Text.StringBuilder.Clear()",
+      "targetId": "System.Collections.Generic.List\u003Cstring\u003E.Clear()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 273
+      "line": 279
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 286
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.IO.File.Exists(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 286
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.IO.File.OpenRead(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 292
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string,string)",
+      "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 295
+      "line": 292
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.IO.Path.GetFileName(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 295
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 296
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 297
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "string.IsNullOrWhiteSpace(string?)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 298
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 299
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Threading.CancellationTokenSource.CreateLinkedTokenSource(CancellationToken)",
+      "targetId": "System.IO.File.OpenRead(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 303
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 306
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.IO.Path.GetFileName(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 306
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 307
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 308
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "string.IsNullOrWhiteSpace(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 309
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.MultipartFormDataContent.Add(HttpContent,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 310
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Threading.CancellationTokenSource.CreateLinkedTokenSource(CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 314
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Threading.CancellationTokenSource.CancelAfter(TimeSpan)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 304
+      "line": 315
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Threading.Tasks.Task\u003CSystem.Net.Http.HttpResponseMessage\u003E.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 307
+      "line": 318
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Net.Http.HttpClient.PostAsync(string?,HttpContent?,CancellationToken)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 307
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Threading.Tasks.Task\u003CSystem.IO.Stream\u003E.ConfigureAwait(bool)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 318
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.HttpContent.ReadAsStreamAsync(CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 318
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Threading.Tasks.Task\u003CSystem.Text.Json.JsonDocument\u003E.ConfigureAwait(bool)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 319
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Text.Json.JsonDocument.ParseAsync(Stream,JsonDocumentOptions,CancellationToken)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 319
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Text.Json.JsonElement.TryGetProperty(string,out JsonElement)",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 320
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Text.Json.JsonElement.GetString()",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 321
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "string.Trim()",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 324
-    },
-    {
-      "type": "calls",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "targetId": "System.Threading.Tasks.Task\u003CSystem.IO.Stream\u003E.ConfigureAwait(bool)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 330
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.HttpContent.ReadAsStreamAsync(CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 330
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Threading.Tasks.Task\u003CSystem.Text.Json.JsonDocument\u003E.ConfigureAwait(bool)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 331
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Text.Json.JsonDocument.ParseAsync(Stream,JsonDocumentOptions,CancellationToken)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 331
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Text.Json.JsonElement.TryGetProperty(string,out JsonElement)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 332
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Text.Json.JsonElement.GetString()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 333
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "string.Trim()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 336
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "string.IsNullOrEmpty(string?)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 337
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 338
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 340
+      "line": 346
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 347
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 357
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 358
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "VoiceType.Models.FinalTranscriptionResult",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 284
+      "line": 290
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "VoiceType.Models.FinalTranscriptionResult",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 287
-    },
-    {
-      "type": "uses",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.MultipartFormDataContent",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 291
-    },
-    {
-      "type": "uses",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "System.Net.Http.StreamContent",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 293
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.MultipartFormDataContent",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 302
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "System.Net.Http.StreamContent",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 304
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Net.Http.Headers.MediaTypeHeaderValue",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 294
+      "line": 305
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Net.Http.StringContent",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 296
+      "line": 307
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Net.Http.StringContent",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 297
+      "line": 308
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "System.Net.Http.StringContent",
-      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 299
-    },
-    {
-      "type": "uses",
-      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
-      "targetId": "VoiceType.Models.FinalTranscriptionResult",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
       "line": 310
     },
@@ -20690,140 +21034,203 @@
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "VoiceType.Models.FinalTranscriptionResult",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 324
+      "line": 322
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "VoiceType.Models.FinalTranscriptionResult",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 331
+      "line": 340
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
       "targetId": "VoiceType.Models.FinalTranscriptionResult",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 341
+      "line": 348
+    },
+    {
+      "type": "uses",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.TranscribeAsync(string,CancellationToken)",
+      "targetId": "VoiceType.Models.FinalTranscriptionResult",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 359
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.AppendServerOutputLine(string?)",
+      "targetId": "System.Collections.Generic.List\u003Cstring\u003E.Add(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 370
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.AppendServerOutputLine(string?)",
+      "targetId": "System.Collections.Generic.List\u003Cstring\u003E.RemoveRange(int,int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 372
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "targetId": "System.Math.Min(int,int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 386
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "targetId": "System.Linq.Enumerable.ToArray\u00601()",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 387
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "targetId": "System.Linq.Enumerable.Skip\u00601(int)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 387
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 392
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "targetId": "VoiceType.Infrastructure.Logging.Logger.Info(string)",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 396
+    },
+    {
+      "type": "calls",
+      "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.LogServerOutputSince(int,string)",
+      "targetId": "string.Join(string?,string?[])",
+      "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
+      "line": 396
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "string.IsNullOrWhiteSpace(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 351
+      "line": 405
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 353
+      "line": 407
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.Path.GetFullPath(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 353
+      "line": 407
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.Path.Combine(string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 354
+      "line": 408
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 355
+      "line": 409
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner.ProbePaths()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 358
+      "line": 412
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 360
+      "line": 414
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.Path.GetDirectoryName(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 362
+      "line": 416
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "string.IsNullOrEmpty(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 363
+      "line": 417
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.Path.Combine(string,string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 365
+      "line": 419
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "System.IO.File.Exists(string?)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 366
+      "line": 420
     },
     {
       "type": "uses",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.ResolveServerExecutablePath()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperProcessRunner",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 358
+      "line": 412
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
       "targetId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.StopCore()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 377
+      "line": 431
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
       "targetId": "VoiceType.Infrastructure.Logging.Logger.Error(string)",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 381
+      "line": 435
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
       "targetId": "VoiceType.Infrastructure.Whisper.ChildProcessJob.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 385
+      "line": 439
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
       "targetId": "System.Net.Http.HttpMessageInvoker.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 386
+      "line": 440
     },
     {
       "type": "calls",
       "sourceId": "VoiceType.Infrastructure.Whisper.WhisperServerClient.Dispose()",
       "targetId": "System.Threading.SemaphoreSlim.Dispose()",
       "filePath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType\\Infrastructure\\Whisper\\WhisperServerClient.cs",
-      "line": 387
+      "line": 441
     },
     {
       "type": "implements",
