@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-11T12:01:16.8736752Z",
+  "generatedAt": "2026-10-23T10:38:36.8397978Z",
   "solutionPath": "C:\\MyFiles\\Git\\VoiceType\\VoiceType\\VoiceType.slnx",
-  "mode": "incremental",
-  "commitSha": "397521760d8c2940c73130f3ef34093c32deb13c",
+  "mode": "full",
+  "commitSha": "322d58a8477d0689f66973250a1aa04c6cddcbf2",
   "nodes": [
     {
       "id": "VoiceType.App",

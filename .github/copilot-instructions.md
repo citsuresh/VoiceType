@@ -49,7 +49,7 @@ Example: `git -c user.name="Suresh Kumar Veluswamy" -c user.email="citsuresh@red
 - Update `README.md` when user-visible behavior changes; update `docs/ROADMAP.md` (remove + renumber,
   no gaps) when a backlog item ships.
 
-<!-- project-memory-management-graph: skill-version=9 -->
+<!-- project-memory-management-graph: skill-version=23 -->
 ## Persistent Project Memory
 Low-token memory files live in `docs/` — read them before re-exploring the codebase or
 re-summarizing prior conversation history for a new task:
@@ -69,27 +69,34 @@ re-summarizing prior conversation history for a new task:
   explicitly asking to; the one exception is flagging a possible recurrence as a suggestion only.
   If this file doesn't exist, that's normal (only created the first time the user explicitly asks
   to add something).
-- `docs/full-graph.json` and `docs/project-dependencies.json` — a Roslyn-based code knowledge
-  graph, queried via the GraphTools wrapper script (located at
-  `C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1`, invoked as
-  `Invoke-GraphTools.ps1 -Tool Query -- <args>`), never read wholesale. This is a default, not a
-  judgment call: before using a general-purpose search tool (text search, symbol search, grep, or
-  similar) to locate a class/interface/enum, find a method's definition, find its callers, find
-  its callees, check how two types relate, or otherwise answer "where is X" / "what uses X" for
-  any C# symbol — even a simple "find this file/class" request — first check whether
-  `docs/full-graph.json` exists, and if so, query it instead:
-  ```
-  C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<repo root>\docs\full-graph.json" --symbol "<fully-qualified-id>"
-  C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<path>" --symbol "<id>" --direction callers
-  C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<path>" --symbol "<id>" --direction callees
-  C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<path>" --list-symbols --project "<project name>"
-  ```
-  Use `--list-symbols --project` first if the exact symbol ID isn't already known. This
-  preference applies even to conceptual/explanatory questions ("explain X", "how does X work") if
-  answering requires locating/relating specific C# symbols. Fallback: if `docs/full-graph.json`
-  doesn't exist, the wrapper errors or exits non-zero, or the graph doesn't contain an answer
-  (e.g. non-code content, file layout), fall back to normal search tools — a missing/failed graph
-  query is not a blocking error.
+- `docs/FEATURE_CHECKLIST.md` — read when planning or adding a feature, if it exists; it is
+  user-curated and must not be changed without explicit instruction.
+- `docs/SCRIPTS.md` — check before writing code for a repeatable mechanical step, if it exists.
+
+Registered solution graphs (never read wholesale) are queried with the GraphTools wrapper at
+`C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1`, invoked as
+`C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- <args>`:
+
+| Solution path relative to repo root | Slug | Graph file | Dependencies file |
+| --- | --- | --- | --- |
+| `VoiceType\VoiceType.slnx` | `voicetype` | `docs/full-graph.voicetype.json` | `docs/project-dependencies.voicetype.json` |
+
+Before general-purpose search for a C# class/interface/enum, method definition, caller/callee,
+type relationship, or "where is X" / "what uses X", query the registered graph first — also for
+conceptual questions when specific C# symbols must be located or related. Query the IDE solution
+first only when it can be determined from context; otherwise search registered graphs and label
+results by solution, noting symbols found in multiple solutions. Use `--list-symbols --project` to
+discover an unknown symbol ID. Query templates:
+```
+C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<repo root>\docs\full-graph.voicetype.json" --symbol "<fully-qualified-id>"
+C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<path>" --symbol "<id>" --direction callers
+C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<path>" --symbol "<id>" --direction callees
+C:\MyFiles\Git\GraphTools\tools\Invoke-GraphTools.ps1 -Tool Query -- --graph "<path>" --list-symbols --project "<project name>"
+```
+If no registered graph exists, a graph file is missing, a query fails, or no graph contains the
+answer, state that explicitly (include full errors); a symbol-not-found result may indicate stale
+data. Then fall back to normal search. At Begin Session, compare each dependencies file's
+`CommitSha` with `git rev-parse HEAD`; ask whether to Bootstrap only on mismatch.
 
 Update them as follows:
 - `docs/CODE_SUMMARY.md`: when a new structural class/service is added, a component's
@@ -111,29 +118,34 @@ Update them as follows:
 Keep all memory files concise — they exist to reduce token usage on future re-reads, not to serve
 as exhaustive documentation.
 
+Reusable scripts: before writing code for a repeatable mechanical step (filtering a log, applying the same edit to many files, extracting data from several files), check `docs/SCRIPTS.md` if it exists and run a script that fits, as its index line says; if the index line says it modifies or deletes files, ask the user before each run, and check its output before relying on it. If you wrote working code for such a step that is likely to be reused with different inputs, is more than a one-liner, can take its inputs as parameters, and contains no credentials, tokens, customer data or personal details, save it as `scripts/agent/<verb-noun>.ps1` with a header comment (purpose, parameters, whether it modifies anything), add one line to `docs/SCRIPTS.md` (table: script | purpose | how to call | read-only or modifies | date; create the file with the table header if it is missing), and say so in your reply. Before saving, check whether an existing script in `scripts/agent/` can take the new case as a parameter. If one can, extend that script with a backward-compatible parameter (its default keeps the current behaviour, and existing parameter names, order and output format stay unchanged), update its header comment, index line and date, and say so, rather than saving a near-copy. If the task's file rules forbid changing the existing script, do not save a near-copy; say in your reply which parameter the existing script needs. Every part that varies between uses (paths, patterns, comment markers, row counts, exclusions) must be a parameter. For C# projects, skip `obj` and `bin` folders by default, with a switch to include them. Before finishing a task, check once whether you wrote any script worth saving. If a script fails or is out of date, fix it in place and update its date, or do the step normally; never loop on a broken script. When a task runs a listed script, set its date in `docs/SCRIPTS.md` to today if the task's file rules allow editing that file; otherwise leave the date unchanged and say so in your reply. The user curates these files: never delete scripts or index lines on your own.
+
 ## Regression Auditor Protocol
-Continuous code-review discipline that applies whenever code changes are made in this project
-(see `~/.copilot/skills/project-memory-management-graph/SKILL.md` "Regression Auditor Protocol"
-section for full detail): propose a breakdown of non-trivial multi-part changes before writing
-code (Pre-Build Decomposition) and confirm it with the user; after each meaningful part and once
-more after completion, run an independent Regression Auditor subagent reviewing the diff alone
-(no builder rationale passed in) for regressions/contradictions/duplication, running
-build/tests where possible, and classifying every finding as out-of-scope or "expected in Part N";
-out-of-scope findings are reported only (never touched), with unrelated confirmed issues offered
-as `docs/KNOWN_OPEN_FINDINGS.md` candidates (same explicit-confirmation rule as above); in-scope
-fixes are proposed as diffs only, never auto-applied. If the same issue recurs across 2+ fix
-attempts, stop and recommend a fresh context instead of continuing to iterate. Anchor quality
-judgments to existing conventions, written acceptance criteria, or passing tests — never
-open-ended opinion — and never use confidence language ("robust", "production-ready", etc.) in
-audit reports. Always show the full Review Report; never apply a fix without explicit approval.
-The user may suspend both Pre-Build Decomposition and the Regression Audit together for the
-current session only (e.g. "skip regression review for this session," POC/throwaway work); this
-never persists past the session and must be re-requested each time.
+For code changes, propose the smallest independently reviewable breakdown and wait for
+confirmation before any non-trivial multi-part implementation. Include `docs/FEATURE_CHECKLIST.md`
+items if it exists. After each meaningful part and once at completion, have an independent
+Regression Auditor review the diff without builder rationale: check unintended behavior, callers,
+shared state, contradictions, duplication, and run build/tests where available. Classify findings
+as out-of-scope or expected in a named Part. Out-of-scope findings are report-only; do not
+investigate or fix them, and mention `docs/KNOWN_OPEN_FINDINGS.md` only as a candidate subject to
+explicit user direction. In-scope findings need root cause, effort/risk estimate, and a proposed
+diff only. The final audit also checks full build/tests, docs synchronization (`PROJECT_STATE`,
+`CODE_SUMMARY`, `DESIGN_DECISIONS`, `ROADMAP` where present), and cross-cutting consistency.
+Show the full Review Report and stop; never apply a proposed fix without the user's explicit,
+individual approval. Plan approval does not approve audit fixes. If the same issue recurs across
+two or more fix attempts, stop and recommend a fresh focused context.
+Anchor judgments to repository conventions, written acceptance criteria, or tests; do not use
+confidence language in reports. A session-only request to skip review suspends both audit and
+breakdown; clarify a request that targets only one. Reduced Cadence Mode requires an explicit
+request and confirmed phases: audit at each phase boundary, revert to full per-part cadence after
+a real in-scope finding, and use the last phase audit as the final audit. Modes are session-scoped
+unless explicitly made persistent.
 
 ## Project Guidelines
 - Manual commit review before any commit.
 - Build/test verification after every change.
 - Do not commit or push automatically — wait for explicit user confirmation first.
+- This project has a WPF/WinForms UI. Use the `vs-debug` skill for Visual Studio debugging; use `ui-navigation-orchestrator` to navigate the running app to a screen or feature, including during debugging.
 
 ## External Project Exploration
 When exploring external projects for VoiceType, use them only as conceptual references; do not copy their code, and record relevant repository references in the roadmap where useful.

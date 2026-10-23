@@ -236,8 +236,10 @@ namespace VoiceType.Infrastructure.Hotkeys
         /// </summary>
         public bool IsHotkeyPhysicallyDown()
         {
-            bool targetDown = (NativeMethods.GetAsyncKeyState(_targetVk) & 0x8000) != 0;
-            return targetDown && ModifiersMatch();
+            // Use the hook-tracked engaged state for the target key, not GetAsyncKeyState: the
+            // hook swallows the target key (e.g. Space), and a swallowed key never updates the
+            // OS async key state, so GetAsyncKeyState would always report it as released.
+            return _suppressingTarget && ModifiersMatch();
         }
 
         // True for any Alt-family virtual-key code (generic, left, or right Alt). Alt is the one

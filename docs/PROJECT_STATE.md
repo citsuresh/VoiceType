@@ -4,27 +4,38 @@
 > tasks/bugs, and recently changed files as of the last session.
 
 ## Current focus
-Ran the `project-memory-management-graph` skill's Begin Session workflow, which detected the
-project was synced at stale skill version 4 (current is 9). Ran Bootstrap to re-sync: migrated
-"Key Flows" out of `docs/CODE_SUMMARY.md` into a new dedicated `docs/KEY_FLOWS.md` (per the v5
-change), and fully regenerated the "Persistent Project Memory" section in
-`.github/copilot-instructions.md` (bumped marker to skill-version=9, added
-`docs/KEY_FLOWS.md`/`docs/KNOWN_OPEN_FINDINGS.md` references, and added the new "Regression
-Auditor Protocol" section per v9). Rebuilt the code knowledge graph fully. No other project code
-changes were made this session.
+Ran Begin Session after confirming the v9 marker was stale against v23. Rebuilt the
+`VoiceType\VoiceType.slnx` graph under the `voicetype` registry name (1,042 nodes, 2,373 edges;
+18.11 seconds), refreshed `.github/copilot-instructions.md`, and verified its reusable-scripts
+bullet with an exact string comparison. The graph matches current commit
+`322d58a8477d0689f66973250a1aa04c6cddcbf2`. At the user's direction, removed the legacy
+`docs/full-graph.json`; the solution's old graph/dependencies references were left unchanged.
+
+Then fixed hold-to-talk never starting on Ctrl+Space (pill flashed and closed): the hook swallows
+the Space key, so `GetAsyncKeyState` never saw it held, and `IsHotkeyPhysicallyDown` aborted every
+start as a fast release. It now uses the hook-tracked `_suppressingTarget` flag. Compiles (temp
+output dir); Regression Auditor found nothing. Not yet runtime-tested; not committed.
 
 ## Recently changed files
-- `docs/CODE_SUMMARY.md` — removed the inline "Key Flows" section, replaced with a pointer to
-  `docs/KEY_FLOWS.md`.
-- `docs/KEY_FLOWS.md` — created; holds the 6 previously-inline flow entries.
-- `.github/copilot-instructions.md` — "Persistent Project Memory" section fully regenerated
-  (skill-version marker bumped 4 → 9; added Regression Auditor Protocol section).
-- `docs/full-graph.json`, `docs/project-dependencies.json` — full rebuild (1042 nodes, 2373 edges).
+- `docs/ROADMAP.md` — item 1 expanded (Whisper streaming root cause, Options A/B/C); new item 2
+  (sherpa-onnx engine: Parakeet + streaming Zipformer, comparison, setups, preview/final UX);
+  items renumbered 3–7.
+- `VoiceType/VoiceType/Infrastructure/Hotkeys/GlobalHotkeyManager.cs` — `IsHotkeyPhysicallyDown`
+  uses `_suppressingTarget` instead of `GetAsyncKeyState` for the target key.
+- `.github/copilot-instructions.md` — marker v23, per-solution graph registry, updated script and
+  auditor guidance, WPF/WinForms debugging reference.
+- `docs/full-graph.voicetype.json`, `docs/project-dependencies.voicetype.json` — full graph rebuild.
+- `docs/full-graph.json` — deleted at the user's request.
+- `docs/project-dependencies.json` — replaced by the registered slug-named file.
+- `docs/PROJECT_STATE.md` — this session snapshot.
 
 ## Open tasks / backlog
-- No roadmap items were addressed this session (see `docs/ROADMAP.md` for actual priorities,
-  which is unchanged).
+- `VoiceType.slnx` still references the removed unqualified graph/dependencies paths; the user
+  chose to leave these solution-folder references unchanged for now.
+- No roadmap items were addressed; `docs/ROADMAP.md` is unchanged.
 
 ## Known issues
-- None new this session.
+- Normal build output not refreshed: `VoiceType.exe` is locked by running PID 101020. Exit the
+  app, rebuild, then test Ctrl+Space hold and quick tap.
+- whisper-server failed to bind 127.0.0.1:51234 after resume (fell back to CLI); not investigated.
 
